@@ -1,4 +1,4 @@
-# Fronted of college-quora website
+# Frontend of college-quora website
 
 It's my college project for final year
 
