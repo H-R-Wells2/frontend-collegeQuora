@@ -30,10 +30,16 @@ function App() {
 
 
 
-  // Svg
+  // useStates for Svg
   const [svg, setSvg] = useState(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
   </svg>)
+
+
+// useStates for Line
+const [line, setLine] = useState("border-gray-200")
+
+
 
 
   // function to display msg in alert (not nessecery)
@@ -55,6 +61,7 @@ function App() {
       setSvg(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
       </svg>)
+      setLine("border-gray-200")
     }
     // set light mode
     else {
@@ -64,6 +71,7 @@ function App() {
       setSvg(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
       </svg>)
+      setLine("border-gray-800")
     }
   }
 
@@ -105,7 +113,7 @@ function App() {
     <>
       <Router>
         <Navbar profile={profile} toggleProfile={toggleProfile} navBtn={navBtn} navBtn2={navBtn2} navMenu={navMenu} toggleNavMenu={toggleNavMenu} showAlert={showAlert} mode={mode} toggleMode={toggleMode} about={about} home={home} svg={svg} />
-        <Sidebar></Sidebar>
+        <Sidebar mode={mode} home={home} about={about} line={line} />
       </Router>
     </>
   );

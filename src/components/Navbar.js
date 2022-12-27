@@ -13,7 +13,7 @@ export default function Navbar(props) {
 
 
     return (
-        <div className={` ${props.mode} shadow-gray-300 shadow-md transition  ease-in-out duration-500 sticky top-0 z-50`}>
+        <div className={` ${props.mode} w-full shadow-gray-400 shadow-md transition ease-in-out duration-500 sticky top-0 z-50`}>
             <nav id="navb">
                 <div className="max-w-7xl mx-auto px-2 sm:px-1 lg:px-8">
                     <div className="relative flex items-center justify-between h-16">
@@ -92,7 +92,7 @@ export default function Navbar(props) {
 
 
                                     <Link to={'/notifications'}><button type='button'
-                                        className={`${location.pathname === "/notification" || location.pathname === "/notifications" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Notifications</button></Link>
+                                        className={`${location.pathname === "/notification" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Notifications</button></Link>
 
 
                                     {/* Search bar */}
@@ -125,7 +125,7 @@ export default function Navbar(props) {
 
 
                             <Link to={'/addQuestions'}><button type='button'
-                                className={`${location.pathname === "/addQuestions" || location.pathname === "/addQuestions" ? props.home : props.about} ml-2 px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Add Questions</button></Link>
+                                className={`${location.pathname === "/addQuestions" ? props.home : props.about} ml-2 px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300 hidden sm:block`}>Add Questions</button></Link>
 
                             {/* toggleMode */}
                             {/* default off */}
