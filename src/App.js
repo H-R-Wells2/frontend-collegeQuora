@@ -1,5 +1,6 @@
 import './App.css';
 import Navbar from "./components/Navbar";
+import Sidebar from './components/Sidebar';
 import React, { useState } from "react";
 
 
@@ -16,7 +17,7 @@ function App() {
   // useStates for Navbar
   const [mode, setMode] = useState("bg-gray-800 text-gray-300");
   const [about, setAbout] = useState("md:hover:bg-gray-700 text-white hover:text-white");
-  const [home, setHome] = useState("bg-gray-900 text-white sm:border-0 border-2 border-white");
+  const [home, setHome] = useState("bg-gray-900 text-white sm:border-0 border-2 border-white shadow-sm shadow-gray-400");
   const [navBtn, setNavBtn] = useState("hidden");
   const [navBtn2, setNavBtn2] = useState("block");
   const [navMenu, setNavMenu] = useState("hidden");
@@ -29,9 +30,9 @@ function App() {
 
 
 
-  // Demo
-  const [demo, setDemo] = useState(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  // Svg
+  const [svg, setSvg] = useState(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
   </svg>)
 
 
@@ -50,60 +51,61 @@ function App() {
     if (mode === "bg-orange-100 text-black") {
       setMode('bg-gray-800 text-gray-300')
       setAbout('md:hover:bg-gray-700 text-white hover:text-white')
-      setHome('bg-gray-900 text-white sm:border-0 border-2 border-white')
-      setDemo(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-  </svg>)
+      setHome('bg-gray-900 text-white sm:border-0 border-2 border-white shadow-sm shadow-gray-400')
+      setSvg(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+      </svg>)
     }
     // set light mode
     else {
       setMode("bg-orange-100 text-black")
       setAbout('md:hover:bg-orange-50 text-black')
-      setHome('bg-orange-200 text-black sm:border-0 border-2 border-black')
-      setDemo(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+      setHome('bg-orange-200 text-black sm:border-0 border-2 border-black shadow-sm shadow-gray-400')
+      setSvg(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
       </svg>)
     }
   }
 
-  
-    // function to hide and unhide mobile navbar
-    const toggleNavMenu = () => {
-      if (navBtn === "block") {
-        setNavBtn('hidden');
-        setNavBtn2('block');
-        setNavMenu('hidden');
-      }
-      else {
-        setNavBtn('block');
-        setNavBtn2('hidden');
-        setNavMenu('block');
-      }
+
+  // function to hide and unhide mobile navbar
+  const toggleNavMenu = () => {
+    if (navBtn === "block") {
+      setNavBtn('hidden');
+      setNavBtn2('block');
+      setNavMenu('hidden');
     }
-
-
-
-    // function to hide and unhide profileMenu 
-    const toggleProfile = () => {
-      if (profile === "hidden") {
-        setProfile('block opacity-0');
-        setTimeout(() => {
-          setProfile('opacity-100')
-        }, 100);
-      }
-      else {
-        setProfile('opacity-0');
-        setTimeout(() => {
-          setProfile('hidden')
-        }, 500);
-      }
+    else {
+      setNavBtn('block');
+      setNavBtn2('hidden');
+      setNavMenu('block');
     }
+  }
+
+
+
+  // function to hide and unhide profileMenu 
+  const toggleProfile = () => {
+    if (profile === "hidden") {
+      setProfile('block opacity-0');
+      setTimeout(() => {
+        setProfile('opacity-100')
+      }, 100);
+    }
+    else {
+      setProfile('opacity-0');
+      setTimeout(() => {
+        setProfile('hidden')
+      }, 500);
+    }
+  }
 
 
   return (
     <>
-    <Router>
-      <Navbar profile={profile} toggleProfile={toggleProfile} navBtn={navBtn} navBtn2={navBtn2} navMenu={navMenu} toggleNavMenu={toggleNavMenu} showAlert={showAlert} mode={mode} toggleMode={toggleMode} about={about} home={home} demo={demo} />
+      <Router>
+        <Navbar profile={profile} toggleProfile={toggleProfile} navBtn={navBtn} navBtn2={navBtn2} navMenu={navMenu} toggleNavMenu={toggleNavMenu} showAlert={showAlert} mode={mode} toggleMode={toggleMode} about={about} home={home} svg={svg} />
+        <Sidebar></Sidebar>
       </Router>
     </>
   );

@@ -13,9 +13,9 @@ export default function Navbar(props) {
 
 
     return (
-        <div className={` ${props.mode} shadow-md transition  ease-in-out duration-500 sticky top-0 z-50`}>
+        <div className={` ${props.mode} shadow-gray-300 shadow-md transition  ease-in-out duration-500 sticky top-0 z-50`}>
             <nav id="navb">
-                <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-2 sm:px-1 lg:px-8">
                     <div className="relative flex items-center justify-between h-16">
                         {/* <img className="h-16 w-42" src={CQlogo1} alt="" /> */}
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -74,13 +74,13 @@ export default function Navbar(props) {
 
                         {/* Nav tabs */}
                         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start ">
-                            <div className="hidden sm:block sm:ml-6">
-                                <div className="flex space-x-4">
+                            <div className="hidden sm:block sm:ml-0">
+                                <div className="flex sm:space-x-4">
 
 
 
                                     <Link to={'/'}><button type='button'
-                                        className={`mt-1`}><img className="h-10 w-40" src={CQlogo1} alt="" /></button></Link>
+                                        className={`mt-1`}><img className=" h-10 w-40" src={CQlogo1} alt="" /></button></Link>
 
 
                                     <Link to={'/spaces'}><button type='button'
@@ -96,7 +96,7 @@ export default function Navbar(props) {
 
 
                                     {/* Search bar */}
-                                    <div className="mt-1 relative flex items-center h-9 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+                                    <div className="mt-1 relative flex items-center h-9 rounded-lg focus-within:shadow-lg border-gray-400 border-2 bg-white overflow-hidden">
                                         <div className="grid place-items-center h-full w-12 text-gray-300">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -122,6 +122,8 @@ export default function Navbar(props) {
 
 
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
+
                             <Link to={'/addQuestions'}><button type='button'
                                 className={`${location.pathname === "/addQuestions" || location.pathname === "/addQuestions" ? props.home : props.about} ml-2 px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Add Questions</button></Link>
 
@@ -136,7 +138,7 @@ export default function Navbar(props) {
                             {/* default - on */}
                             <label className="relative flex justify-between items-center group p-2 text-xl">
                                 <input type="checkbox" onClick={props.toggleMode} className=" h-7 w-7 absolute left-1/2 -translate-x-1/2 appearance-none peer rounded-md" />
-                                <span className="w-7 h-7 flex items-center flex-shrink-0 p-1 bg-blue-600 rounded-full ease-in-out peer-checked:bg-gray-400 ">{props.demo}</span>
+                                <span className="w-7 h-7 flex items-center flex-shrink-0 p-1 bg-blue-600 rounded-full ease-in-out peer-checked:bg-gray-300 ">{props.svg}</span>
                             </label>
 
 
@@ -146,7 +148,7 @@ export default function Navbar(props) {
                                 <div>
                                     <button
                                         type="button" onClick={props.toggleProfile}
-                                        className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 "
+                                        className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 w-max"
                                         id="user-menu-button"
                                         aria-expanded="false"
                                         aria-haspopup="true">
