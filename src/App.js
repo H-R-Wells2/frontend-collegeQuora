@@ -28,6 +28,13 @@ function App() {
   const [alert, setAlert] = useState();
 
 
+
+  // Demo
+  const [demo, setDemo] = useState(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>)
+
+
   // function to display msg in alert (not nessecery)
   const showAlert = (msg1, type1) => {
     setAlert({
@@ -44,14 +51,18 @@ function App() {
       setMode('bg-gray-800 text-gray-300')
       setAbout('md:hover:bg-gray-700 text-white hover:text-white')
       setHome('bg-gray-900 text-white sm:border-0 border-2 border-white')
-
-
+      setDemo(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>)
     }
     // set light mode
     else {
       setMode("bg-orange-100 text-black")
       setAbout('md:hover:bg-orange-50 text-black')
       setHome('bg-orange-200 text-black sm:border-0 border-2 border-black')
+      setDemo(<svg height={19} width={19} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>)
     }
   }
 
@@ -92,7 +103,7 @@ function App() {
   return (
     <>
     <Router>
-      <Navbar profile={profile} toggleProfile={toggleProfile} navBtn={navBtn} navBtn2={navBtn2} navMenu={navMenu} toggleNavMenu={toggleNavMenu} showAlert={showAlert} mode={mode} toggleMode={toggleMode} about={about} home={home} />
+      <Navbar profile={profile} toggleProfile={toggleProfile} navBtn={navBtn} navBtn2={navBtn2} navMenu={navMenu} toggleNavMenu={toggleNavMenu} showAlert={showAlert} mode={mode} toggleMode={toggleMode} about={about} home={home} demo={demo} />
       </Router>
     </>
   );
