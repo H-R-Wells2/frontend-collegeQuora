@@ -10,7 +10,12 @@ import {
   Route
 } from "react-router-dom";
 
+
+
 function App() {
+
+
+
 
 
 
@@ -36,8 +41,8 @@ function App() {
   </svg>)
 
 
-// useStates for Line
-const [line, setLine] = useState("border-gray-200")
+  // useStates for Line
+  const [line, setLine] = useState("border-gray-200")
 
 
 

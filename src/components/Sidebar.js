@@ -26,7 +26,7 @@ export default function Sidebar(props) {
 
 
                     <div className="flex-1">
-                        <ul className="pt-2 pb-4 space-y-1 text-md">
+                        <ul className="pt-2 pb-4 mb-6 space-y-1 text-md">
                             <li className="rounded-sm">
                                 <Link to={'/spaces/general'}><button type='button'
                                     className={`${location.pathname === "/spaces/general" ? props.home : props.about} flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><AiFillProfile className="mr-2 h-6 w-6" />General</button></Link>

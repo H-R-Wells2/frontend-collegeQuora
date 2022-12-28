@@ -1,11 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import hrwells from "./hrwells.jpg";
 import blankprofile from "./blankprofile.jpg"
 import CQlogo1 from "./CQlogo1.png"
 import { Link, useLocation } from "react-router-dom";
+import AddQuestionModal from './AddQuestionModal';
+
+
 
 export default function Navbar(props) {
 
+    // useStates for Card
+    const [mainBox, setMainBox] = useState("bg-gray-700");
+    const [mainBox2, setMainBox2] = useState("bg-gray-300");
+    const [textMain, settextMain] = useState('text-white');
+    const [textArea, setTextArea] = useState('bg-slate-300 placeholder-slate-600');
+
+
+    
+
+    const [open, setOpen] = useState(false)
+
+    const addQuestionBtn = () => {
+        setOpen(true)
+        if (props.mode === "bg-gray-800 text-gray-300") {
+            setMainBox('bg-gray-700')
+            setMainBox2('bg-gray-300')
+            settextMain('text-white')
+            setTextArea('bg-slate-300 placeholder-slate-600')
+        }
+        else {
+            setMainBox('bg-white')
+            setMainBox2('bg-slate-200')
+            settextMain('text-black')
+            setTextArea('bg-white placeholder-slate-400')
+        }
+    
+    }
 
     let location = useLocation();
     useEffect(() => {
@@ -84,7 +114,7 @@ export default function Navbar(props) {
 
 
                                     <Link to={'/spaces'}><button type='button'
-                                        className={`${location.pathname === "/spaces" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Spaces</button></Link>
+                                        className={`${location.pathname === "/spaces" || location.pathname === "/spaces/bscit" || location.pathname === "/spaces/bms" || location.pathname === "/spaces/baf" || location.pathname === "/spaces/bcom" || location.pathname === "/spaces/general" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Spaces</button></Link>
 
 
                                     <Link to={'/answer'}><button type='button'
@@ -92,7 +122,7 @@ export default function Navbar(props) {
 
 
                                     <Link to={'/notifications'}><button type='button'
-                                        className={`${location.pathname === "/notification" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Notifications</button></Link>
+                                        className={`${location.pathname === "/notifications" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Notifications</button></Link>
 
 
                                     {/* Search bar */}
@@ -124,8 +154,8 @@ export default function Navbar(props) {
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
 
-                            <Link to={'/addQuestions'}><button type='button'
-                                className={`${location.pathname === "/addQuestions" ? props.home : props.about} ml-2 px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300 hidden sm:block`}>Add Questions</button></Link>
+                            <button onClick={addQuestionBtn} type='button'
+                                className={`${open === true ? props.home : props.about} ml-2 px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300 hidden sm:block`}>Add Questions</button>
 
                             {/* toggleMode */}
                             {/* default off */}
@@ -224,6 +254,7 @@ export default function Navbar(props) {
                     </div>
                 </div>
             </nav >
+            <AddQuestionModal open={open} setOpen={setOpen} mainBox={mainBox} textArea={textArea} textMain={textMain} />
         </div >
     )
 }
