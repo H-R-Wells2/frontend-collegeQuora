@@ -11,12 +11,14 @@ export default function Navbar(props) {
 
     // useStates for Card
     const [mainBox, setMainBox] = useState("bg-gray-700");
-    const [mainBox2, setMainBox2] = useState("bg-gray-300");
     const [textMain, settextMain] = useState('text-white');
     const [textArea, setTextArea] = useState('bg-slate-300 placeholder-slate-600');
 
+    // useStates for modal buttons
+    const [addOrCrClass, setAddOrCrClass] = useState("hover:bg-orange-200")
+    // useStates for cancel button in modal
+    const [cancelBtn, setCancelBtn] = useState("hover:bg-gray-600")
 
-    
 
     const [open, setOpen] = useState(false)
 
@@ -24,17 +26,19 @@ export default function Navbar(props) {
         setOpen(true)
         if (props.mode === "bg-gray-800 text-gray-300") {
             setMainBox('bg-gray-700')
-            setMainBox2('bg-gray-300')
             settextMain('text-white')
             setTextArea('bg-slate-300 placeholder-slate-600')
+            setAddOrCrClass('hover:bg-gray-500')
+            setCancelBtn("hover:bg-gray-600 ")
         }
         else {
-            setMainBox('bg-white')
-            setMainBox2('bg-slate-200')
+            setMainBox('bg-orange-100')
             settextMain('text-black')
             setTextArea('bg-white placeholder-slate-400')
+            setAddOrCrClass('hover:bg-orange-200')
+            setCancelBtn("hover:bg-orange-200")
         }
-    
+
     }
 
     let location = useLocation();
@@ -254,7 +258,7 @@ export default function Navbar(props) {
                     </div>
                 </div>
             </nav >
-            <AddQuestionModal open={open} setOpen={setOpen} mainBox={mainBox} textArea={textArea} textMain={textMain} />
+            <AddQuestionModal open={open} setOpen={setOpen} mainBox={mainBox} textArea={textArea} textMain={textMain} addOrCrClass={addOrCrClass} cancelBtn={cancelBtn} />
         </div >
     )
 }
