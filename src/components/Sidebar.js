@@ -18,7 +18,7 @@ export default function Sidebar(props) {
 
     return (
         <>
-            <div className={`${props.mode} hidden sm:block transition ease-in-out duration-500 flex-col h-screen p-3 shadow w-60`}>
+            <div className={`${props.mode} fixed hidden sm:block transition ease-in-out duration-500 flex-col h-screen p-3 shadow w-60`}>
                 <div className="flex justify-center">
                     <span className="text-xl font-bold text-center w-full">Spaces</span>
                 </div>
@@ -28,38 +28,38 @@ export default function Sidebar(props) {
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 mb-6 space-y-1 text-md">
                             <li className="rounded-sm">
-                                <Link to={'/spaces/general'}><button type='button'
-                                    className={`${location.pathname === "/spaces/general" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><AiFillProfile className="mr-2 h-6 w-6" />General</button></Link>
+                                <Link to={'/spaces/general'}
+                                    className={`${location.pathname === "/spaces/general" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><AiFillProfile className="mr-2 h-6 w-6" />General</Link>
                             </li>
                             <li className="rounded-sm">
-                                <Link to={'/spaces/bscit'}><button type='button'
-                                    className={`${location.pathname === "/spaces/bscit" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlineComputer className="mr-2 h-6 w-6" />BSc-IT</button></Link>
+                                <Link to={'/spaces/bscit'}
+                                    className={`${location.pathname === "/spaces/bscit" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlineComputer className="mr-2 h-6 w-6" />BSc-IT</Link>
                             </li>
                             <li className="rounded-sm">
-                                <Link to={'/spaces/bms'}><button type='button'
-                                    className={`${location.pathname === "/spaces/bms" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlineBusinessCenter className="mr-2 h-6 w-6" />BMS</button></Link>
+                                <Link to={'/spaces/bms'}
+                                    className={`${location.pathname === "/spaces/bms" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlineBusinessCenter className="mr-2 h-6 w-6" />BMS</Link>
                             </li>
                             <li className="rounded-sm">
-                                <Link to={'/spaces/baf'}><button type='button'
-                                    className={`${location.pathname === "/spaces/baf" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><HiOutlineCalculator className="mr-2 h-6 w-6" />BAF</button></Link>
+                                <Link to={'/spaces/baf'}
+                                    className={`${location.pathname === "/spaces/baf" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><HiOutlineCalculator className="mr-2 h-6 w-6" />BAF</Link>
                             </li>
                             <li className="rounded-sm">
-                                <Link to={'/spaces/bcom'}><button type='button'
-                                    className={`${location.pathname === "/spaces/bcom" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlineCalculate className="mr-2 h-6 w-6" />B.Com</button></Link>
+                                <Link to={'/spaces/bcom'}
+                                    className={`${location.pathname === "/spaces/bcom" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlineCalculate className="mr-2 h-6 w-6" />B.Com</Link>
                             </li>
                         </ul>
                         <ul className={`${props.line} border-t pt-4 transition ease-in-out duration-500`}>
                             <li className="rounded-sm ">
-                                <Link to={'/about'}><button type='button'
-                                    className={`${location.pathname === "/about" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><AiOutlineTeam className="mr-2 h-6 w-6" />About</button></Link>
+                                <Link to={'/about'}
+                                    className={`${location.pathname === "/about" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><AiOutlineTeam className="mr-2 h-6 w-6" />About</Link>
                             </li>
                             <li className="rounded-sm">
-                                <Link to={'/terms'}><button type='button'
-                                    className={`${location.pathname === "/terms" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><HiOutlineDocumentText className="mr-2 h-6 w-6" />Terms</button></Link>
+                                <Link to={'/terms'}
+                                    className={`${location.pathname === "/terms" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><HiOutlineDocumentText className="mr-2 h-6 w-6" />Terms</Link>
                             </li>
                             <li className="rounded-sm">
-                                <Link to={'/privacy'}><button type='button'
-                                    className={`${location.pathname === "/privacy" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlinePrivacyTip className="mr-2 h-6 w-6" />Privacy Policy</button></Link>
+                                <Link to={'/privacy'}
+                                    className={`${location.pathname === "/privacy" ? props.home : props.about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlinePrivacyTip className="mr-2 h-6 w-6" />Privacy Policy</Link>
                             </li>
                         </ul>
                     </div>

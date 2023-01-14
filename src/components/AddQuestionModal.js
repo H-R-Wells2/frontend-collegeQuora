@@ -37,13 +37,13 @@ export default function AddQuestionModal(props) {
                     </Transition.Child>
 
                     <div className="fixed z-10 inset-0 overflow-y-auto">
-                        <div className="mt-8 flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+                        <div className="flex h-screen items-center sm:items-center justify-center p-4 text-center sm:p-0">
                             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enterTo="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 sm:scale-100" leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
 
 
                                 <Dialog.Panel className="">
                                     {/* Apna code */}
-                                    <div className={` ${props.mainBox} relative container max-w-xs px-9 py-10 sm:px-10 sm:pb-10 sm:pt-5 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left `}>
+                                    <div className={` ${props.mainBox} relative container max-w-sm px-9 py-10 sm:px-10 sm:pb-10 sm:pt-5 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left `}>
 
                                         <div className='flex justify-end'>
                                             <Link to={"/"}><button onClick={() => props.setOpen(false)} className='hover:fill-slate-500 fill-slate-400'>
@@ -71,7 +71,7 @@ export default function AddQuestionModal(props) {
 
 
 
-
+                                        {/* Add Question Form */}
                                         <form className={`${viewFormAdd}`}>
 
                                             {/* Title */}
@@ -107,7 +107,7 @@ export default function AddQuestionModal(props) {
                                                 </button>
 
                                                 <button type="submit"
-                                                    className=" w-1/4 px-2 py-3 md:py-2.5 bg-blue-600 text-white font-medium text-sm leading-tight uppercase rounded-2xl shadow-md md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400  transition  duration-150 ease-in-out disabled:bg-blue-500 disabled:md:hover:bg-blue-500 disabled:focus:bg-blue-500 disabled:text-gray-400 disabled:cursor-not-allowed">
+                                                    className=" sm:w-1/4 px-2 py-3 md:py-2.5 bg-blue-600 text-white font-medium text-sm leading-tight uppercase rounded-2xl shadow-md md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400  transition  duration-150 ease-in-out disabled:bg-blue-500 disabled:md:hover:bg-blue-500 disabled:focus:bg-blue-500 disabled:text-gray-400 disabled:cursor-not-allowed">
                                                     Add Question
                                                 </button>
                                             </div>

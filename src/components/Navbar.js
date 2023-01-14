@@ -113,20 +113,20 @@ export default function Navbar(props) {
 
 
 
-                                    <Link to={'/'}><button type='button'
-                                        className={`mt-1`}><img className=" h-10 w-40" src={CQlogo1} alt="" /></button></Link>
+                                    <Link  className={`mt-1`} to={'/'}>
+                                       <img className=" h-10 w-40" src={CQlogo1} alt="" /></Link>
 
 
-                                    <Link to={'/spaces'}><button type='button'
-                                        className={`${location.pathname === "/spaces" || location.pathname === "/spaces/bscit" || location.pathname === "/spaces/bms" || location.pathname === "/spaces/baf" || location.pathname === "/spaces/bcom" || location.pathname === "/spaces/general" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Spaces</button></Link>
+                                    <Link to={'/spaces'}
+                                        className={`${location.pathname === "/spaces" || location.pathname === "/spaces/bscit" || location.pathname === "/spaces/bms" || location.pathname === "/spaces/baf" || location.pathname === "/spaces/bcom" || location.pathname === "/spaces/general" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Spaces</Link>
 
 
-                                    <Link to={'/answer'}><button type='button'
-                                        className={`${location.pathname === "/answer" ? props.home : props.about}  px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Answer</button></Link>
+                                    <Link to={'/answer'}
+                                        className={`${location.pathname === "/answer" ? props.home : props.about}  px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Answer</Link>
 
 
-                                    <Link to={'/notifications'}><button type='button'
-                                        className={`${location.pathname === "/notifications" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Notifications</button></Link>
+                                    <Link to={'/notifications'}
+                                        className={`${location.pathname === "/notifications" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Notifications</Link>
 
 
                                     {/* Search bar */}

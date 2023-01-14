@@ -9,6 +9,11 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import Content from './components/Content';
+import Bscit from './components/Bscit';
+import Bms from './components/Bms';
+import Baf from './components/Baf';
+import Bcom from './components/Bcom';
 
 
 
@@ -44,6 +49,9 @@ function App() {
   // useStates for Line
   const [line, setLine] = useState("border-gray-200")
 
+  // useState for button in card
+  const [cardBtn, setCardBtn] = useState("bg-blue-600 text-white")
+
 
 
 
@@ -67,6 +75,7 @@ function App() {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
       </svg>)
       setLine("border-gray-200")
+      setCardBtn("bg-blue-600 text-white")
     }
     // set light mode
     else {
@@ -77,6 +86,7 @@ function App() {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
       </svg>)
       setLine("border-gray-800")
+      setCardBtn("bg-orange-400 text-black")
     }
   }
 
@@ -119,6 +129,13 @@ function App() {
       <Router>
         <Navbar profile={profile} toggleProfile={toggleProfile} navBtn={navBtn} navBtn2={navBtn2} navMenu={navMenu} toggleNavMenu={toggleNavMenu} showAlert={showAlert} mode={mode} toggleMode={toggleMode} about={about} home={home} svg={svg} />
         <Sidebar mode={mode} home={home} about={about} line={line} />
+        <Routes>
+          <Route path="/" element={<Content mode={mode} cardBtn={cardBtn} />} />
+          <Route path="/spaces/bscit" element={<Bscit mode={mode} cardBtn={cardBtn} />} />
+          <Route path="/spaces/bms" element={<Bms mode={mode} cardBtn={cardBtn} />} />
+          <Route path="/spaces/baf" element={<Baf mode={mode} cardBtn={cardBtn} />} />
+          <Route path="/spaces/bcom" element={<Bcom mode={mode} cardBtn={cardBtn} />} />
+        </Routes>
       </Router>
     </>
   );
