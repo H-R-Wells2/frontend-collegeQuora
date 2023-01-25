@@ -14,6 +14,7 @@ import Bscit from './components/Bscit';
 import Bms from './components/Bms';
 import Baf from './components/Baf';
 import Bcom from './components/Bcom';
+import Spaces from './components/Spaces';
 
 
 
@@ -135,6 +136,7 @@ function App() {
           <Route path="/spaces/bms" element={<Bms mode={mode} cardBtn={cardBtn} />} />
           <Route path="/spaces/baf" element={<Baf mode={mode} cardBtn={cardBtn} />} />
           <Route path="/spaces/bcom" element={<Bcom mode={mode} cardBtn={cardBtn} />} />
+          <Route path='/spaces' element={<Spaces mode={mode} />} />
         </Routes>
       </Router>
     </>
