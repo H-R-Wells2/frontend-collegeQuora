@@ -4,6 +4,9 @@ import blankprofile from "./blankprofile.jpg"
 import CQlogo1 from "./CQlogo1.png"
 import { Link, useLocation } from "react-router-dom";
 import AddQuestionModal from './AddQuestionModal';
+import { IoLogIn } from "react-icons/io5";
+import { BsFillPersonFill } from "react-icons/bs";
+
 
 
 
@@ -16,6 +19,7 @@ export default function Navbar(props) {
 
     // useStates for modal buttons
     const [addOrCrClass, setAddOrCrClass] = useState("hover:bg-orange-200")
+    
     // useStates for cancel button in modal
     const [cancelBtn, setCancelBtn] = useState("hover:bg-gray-600")
 
@@ -161,12 +165,6 @@ export default function Navbar(props) {
                             <button onClick={addQuestionBtn} type='button'
                                 className={`${open === true ? props.home : props.about} ml-2 px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300 hidden sm:block`}>Add Questions</button>
 
-                            {/* toggleMode */}
-                            {/* default off */}
-                            {/* <label className="relative flex justify-between items-center group p-2 text-xl">
-                <input type="checkbox" onClick={props.toggleMode} className="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none rounded-md" />
-                <span className="w-10 h-6 flex items-center flex-shrink-0 ml-4 p-1 bg-gray-400 rounded-full duration-300 ease-in-out peer-checked:bg-blue-600 after:w-4 after:h-4 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-4 "></span>
-              </label> */}
 
 
                             {/* default - on */}
@@ -199,26 +197,26 @@ export default function Navbar(props) {
                                     aria-orientation="vertical"
                                     aria-labelledby="user-menu-button"
                                     tabIndex="-1">
-                                    <Link to='/'
+                                    {/* <Link to='/'
                                         className="block px-4 py-2 hover:bg-gray-200 text-sm text-gray-700"
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-0">
                                         Your Profile
-                                    </Link>
-                                    <Link to='/'
-                                        className="block px-4 py-2 hover:bg-gray-200 text-sm text-gray-700"
+                                    </Link> */}
+                                    <Link onClick={props.toggleProfile} to='/login'
+                                        className="px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 border-b-2 flex"
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-1">
-                                        Settings
+                                        <IoLogIn className='h-5 w-5 mx-1' />Log In
                                     </Link>
-                                    <Link to='/login'
-                                        className="block px-4 py-2 hover:bg-gray-200 text-sm text-gray-700"
+                                    <Link onClick={props.toggleProfile} to='/signup'
+                                        className="flex px-4 py-2 hover:bg-gray-200 text-sm text-gray-700"
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-2">
-                                        Log out
+                                        <BsFillPersonFill className='h-5 w-4 mr-1 mx-1' />Sign Up
                                     </Link>
                                 </div>
                             </div>
