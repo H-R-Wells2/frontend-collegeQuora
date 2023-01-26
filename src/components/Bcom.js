@@ -11,7 +11,7 @@ export default function Bcom(props) {
 
 
 
-                <div className={`shadow-lg text-center justify-center py-10 rounded-lg max-w-2xl transition ease-in-out duration-500 $${props.mainBox} ${props.textMain}`}>
+                <div className={`shadow-lg text-center justify-center py-10 rounded-lg max-w-2xl transition ease-in-out duration-500 ${props.mainBox} ${props.textMain}`}>
                     <div className='text-4xl flex font-semibold justify-center'>
                         <MdOutlineCalculate className='mt-1' />
                         <span className='ml-2'>B.Com</span>

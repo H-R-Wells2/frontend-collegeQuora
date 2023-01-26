@@ -46,15 +46,16 @@ function App() {
   const [remText, setRemText] = useState("text-gray-300")
   const [labelInp, setLabelInp] = useState("peer-focus:text-sky-400")
   const [bordInp, setBordInp] = useState("focus:border-sky-400")
+  const [loggedIn, setLoggedIn] = useState(false)
 
-    // useStates for persnol notes
-    const [backG, setBackG] = useState("bg-slate-400")
-    const [tagColor, setTagColor] = useState("bg-gray-200")
+  // useStates for persnol notes
+  const [backG, setBackG] = useState("bg-slate-400")
+  const [tagColor, setTagColor] = useState("bg-gray-200")
 
 
   // useStates for alert
-  const [alertHide, setAlertHide] = useState("block");
-  const [alert, setAlert] = useState();
+  // const [alertHide, setAlertHide] = useState("block");
+  // const [alert, setAlert] = useState();
 
 
 
@@ -75,12 +76,12 @@ function App() {
 
 
   // function to display msg in alert (not nessecery)
-  const showAlert = (msg1, type1) => {
-    setAlert({
-      msg: msg1,
-      type: type1
-    })
-  }
+  // const showAlert = (msg1, type1) => {
+  //   setAlert({
+  //     msg: msg1,
+  //     type: type1
+  //   })
+  // }
 
 
   // function to change mode (dark/light)
@@ -102,6 +103,8 @@ function App() {
       setTagColor("bg-gray-200")
       setLogsign("text-sky-400")
       setRemText("text-gray-300")
+      setBordInp("focus:border-sky-400")
+      setLabelInp("peer-focus:text-blue-400")
       setCardBtnH("hover:bg-slate-500")
     }
     // set light mode
@@ -121,6 +124,8 @@ function App() {
       setTagColor("bg-gray-300")
       setLogsign("text-blue-700")
       setRemText("text-gray-900")
+      setBordInp("focus:border-blue-600")
+      setLabelInp("peer-focus:text-blue-600")
       setCardBtnH("hover:bg-orange-200")
     }
   }
@@ -143,18 +148,30 @@ function App() {
 
 
   // function to hide and unhide profileMenu 
+  const [showWhenLogedIn, setShowWhenLoggedIn] = useState("hidden")
+  const [hideWhenLoggedIn, setHideWhenLoggedIn] = useState("block")
   const toggleProfile = () => {
     if (profile === "hidden") {
       setProfile('block opacity-0');
       setTimeout(() => {
         setProfile('opacity-100')
       }, 100);
+      if (loggedIn === true) {
+        setShowWhenLoggedIn("block");
+        setHideWhenLoggedIn("hidden");
+      }
+      else {
+        setShowWhenLoggedIn("hidden");
+        setHideWhenLoggedIn("block")
+      }
     }
     else {
       setProfile('opacity-0');
       setTimeout(() => {
         setProfile('hidden')
       }, 500);
+
+
     }
   }
 
@@ -162,7 +179,7 @@ function App() {
   return (
     <div className={`${backG} transition ease-in-out duration-500 min-h-screen`}>
       <Router>
-        <Navbar profile={profile} toggleProfile={toggleProfile} navBtn={navBtn} navBtn2={navBtn2} navMenu={navMenu} toggleNavMenu={toggleNavMenu} showAlert={showAlert} mode={mode} toggleMode={toggleMode} about={about} home={home} svg={svg} />
+        <Navbar profile={profile} toggleProfile={toggleProfile} navBtn={navBtn} navBtn2={navBtn2} navMenu={navMenu} toggleNavMenu={toggleNavMenu} mode={mode} toggleMode={toggleMode} about={about} home={home} svg={svg} loggedIn={loggedIn} showWhenLogedIn={showWhenLogedIn} hideWhenLoggedIn={hideWhenLoggedIn} />
         <Sidebar mode={mode} home={home} about={about} line={line} />
         <Routes>
           <Route path="/" element={<Content mainBox={mainBox} textMain={textMain} cardBtn={cardBtn} cardBtnH={cardBtnH} />} />
@@ -171,8 +188,8 @@ function App() {
           <Route path="/spaces/baf" element={<Baf mainBox={mainBox} textMain={textMain} cardBtn={cardBtn} />} />
           <Route path="/spaces/bcom" element={<Bcom mainBox={mainBox} textMain={textMain} cardBtn={cardBtn} />} />
           <Route path='/spaces' element={<Spaces mainBox={mainBox} textMain={textMain} backG={backG} />} />
-          <Route path="/login" element={<Login backG={backG} textMain={textMain} tagColor={tagColor} mainBox={mainBox} textArea={textArea} logsign={logsign} remText={remText} />} />
-          <Route path="/signup" element={<Signup backG={backG} textMain={textMain} tagColor={tagColor} mainBox={mainBox} textArea={textArea} logsign={logsign} remText={remText} bordInp={bordInp} labelInp={labelInp} />} />
+          <Route path="/login" element={<Login backG={backG} textMain={textMain} tagColor={tagColor} mainBox={mainBox} textArea={textArea} logsign={logsign} remText={remText} setLoggedIn={setLoggedIn} />} />
+          <Route path="/signup" element={<Signup backG={backG} textMain={textMain} tagColor={tagColor} mainBox={mainBox} textArea={textArea} logsign={logsign} remText={remText} bordInp={bordInp} labelInp={labelInp} setLoggedIn={setLoggedIn} />} />
         </Routes>
       </Router>
     </div>

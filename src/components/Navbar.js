@@ -45,6 +45,7 @@ export default function Navbar(props) {
 
     }
 
+
     let location = useLocation();
     useEffect(() => {
     }, [location]);
@@ -197,22 +198,22 @@ export default function Navbar(props) {
                                     aria-orientation="vertical"
                                     aria-labelledby="user-menu-button"
                                     tabIndex="-1">
-                                    {/* <Link to='/'
-                                        className="block px-4 py-2 hover:bg-gray-200 text-sm text-gray-700"
+                                    <Link to='/'
+                                        className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${props.showWhenLogedIn}`}
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-0">
                                         Your Profile
-                                    </Link> */}
+                                    </Link>
                                     <Link onClick={props.toggleProfile} to='/login'
-                                        className="px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 border-b-2 flex"
+                                        className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 border-b-2 flex ${props.hideWhenLoggedIn}`}
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-1">
                                         <IoLogIn className='h-5 w-5 mx-1' />Log In
                                     </Link>
                                     <Link onClick={props.toggleProfile} to='/signup'
-                                        className="flex px-4 py-2 hover:bg-gray-200 text-sm text-gray-700"
+                                        className={`flex px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${props.hideWhenLoggedIn}`}
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-2">
