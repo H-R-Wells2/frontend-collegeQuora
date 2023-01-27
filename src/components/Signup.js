@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 
 
@@ -8,7 +9,7 @@ const Signup = (props) => {
 
 
 
-    const [credentials, setCredetials] = useState({ name: "", email: "", password: ""})
+    const [credentials, setCredetials] = useState({ name: "", email: "", password: "" })
     let navigate = useNavigate();
 
 
@@ -38,6 +39,18 @@ const Signup = (props) => {
     }
 
     // on change
+    const [disabledBtn, setDisabledBtn] = useState("hidden")
+    const validating = () => {
+        if (document.getElementById("password").value === document.getElementById("cpassword").value) {
+            setDisabledBtn("hidden")
+            
+        }
+        else {
+            setDisabledBtn("block")
+        }
+
+
+    }
     const onChange = (e) => {
         setCredetials({ ...credentials, [e.target.name]: e.target.value })
     }
@@ -51,6 +64,8 @@ const Signup = (props) => {
 
                     <h1 className={`${props.textMain} text-3xl font-mono form-label transition  ease-in-out duration-500 inline-block mb-4 font-bold `}>Sign up</h1>
                     <form onSubmit={handleSubmit}>
+
+
                         {/* Email id */}
                         <div className="relative z-0 w-full mb-6 group">
                             <input onChange={onChange} type="email" name="email" id='email' className={` block py-2 mt-3 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${props.bordInp} peer`} placeholder=" " required />
@@ -61,17 +76,18 @@ const Signup = (props) => {
 
 
 
-                         {/* Password */}
-                         <div className="relative z-0 w-full mb-6 group">
-                                <input onChange={onChange} minLength={5} type="password" name="password" id="password" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${props.bordInp} peer`} placeholder=" " required />
-                                <label htmlFor="password" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 ${props.labelInp} peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Password</label>
-                            </div>
+                        {/* Password */}
+                        <div className="relative z-0 w-full mb-6 group">
+                            <input onChange={onChange} minLength={5} type="password" name="password" id="password" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${props.bordInp} peer`} placeholder=" " required />
+                            <label htmlFor="password" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 ${props.labelInp} peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Password</label>
+                        </div>
 
-                            {/* Confirm password */}
-                            <div className="relative z-0 w-full mb-6 group">
-                                <input onChange={onChange} type="password" name="cpassword" id="cpassword" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${props.bordInp} peer`} placeholder=" " required />
-                                <label htmlFor="cpassword" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${props.labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Confirm password</label>
-                            </div>
+                        {/* Confirm password */}
+                        <div className="relative z-0 w-full mb-6 group">
+                            <input  onChange={validating} type="password" name="cpassword" id="cpassword" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${props.bordInp} peer`} placeholder=" " required />
+                            <label htmlFor="cpassword" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${props.labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Confirm password</label>
+                            <span className={`text-red-500 flex transition ease-in-out duration-300 ${disabledBtn}`}>Password doesn't match <IoMdCloseCircleOutline className="h-5 w-4 mt-1 ml-1" /></span>
+                        </div>
 
 
 
@@ -97,7 +113,7 @@ const Signup = (props) => {
                         <div className="flex justify-center">
 
                             <button type='submit'
-                                className=" w-full px-2 py-3 md:py-2.5 bg-blue-600 text-white font-medium text-lg leading-tight  rounded shadow-md md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 transition  duration-150 ease-in-out disabled:bg-blue-500 disabled:md:hover:bg-blue-500 disabled:focus:bg-blue-500 disabled:text-gray-400 disabled:cursor-not-allowed">
+                                className=" w-full px-2 py-3 md:py-2.5 bg-blue-600 text-white font-medium text-lg leading-tight  rounded shadow-md md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 transition  duration-150 ease-in-out">
                                 Sign up for free
                             </button>
                         </div>
