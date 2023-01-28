@@ -26,7 +26,7 @@ export default function Content(props) {
             </div>
           </div>
 
-          <img className="" src="https://img.collegequora.workers.dev/0:/cqimg1.jpg" alt="" />
+          {/* <img className="" src="https://img.collegequora.workers.dev/0:/cqimg1.jpg" alt="" /> */}
 
           <div className="p-6">
             <h5 className="text-2xl font-medium mb-2">Title...</h5>
@@ -70,7 +70,7 @@ export default function Content(props) {
             </div>
           </div>
 
-          <img className="" src="https://img.collegequora.workers.dev/0:/cqimg2.jpg" alt="" />
+          {/* <img className="" src="https://img.collegequora.workers.dev/0:/cqimg2.jpg" alt="" /> */}
 
           <div className="p-6">
             <h5 className="text-2xl font-medium mb-2">Title...</h5>
@@ -112,7 +112,7 @@ export default function Content(props) {
             </div>
           </div>
 
-          <img className="" src="https://img.collegequora.workers.dev/0:/cqimg3.jpg" alt="" />
+          {/* <img className="" src="https://img.collegequora.workers.dev/0:/cqimg3.jpg" alt="" /> */}
 
           <div className="p-6">
             <h5 className="text-2xl font-medium mb-2">Title...</h5>

@@ -43,7 +43,7 @@ const Signup = (props) => {
     const validating = () => {
         if (document.getElementById("password").value === document.getElementById("cpassword").value) {
             setDisabledBtn("hidden")
-            
+
         }
         else {
             setDisabledBtn("block")
@@ -60,10 +60,25 @@ const Signup = (props) => {
         <div className='flex justify-center'>
             <div className={`flex justify-center w-full max-w-lg mt-10 `}>
 
-                <div className={`${props.mainBox}  z-20 mx-8 container max-w-xs px-9 py-10 sm:px-10 sm:pb-10 sm:pt-5 rounded-lg shadow-lg  w-full lg:max-w-2xl transition ease-in-out duration-500 `}>
+                <div className={`${props.mainBox} mb-8 z-20 mx-2 container max-w-xs px-9 py-10 sm:px-10 sm:pb-10 sm:pt-5 rounded-lg shadow-lg  w-full lg:max-w-2xl transition ease-in-out duration-500 `}>
 
                     <h1 className={`${props.textMain} text-3xl font-mono form-label transition  ease-in-out duration-500 inline-block mb-4 font-bold `}>Sign up</h1>
                     <form onSubmit={handleSubmit}>
+
+
+
+                        {/* Name */}
+                        <div className="mt-2 grid xl:grid-cols-2 xl:gap-6">
+                            <div className="relative z-0 w-full mb-6 group">
+                                <input onChange={onChange} type="text" name="name" id="first_name" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  ${props.bordInp} peer`} placeholder=" " required />
+                                <label htmlFor="first_name" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${props.labelInp} peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>First name</label>
+                            </div>
+                            <div className="relative z-0 w-full mb-6 group">
+                                <input onChange={onChange} type="text" name="last_name" id="last_name" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  ${props.bordInp} peer`} placeholder=" " />
+                                <label htmlFor="last_name" className={`peer-focus:font-medium absolute text-lg text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${props.labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Last name</label>
+                            </div>
+                        </div>
+
 
 
                         {/* Email id */}
@@ -76,6 +91,24 @@ const Signup = (props) => {
 
 
 
+
+                        {/* Username */}
+                        <div className="relative z-0 w-full mb-6 group">
+                            <input name="username" id="username" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${props.bordInp} peer`} placeholder=" " required />
+                            <label htmlFor="cpassword" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${props.labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Username</label>
+                        </div>
+
+
+
+
+                        {/* College Name */}
+                        <div className="relative z-0 w-full mb-6 group">
+                            <input name="collegeName" id="collegeName" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${props.bordInp} peer`} placeholder=" " required />
+                            <label htmlFor="cpassword" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${props.labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>College Name</label>
+                        </div>
+
+
+
                         {/* Password */}
                         <div className="relative z-0 w-full mb-6 group">
                             <input onChange={onChange} minLength={5} type="password" name="password" id="password" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${props.bordInp} peer`} placeholder=" " required />
@@ -84,24 +117,13 @@ const Signup = (props) => {
 
                         {/* Confirm password */}
                         <div className="relative z-0 w-full mb-6 group">
-                            <input  onChange={validating} type="password" name="cpassword" id="cpassword" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${props.bordInp} peer`} placeholder=" " required />
+                            <input onChange={validating} type="password" name="cpassword" id="cpassword" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${props.bordInp} peer`} placeholder=" " required />
                             <label htmlFor="cpassword" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${props.labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Confirm password</label>
                             <span className={`text-red-500 flex transition ease-in-out duration-300 ${disabledBtn}`}>Password doesn't match <IoMdCloseCircleOutline className="h-5 w-4 mt-1 ml-1" /></span>
                         </div>
 
 
 
-                        {/* Name */}
-                        <div className="grid xl:grid-cols-2 xl:gap-6">
-                            <div className="relative z-0 w-full mb-6 group">
-                                <input onChange={onChange} type="text" name="name" id="first_name" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  ${props.bordInp} peer`} placeholder=" " required />
-                                <label htmlFor="first_name" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${props.labelInp} peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>First name</label>
-                            </div>
-                            <div className="relative z-0 w-full mb-6 group">
-                                <input onChange={onChange} type="text" name="last_name" id="last_name" className={`block py-2.5 px-0 w-full text-base ${props.textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  ${props.bordInp} peer`} placeholder=" " />
-                                <label htmlFor="last_name" className={`peer-focus:font-medium absolute text-lg text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${props.labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Last name</label>
-                            </div>
-                        </div>
 
 
 

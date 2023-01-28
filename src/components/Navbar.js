@@ -19,7 +19,7 @@ export default function Navbar(props) {
 
     // useStates for modal buttons
     const [addOrCrClass, setAddOrCrClass] = useState("hover:bg-orange-200")
-    
+
     // useStates for cancel button in modal
     const [cancelBtn, setCancelBtn] = useState("hover:bg-gray-600")
 
@@ -118,8 +118,8 @@ export default function Navbar(props) {
 
 
 
-                                    <Link  className={`mt-1`} to={'/'}>
-                                       <img className=" h-10 w-40" src={CQlogo1} alt="" /></Link>
+                                    <Link className={`mt-1`} to={'/'}>
+                                        <img className=" h-10 w-40" src={CQlogo1} alt="" /></Link>
 
 
                                     <Link to={'/spaces'}
@@ -135,7 +135,7 @@ export default function Navbar(props) {
 
 
                                     {/* Search bar */}
-                                    <div className="mt-1 relative flex items-center h-9 rounded-lg focus-within:shadow-lg border-gray-400 border-2 bg-white overflow-hidden">
+                                    <form className="mt-1 relative flex items-center h-9 rounded-lg focus-within:shadow-lg border-gray-400 border-2 bg-white overflow-hidden">
                                         <div className="grid place-items-center h-full w-12 text-gray-300">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -147,7 +147,7 @@ export default function Navbar(props) {
                                             type="text"
                                             id="search"
                                             placeholder="Search something.." />
-                                    </div>
+                                    </form>
 
                                 </div>
                             </div>
@@ -162,7 +162,7 @@ export default function Navbar(props) {
 
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-
+                            {/* Add question */}
                             <button onClick={addQuestionBtn} type='button'
                                 className={`${open === true ? props.home : props.about} ml-2 px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300 hidden sm:block`}>Add Questions</button>
 
@@ -173,6 +173,10 @@ export default function Navbar(props) {
                                 <input type="checkbox" onClick={props.toggleMode} className=" h-7 w-7 absolute left-1/2 -translate-x-1/2 appearance-none peer rounded-md" />
                                 <span className="w-7 h-7 flex items-center flex-shrink-0 p-1 bg-blue-600 rounded-full ease-in-out peer-checked:bg-gray-300 ">{props.svg}</span>
                             </label>
+
+                            
+
+                            
 
 
 
