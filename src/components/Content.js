@@ -1,17 +1,34 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import blankprofile from "./blankprofile.jpg"
 import { BiUpvote, BiDownvote } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegCommentDots } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
+import postContext from '../context/posts/postContext';
+import PostItem from './PostItem';
+
 
 
 
 export default function Content(props) {
+
+
+
+  const context = useContext(postContext);
+    const { posts, getPosts } = context;
+    getPosts()
+
+
+
+
   return (
     <div className='flex justify-start ml-64 mr-4 py-3'>
       <div className="flex flex-col gap-y-4">
 
+
+      {posts.map((post) => {
+                    return <PostItem key={post._id} post={post} mainBox={props.mainBox} textMain={props.textMain} cardBtn={props.cardBtn} cardBtnH={props.cardBtnH} />;
+                })}
 
 
         <div className={`shadow-lg rounded-lg max-w-2xl pt-2 transition ease-in-out duration-500 ${props.mainBox} ${props.textMain}`}>

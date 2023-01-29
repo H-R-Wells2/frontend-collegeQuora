@@ -17,6 +17,7 @@ import Bms from './components/Bms';
 import Baf from './components/Baf';
 import Bcom from './components/Bcom';
 import Spaces from './components/Spaces';
+import PostState from './context/posts/PostState';
 
 
 
@@ -178,6 +179,7 @@ function App() {
 
   return (
     <div className={`${backG} transition ease-in-out duration-500 min-h-screen`}>
+      <PostState>
       <Router>
         <Navbar profile={profile} toggleProfile={toggleProfile} navBtn={navBtn} navBtn2={navBtn2} navMenu={navMenu} toggleNavMenu={toggleNavMenu} mode={mode} toggleMode={toggleMode} about={about} home={home} svg={svg} loggedIn={loggedIn} showWhenLogedIn={showWhenLogedIn} hideWhenLoggedIn={hideWhenLoggedIn} />
         <Sidebar mode={mode} home={home} about={about} line={line} />
@@ -192,6 +194,7 @@ function App() {
           <Route path="/signup" element={<Signup backG={backG} textMain={textMain} tagColor={tagColor} mainBox={mainBox} textArea={textArea} logsign={logsign} remText={remText} bordInp={bordInp} labelInp={labelInp} setLoggedIn={setLoggedIn} />} />
         </Routes>
       </Router>
+      </PostState>
     </div>
   );
 }

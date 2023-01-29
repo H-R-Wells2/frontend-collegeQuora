@@ -1,7 +1,11 @@
 import React from 'react'
 import { useContext } from 'react';
 import postContext from '../context/posts/postContext';
-
+import blankprofile from "./blankprofile.jpg"
+import { BiUpvote, BiDownvote } from "react-icons/bi";
+import { BsThreeDots } from "react-icons/bs";
+import { FaRegCommentDots } from "react-icons/fa";
+import { IoCloseOutline } from "react-icons/io5";
 
 
 
@@ -13,8 +17,7 @@ import postContext from '../context/posts/postContext';
 const PostItem = (props) => {
 
     const context = useContext(postContext)
-    const { post, updatePost } = props;
-    const { deletePost } = context;
+    const { post } = props;
 
 
 
@@ -24,7 +27,7 @@ const PostItem = (props) => {
                 <div className='flex justify-between mb-1'>
                     <div className='flex'>
                         <img className="ml-2 mb-2 h-8 w-8 rounded-full" src={blankprofile} alt="" />
-                        <span className='text-base ml-2 h-max cursor-pointer mt-1'>Shubham Kadam</span>
+                        <span className='text-base ml-2 h-max cursor-pointer mt-1'>{post.user.username}</span>
                         <span className='text-sm ml-1 h-max text-blue-500 cursor-pointer'>Follow</span>
                     </div>
                     <div className=''>
