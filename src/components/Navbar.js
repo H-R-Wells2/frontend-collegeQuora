@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 // import hrwells from "./hrwells.jpg";
 import blankprofile from "./blankprofile.jpg"
 import CQlogo1 from "./CQlogo1.png"
@@ -6,44 +6,18 @@ import { Link, useLocation } from "react-router-dom";
 import AddQuestionModal from './AddQuestionModal';
 import { IoLogIn } from "react-icons/io5";
 import { BsFillPersonFill } from "react-icons/bs";
+import modeContext from '../context/mode/modeContext';
+
 
 
 
 
 export default function Navbar(props) {
 
-    // useStates for Card
-    const [mainBox, setMainBox] = useState("bg-gray-700");
-    const [textMain, settextMain] = useState('text-white');
-    const [textArea, setTextArea] = useState('bg-slate-300 placeholder-slate-600');
 
-    // useStates for modal buttons
-    const [addOrCrClass, setAddOrCrClass] = useState("hover:bg-orange-200")
-
-    // useStates for cancel button in modal
-    const [cancelBtn, setCancelBtn] = useState("hover:bg-gray-600")
-
-
-    const [open, setOpen] = useState(false)
-
-    const addQuestionBtn = () => {
-        setOpen(true)
-        if (props.mode === "bg-gray-800 text-gray-300") {
-            setMainBox('bg-gray-700')
-            settextMain('text-white')
-            setTextArea('bg-slate-300 placeholder-slate-600')
-            setAddOrCrClass('hover:bg-gray-500')
-            setCancelBtn("hover:bg-gray-600 ")
-        }
-        else {
-            setMainBox('bg-orange-100')
-            settextMain('text-black')
-            setTextArea('bg-white placeholder-slate-400')
-            setAddOrCrClass('hover:bg-orange-200')
-            setCancelBtn("hover:bg-orange-200")
-        }
-
-    }
+    // getting states from context
+    const context = useContext(modeContext)
+    const {  mode, about, navBtn, navBtn2, navMenu, profile, mainBox, textMain, textArea, svg, toggleMode, addOrCrClass, cancelBtn, open, setOpen, addQuestionBtn, home, showWhenLogedIn, hideWhenLoggedIn, toggleProfile, toggleNavMenu } = context
 
 
     let location = useLocation();
@@ -52,7 +26,7 @@ export default function Navbar(props) {
 
 
     return (
-        <div className={` ${props.mode} w-full shadow-gray-400 shadow-md transition ease-in-out duration-500 sticky top-0 z-50`}>
+        <div className={` ${mode} w-full shadow-gray-400 shadow-md transition ease-in-out duration-500 sticky top-0 z-50`}>
             <nav id="navb">
                 <div className="max-w-7xl mx-auto px-2 sm:px-1 lg:px-8">
                     <div className="relative flex items-center justify-between h-16">
@@ -67,7 +41,7 @@ export default function Navbar(props) {
 
                             {/* <!-- Mobile menu button--> */}
                             <button
-                                type="button" onClick={props.toggleNavMenu}
+                                type="button" onClick={toggleNavMenu}
                                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 ring-gray-500 ring-inset outline-none ring-1 "
                                 aria-controls="mobile-menu"
                                 aria-expanded="false">
@@ -76,7 +50,7 @@ export default function Navbar(props) {
 
                                 {/*Icon when menu is closed. */}
                                 <svg
-                                    className={`${props.navBtn2} h-6 w-6`}
+                                    className={`${navBtn2} h-6 w-6`}
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
@@ -91,7 +65,7 @@ export default function Navbar(props) {
 
                                 {/*Icon when menu is open. */}
                                 <svg
-                                    className={`${props.navBtn} h-6 w-6`}
+                                    className={`${navBtn} h-6 w-6`}
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
@@ -118,20 +92,20 @@ export default function Navbar(props) {
 
 
 
-                                    <Link className={`mt-1`} to={'/'}>
-                                        <img className=" h-10 w-40" src={CQlogo1} alt="" /></Link>
+                                    <Link className={` mt-1 h-10 w-40 `} to={'/'}>
+                                        <img className="  h-10 w-40   " src={CQlogo1} alt="" /></Link>
 
 
                                     <Link to={'/spaces'}
-                                        className={`${location.pathname === "/spaces" || location.pathname === "/spaces/bscit" || location.pathname === "/spaces/bms" || location.pathname === "/spaces/baf" || location.pathname === "/spaces/bcom" || location.pathname === "/spaces/general" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Spaces</Link>
+                                        className={`${location.pathname === "/spaces" || location.pathname === "/spaces/bscit" || location.pathname === "/spaces/bms" || location.pathname === "/spaces/baf" || location.pathname === "/spaces/bcom" || location.pathname === "/spaces/general" ? home : about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Spaces</Link>
 
 
                                     <Link to={'/answer'}
-                                        className={`${location.pathname === "/answer" ? props.home : props.about}  px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Answer</Link>
+                                        className={`${location.pathname === "/answer" ? home : about}  px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Answer</Link>
 
 
                                     <Link to={'/notifications'}
-                                        className={`${location.pathname === "/notifications" ? props.home : props.about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Notifications</Link>
+                                        className={`${location.pathname === "/notifications" ? home : about} px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300`}>Notifications</Link>
 
 
                                     {/* Search bar */}
@@ -164,14 +138,14 @@ export default function Navbar(props) {
 
                             {/* Add question */}
                             <button onClick={addQuestionBtn} type='button'
-                                className={`${open === true ? props.home : props.about} ml-2 px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300 hidden sm:block`}>Add Questions</button>
+                                className={`${open === true ? home : about} ml-2 px-3 py-3 rounded-md text-sm font-medium transition  ease-in-out duration-300 hidden sm:block`}>Add Questions</button>
 
 
 
                             {/* default - on */}
                             <label className="relative flex justify-between items-center group p-2 text-xl">
-                                <input type="checkbox" onClick={props.toggleMode} className=" h-7 w-7 absolute left-1/2 -translate-x-1/2 appearance-none peer rounded-md" />
-                                <span className="w-7 h-7 flex items-center flex-shrink-0 p-1 bg-blue-600 rounded-full ease-in-out peer-checked:bg-gray-300 ">{props.svg}</span>
+                                <input type="checkbox" onClick={toggleMode} className=" h-7 w-7 absolute left-1/2 -translate-x-1/2 appearance-none peer rounded-md" />
+                                <span className="w-7 h-7 flex items-center flex-shrink-0 p-1 bg-blue-600 rounded-full ease-in-out peer-checked:bg-gray-300 ">{svg}</span>
                             </label>
 
                             
@@ -184,7 +158,7 @@ export default function Navbar(props) {
                             <div className="ml-1 relative">
                                 <div>
                                     <button
-                                        type="button" onClick={props.toggleProfile}
+                                        type="button" onClick={toggleProfile}
                                         className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 w-max"
                                         id="user-menu-button"
                                         aria-expanded="false"
@@ -197,27 +171,27 @@ export default function Navbar(props) {
 
                                 {/* profile */}
                                 <div
-                                    className={`${props.profile} origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none transition-all ease-in-out duration-300 `}
+                                    className={`${profile} origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none transition-all ease-in-out duration-300 `}
                                     role="menu"
                                     aria-orientation="vertical"
                                     aria-labelledby="user-menu-button"
                                     tabIndex="-1">
                                     <Link to='/'
-                                        className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${props.showWhenLogedIn}`}
+                                        className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${showWhenLogedIn}`}
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-0">
                                         Your Profile
                                     </Link>
-                                    <Link onClick={props.toggleProfile} to='/login'
-                                        className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 border-b-2 flex ${props.hideWhenLoggedIn}`}
+                                    <Link onClick={toggleProfile} to='/login'
+                                        className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 border-b-2 flex ${hideWhenLoggedIn}`}
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-1">
                                         <IoLogIn className='h-5 w-5 mx-1' />Log In
                                     </Link>
-                                    <Link onClick={props.toggleProfile} to='/signup'
-                                        className={`flex px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${props.hideWhenLoggedIn}`}
+                                    <Link onClick={toggleProfile} to='/signup'
+                                        className={`flex px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${hideWhenLoggedIn}`}
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-2">
@@ -235,26 +209,26 @@ export default function Navbar(props) {
 
 
                 {/* <!-- Mobile menu, show/hide based on menu state. --> */}
-                <div className={`sm:hidden  ${props.navMenu} `} id="mobile-menu">
+                <div className={`sm:hidden  ${navMenu} `} id="mobile-menu">
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         <Link to='/'
-                            className={`${props.home} block border-2 transition  ease-in-out duration-500  px-3 py-2 rounded-md text-base font-medium`}
+                            className={`${home} block border-2 transition  ease-in-out duration-500  px-3 py-2 rounded-md text-base font-medium`}
                             aria-current="page">
                             Text Control
                         </Link>
 
                         <Link to='/about'
-                            className={`${props.about} block px-3 py-2 rounded-md text-base border-2 border-gray-400 font-medium`}>
+                            className={`${about} block px-3 py-2 rounded-md text-base border-2 border-gray-400 font-medium`}>
                             About
                         </Link>
 
                         <Link to='/'
-                            className={`${props.about} block px-3 py-2 rounded-md text-base border-2 border-gray-400 font-medium`}>
+                            className={`${about} block px-3 py-2 rounded-md text-base border-2 border-gray-400 font-medium`}>
                             Projects
                         </Link>
 
                         <Link to='/'
-                            className={`${props.about} block px-3 py-2 rounded-md text-base border-2 border-gray-400 font-medium`}>
+                            className={`${about} block px-3 py-2 rounded-md text-base border-2 border-gray-400 font-medium`}>
                             Calender
                         </Link>
 

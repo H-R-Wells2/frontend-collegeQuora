@@ -52,7 +52,7 @@ const PostState = (props) => {
         'Content-Type': 'application/json',
         "auth-token": localStorage.getItem('token')
       },
-      body: JSON.stringify({title, description, tag})
+      body: JSON.stringify({ title, description, tag })
     });
 
 
@@ -125,10 +125,10 @@ const PostState = (props) => {
       if (element._id === id) {
         newPosts[index].title = title;
         newPosts[index].description = description;
-        newPosts[index].tag = tag; 
-        break; 
+        newPosts[index].tag = tag;
+        break;
       }
-    }  
+    }
     setPosts(newPosts);
   }
 

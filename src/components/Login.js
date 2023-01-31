@@ -1,12 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import modeContext from '../context/mode/modeContext';
+
 
 
 const Login = (props) => {
 
 
+
+      // getting states from context
+      const context = useContext(modeContext)
+      const { mainBox, textMain, logsign, remText, setLoggedIn } = context
+
+
+    // useStates for credentials
     const [credentials, setCredetials] = useState({ email: "", password: "" })
     let navigate = useNavigate();
 
@@ -33,7 +42,7 @@ const Login = (props) => {
             // save the auth token and redirect
             localStorage.setItem('token', json.authToken)
             navigate('/')
-            props.setLoggedIn(true)
+            setLoggedIn(true)
         } else {
             alert("Invalid credentials");
         }
@@ -61,17 +70,17 @@ const Login = (props) => {
         <div className=' flex justify-center'>
             <div className={`mt-16 flex justify-center w-full max-w-lg `}>
 
-                <div className={`${props.mainBox} mb-8 z-20 mx-8 container max-w-xs px-9 py-10 sm:px-10 sm:pb-10 sm:pt-5 rounded-lg shadow-lg  w-full lg:max-w-2xl transition ease-in-out duration-500 `}>
+                <div className={`${mainBox} mb-8 z-20 mx-8 container max-w-xs px-9 py-10 sm:px-10 sm:pb-10 sm:pt-5 rounded-lg shadow-lg  w-full lg:max-w-2xl transition ease-in-out duration-500 `}>
 
-                    <label className={` ${props.textMain} text-3xl font-mono form-label transition  ease-in-out duration-500 inline-block mb-4 font-bold`}>Log in</label>
+                    <label className={` ${textMain} text-3xl font-mono form-label transition  ease-in-out duration-500 inline-block mb-4 font-bold`}>Log in</label>
 
 
                     <form onSubmit={handleSubmit}>
                         <div className=" mb-6">
                             <div className='flex justify-between'>
-                                <label htmlFor='email' className={` ${props.textMain} text-xl form-label transition ease-in-out duration-500 inline-block mb-2 font-semibold`}>Email ID</label>
-                                <p className={` ${props.textMain} transition ease-in-out duration-500  mt-2 text-sm`}>Need an account?
-                                    <Link to={'/signup'} className={`${props.logsign} font-medium transition ease-in-out duration-500 mx-1`} >sign up</Link></p>
+                                <label htmlFor='email' className={` ${textMain} text-xl form-label transition ease-in-out duration-500 inline-block mb-2 font-semibold`}>Email ID</label>
+                                <p className={` ${textMain} transition ease-in-out duration-500  mt-2 text-sm`}>Need an account?
+                                    <Link to={'/signup'} className={`${logsign} font-medium transition ease-in-out duration-500 mx-1`} >sign up</Link></p>
                             </div>
 
                             <input id="email" type="email" onChange={onChange} value={credentials.email} name="email"
@@ -83,10 +92,10 @@ const Login = (props) => {
                         {/* Password */}
                         <div className=" mb-6">
                             <div className='flex justify-between'>
-                                <label htmlFor='password' className={` ${props.textMain} text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold`}>Password</label>
+                                <label htmlFor='password' className={` ${textMain} text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold`}>Password</label>
                                 <button type="button">
-                                    <FaEyeSlash onClick={togglePass} className={`${hideEyeSlash} ${props.textMain} transition  ease-in-out duration-500 h-5 w-5 mr-2 mt-2`} />
-                                    <FaEye onClick={togglePass} className={`${hideEye} ${props.textMain} transition  ease-in-out duration-500 h-5 w-5 mr-2 mt-2`} />
+                                    <FaEyeSlash onClick={togglePass} className={`${hideEyeSlash} ${textMain} transition  ease-in-out duration-500 h-5 w-5 mr-2 mt-2`} />
+                                    <FaEye onClick={togglePass} className={`${hideEye} ${textMain} transition  ease-in-out duration-500 h-5 w-5 mr-2 mt-2`} />
                                 </button>
                             </div>
 
@@ -103,7 +112,7 @@ const Login = (props) => {
                             <div className="flex h-3 mt-0.5">
                                 <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300" />
                             </div>
-                            <label htmlFor="remember" className={`select-none ${props.remText} text-gray-300 ml-2 text-sm font-medium transition ease-in-out duration-500 cursor-pointer `}>Remember me</label>
+                            <label htmlFor="remember" className={`select-none ${remText} text-gray-300 ml-2 text-sm font-medium transition ease-in-out duration-500 cursor-pointer `}>Remember me</label>
                         </div>
 
 
@@ -120,7 +129,7 @@ const Login = (props) => {
                                 Log in
                             </button>
                         </div>
-                        <p className={` ${props.textMain} transition ease-in-out duration-500 text-sm cursor-pointer text-center mt-3`}>Forgot password?</p>
+                        <p className={` ${textMain} transition ease-in-out duration-500 text-sm cursor-pointer text-center mt-3`}>Forgot password?</p>
                     </form>
                 </div>
             </div>

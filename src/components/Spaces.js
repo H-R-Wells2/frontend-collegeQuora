@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { AiOutlineCompass } from "react-icons/ai";
 import { IoIosPeople } from "react-icons/io";
+import modeContext from '../context/mode/modeContext';
 
 
 export default function Spaces(props) {
+
+
+
+      // getting states from context
+      const context = useContext(modeContext)
+      const { mainBox, textMain } = context
+
+
+
   return (    
     <div className='flex justify-start ml-64 mr-4 py-3'>
       <div className="flex flex-col w-1/2 gap-y-4">
 
 
 
-        <div className={`shadow-lg text-center justify-center py-5 rounded-lg max-w-2xl transition ease-in-out duration-500 ${props.mainBox} ${props.textMain}`}>
+        <div className={`shadow-lg text-center justify-center py-5 rounded-lg max-w-2xl transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
           <div className='text-4xl flex font-semibold justify-center'>
             <IoIosPeople className='mt-1' />
             <span className='ml-2'>Welcome To spaces</span>

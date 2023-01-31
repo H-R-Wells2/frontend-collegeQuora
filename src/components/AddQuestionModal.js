@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import modeContext from '../context/mode/modeContext';
+
+
 
 export default function AddQuestionModal(props) {
+
+
+
+    // getting states from context
+    const context = useContext(modeContext)
+    const { mainBox, textMain, textArea, addOrCrClass, cancelBtn, open, setOpen } = context
+
+
 
     // useStates for selected form
     const [viewFormAdd, setViewFormAdd] = useState("block")
@@ -30,8 +41,8 @@ export default function AddQuestionModal(props) {
 
     return (
         <div>
-            <Transition.Root show={props.open} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={props.setOpen} >
+            <Transition.Root show={open} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={setOpen} >
                     <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
                         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                     </Transition.Child>
@@ -43,10 +54,10 @@ export default function AddQuestionModal(props) {
 
                                 <Dialog.Panel className="">
                                     {/* Apna code */}
-                                    <div className={` ${props.mainBox} relative container max-w-sm px-9 py-10 sm:px-10 sm:pb-10 sm:pt-5 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left `}>
+                                    <div className={` ${mainBox} relative container max-w-sm px-9 py-10 sm:px-10 sm:pb-10 sm:pt-5 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left `}>
 
                                         <div className='flex justify-end'>
-                                            <Link to={"/"}><button onClick={() => props.setOpen(false)} className='hover:fill-slate-500 fill-slate-400'>
+                                            <Link to={"/"}><button onClick={() => setOpen(false)} className='hover:fill-slate-500 fill-slate-400'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20.000000pt"
                                                     height="20.000000pt" viewBox="0 0 200 512">
                                                     <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z" />
@@ -58,12 +69,12 @@ export default function AddQuestionModal(props) {
                                         {/* To select add question or create post */}
                                         <div className='flex justify-between font-semibold border-b-2 border-gray-400 mb-4'>
 
-                                            <button className={`${props.addOrCrClass} ${selectedBtn1} w-72 py-2 px-4 rounded-l-md text-center cursor-pointer`} onClick={addQuestionOnModal}>
-                                                <span className={`${props.textMain} text-xl `}>Add Question</span>
+                                            <button className={`${addOrCrClass} ${selectedBtn1} w-72 py-2 px-4 rounded-l-md text-center cursor-pointer`} onClick={addQuestionOnModal}>
+                                                <span className={`${textMain} text-xl `}>Add Question</span>
                                             </button>
 
-                                            <button className={`${props.addOrCrClass} ${selectedBtn2} w-72 py-2 px-4 rounded-r-md text-center cursor-pointer`} onClick={createPostOnModal}>
-                                                <span className={`${props.textMain} text-xl `}>Create Post</span>
+                                            <button className={`${addOrCrClass} ${selectedBtn2} w-72 py-2 px-4 rounded-r-md text-center cursor-pointer`} onClick={createPostOnModal}>
+                                                <span className={`${textMain} text-xl `}>Create Post</span>
                                             </button>
 
                                         </div>
@@ -76,7 +87,7 @@ export default function AddQuestionModal(props) {
 
                                             {/* Title */}
                                             <div id="titlediv" className="form-group mb-6">
-                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${props.textMain}`}>Question</label>
+                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Question</label>
 
                                                 <input id="etitle" minLength={3} required type="text" name="etitle"
                                                     className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -86,10 +97,10 @@ export default function AddQuestionModal(props) {
 
                                             {/* Tag */}
                                             <div className="form-group mb-6">
-                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${props.textMain}`}>Tag</label>
+                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Tag</label>
 
                                                 <input id="etag" name="etag"
-                                                    className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${props.textArea}`}
+                                                    className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`}
                                                     rows="1" autoComplete="off" placeholder="Enter related tags like #Educational"></input>
                                             </div>
 
@@ -102,7 +113,7 @@ export default function AddQuestionModal(props) {
                                             {/* Button */}
                                             <div className="flex justify-end">
 
-                                                <button type='reset' onClick={() => props.setOpen(false)} className={`text-lg px-3 ${props.textMain} ${props.cancelBtn} rounded-2xl mx-1`}>
+                                                <button type='reset' onClick={() => setOpen(false)} className={`text-lg px-3 ${textMain} ${cancelBtn} rounded-2xl mx-1`}>
                                                     Cancel
                                                 </button>
 
@@ -128,7 +139,7 @@ export default function AddQuestionModal(props) {
 
                                             {/* Title */}
                                             <div id="titlediv" className="form-group mb-6">
-                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${props.textMain}`}>Create Post</label>
+                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Create Post</label>
 
                                                 <textarea id="etitle" minLength={3} required type="text" name="etitle"
                                                     className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" rows="3"
@@ -139,10 +150,10 @@ export default function AddQuestionModal(props) {
 
                                             {/* Tag */}
                                             <div className="form-group mb-6">
-                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${props.textMain}`}>Tag</label>
+                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Tag</label>
 
                                                 <input id="etag" name="etag"
-                                                    className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${props.textArea}`}
+                                                    className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`}
                                                     rows="1" autoComplete="off" placeholder="Tag"></input>
                                             </div>
 
@@ -155,7 +166,7 @@ export default function AddQuestionModal(props) {
                                             {/* Button */}
                                             <div className="flex justify-end">
 
-                                                <button type='reset' onClick={() => props.setOpen(false)} className={`text-lg px-3 ${props.textMain}  ${props.cancelBtn} rounded-2xl mx-1`}>
+                                                <button type='reset' onClick={() => setOpen(false)} className={`text-lg px-3 ${textMain}  ${cancelBtn} rounded-2xl mx-1`}>
                                                     Cancel
                                                 </button>
 
