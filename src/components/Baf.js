@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import blankprofile from "./blankprofile.jpg"
 import { BiUpvote } from "react-icons/bi"
 import { HiOutlineCalculator } from "react-icons/hi";
@@ -8,9 +8,9 @@ import modeContext from '../context/mode/modeContext';
 export default function Baf(props) {
 
 
-        // getting states from context
-        const context = useContext(modeContext)
-        const { mainBox, textMain, cardBtn } = context
+    // getting states from context
+    const context = useContext(modeContext)
+    const { mainBox, textMain, cardBtn } = context
 
 
     return (
@@ -38,7 +38,7 @@ export default function Baf(props) {
                         <span className='text-sm ml-1 h-max text-blue-500 cursor-pointer'>Follow</span>
                     </div>
 
-                    <img className="" src="https://mdbootstrap.com/img/new/standard/nature/182.jpg" alt="" />
+                    <img className="" src="https://drive.google.com/uc?export=view&id=1LHNgGyZprJUHpFjsdHvN9mrS3c1uLqP_" alt="" />
 
                     <div className="p-6">
                         <h5 className="text-xl font-medium mb-2">Title...</h5>
@@ -50,7 +50,7 @@ export default function Baf(props) {
                     </div>
                 </div>
 
-                
+
 
 
             </div>

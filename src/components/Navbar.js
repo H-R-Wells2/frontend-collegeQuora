@@ -24,6 +24,12 @@ export default function Navbar(props) {
     useEffect(() => {
     }, [location]);
 
+    // log out
+    const logout = () => {
+        localStorage.removeItem('token');
+        window.location.reload();
+    }
+
 
     return (
         <div className={` ${mode} w-full shadow-gray-400 shadow-md transition ease-in-out duration-500 sticky top-0 z-50`}>
@@ -176,12 +182,19 @@ export default function Navbar(props) {
                                     aria-orientation="vertical"
                                     aria-labelledby="user-menu-button"
                                     tabIndex="-1">
-                                    <Link to='/'
+                                    <Link onClick={toggleProfile} to='/myprofile'
                                         className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${showWhenLogedIn}`}
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-0">
-                                        Your Profile
+                                        My Profile
+                                    </Link>
+                                    <Link onClick={logout}
+                                        className={`border-t border-gray-400 px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${showWhenLogedIn}`}
+                                        role="menuitem"
+                                        tabIndex="-1"
+                                        id="user-menu-item-0">
+                                        Log Out
                                     </Link>
                                     <Link onClick={toggleProfile} to='/login'
                                         className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 border-b-2 flex ${hideWhenLoggedIn}`}

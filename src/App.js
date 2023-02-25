@@ -18,7 +18,8 @@ import Spaces from './components/Spaces';
 import PostState from './context/posts/PostState';
 import ModeState from './context/mode/ModeState';
 import modeContext from './context/mode/modeContext';
-
+import AuthState from './context/auth/AuthState';
+import { Myprofile } from './components/Myprofile';
 
 
 function App() {
@@ -30,26 +31,31 @@ function App() {
 
 
 
+
+
   return (
     <>
-    <PostState>
-      <div className={`${backG} transition ease-in-out duration-500 min-h-screen`}>
-        <Router>
-          <Navbar />
-          <Sidebar />
-          <Routes>
-            <Route path="/" element={<Content />} />
-            <Route path="/spaces/bscit" element={<Bscit />} />
-            <Route path="/spaces/bms" element={<Bms />} />
-            <Route path="/spaces/baf" element={<Baf />} />
-            <Route path="/spaces/bcom" element={<Bcom />} />
-            <Route path='/spaces' element={<Spaces />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
-        </Router>
-      </div>
-    </PostState>
+      <PostState>
+        <div className={`${backG} transition ease-in-out duration-500 min-h-screen`}>
+          <Router>
+            <AuthState>
+              <Navbar />
+              <Sidebar />
+              <Routes>
+                <Route path="/" element={<Content />} />
+                <Route path="/spaces/bscit" element={<Bscit />} />
+                <Route path="/spaces/bms" element={<Bms />} />
+                <Route path="/spaces/baf" element={<Baf />} />
+                <Route path="/spaces/bcom" element={<Bcom />} />
+                <Route path='/spaces' element={<Spaces />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/myprofile" element={<Myprofile />} />
+              </Routes>
+            </AuthState>
+          </Router>
+        </div>
+      </PostState>
     </>
   );
 }

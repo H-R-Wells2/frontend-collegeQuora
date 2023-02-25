@@ -3,24 +3,24 @@ import { Link } from "react-router-dom";
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import modeContext from '../context/mode/modeContext';
+import postContext from '../context/posts/postContext';
 
 
 
 export default function AddQuestionModal(props) {
 
 
-
-    // getting states from context
-    const context = useContext(modeContext)
-    const { mainBox, textMain, textArea, addOrCrClass, cancelBtn, open, setOpen } = context
+    // getting states from modeContext
+    const context = useContext(modeContext);
+    const { mainBox, textMain, textArea, addOrCrClass, cancelBtn, open, setOpen } = context;
 
 
 
     // useStates for selected form
-    const [viewFormAdd, setViewFormAdd] = useState("block")
-    const [viewFormCr, setViewFormCr] = useState("hidden")
-    const [selectedBtn1, setSelectedBtn1] = useState("border-b-4 border-blue-500")
-    const [selectedBtn2, setSelectedBtn2] = useState("")
+    const [viewFormAdd, setViewFormAdd] = useState("block");
+    const [viewFormCr, setViewFormCr] = useState("hidden");
+    const [selectedBtn1, setSelectedBtn1] = useState("border-b-4 border-blue-500");
+    const [selectedBtn2, setSelectedBtn2] = useState("");
 
 
     const addQuestionOnModal = () => {
@@ -35,6 +35,22 @@ export default function AddQuestionModal(props) {
         setViewFormCr("block")
         setSelectedBtn1("")
         setSelectedBtn2("border-b-4 border-blue-500")
+    }
+
+    
+    // getting states from postContext
+    const { addPost } = useContext(postContext);
+    
+    const [post, setPost] = useState({ title: "", description: "", tag: "" })
+
+    const onSubmitPost = (e) => {
+        e.preventDefault();
+        addPost(post.title, post.description, post.tag);
+        setPost({ title: "", description: "", tag: "" });
+    }
+
+    const onChange = (e) => {
+        setPost({ ...post, [e.target.name]: e.target.value })
     }
 
 
@@ -135,15 +151,25 @@ export default function AddQuestionModal(props) {
 
 
                                         {/* Create Post Form */}
-                                        <form className={`${viewFormCr}`}>
+                                        <form className={`${viewFormCr}`} onSubmit={onSubmitPost} >
 
                                             {/* Title */}
                                             <div id="titlediv" className="form-group mb-6">
-                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Create Post</label>
+                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Title</label>
 
-                                                <textarea id="etitle" minLength={3} required type="text" name="etitle"
+                                                <input value={post.title} id="ptitle" minLength={3} required type="text" name="title" onChange={onChange}
+                                                    className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" rows="1"
+                                                    placeholder="Title..." autoComplete="off" />
+                                            </div>
+
+
+                                            {/* Description */}
+                                            <div id="descriptiondiv" className="form-group mb-6">
+                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Description</label>
+
+                                                <textarea value={post.description} id="edescription" minLength={3} required type="text" name="description" onChange={onChange}
                                                     className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" rows="3"
-                                                    placeholder="Say something..." autoComplete="off" />
+                                                    placeholder="Description..." autoComplete="off" />
                                             </div>
 
 
@@ -152,9 +178,9 @@ export default function AddQuestionModal(props) {
                                             <div className="form-group mb-6">
                                                 <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Tag</label>
 
-                                                <input id="etag" name="etag"
+                                                <input value={post.tag} id="etag" name="tag" onChange={onChange}
                                                     className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`}
-                                                    rows="1" autoComplete="off" placeholder="Tag"></input>
+                                                    rows="1" autoComplete="off" placeholder="Tag..."></input>
                                             </div>
 
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import modeContext from "./modeContext";
 import { useState } from "react";
 
@@ -21,6 +21,7 @@ const ModeState = (props) => {
   // useStates for Card
   const [mainBox, setMainBox] = useState("bg-gray-700");
   const [textMain, setTextMain] = useState('text-white');
+  const [textMain2, setTextMain2] = useState('text-gray-300');
   const [textArea, setTextArea] = useState('bg-slate-300 placeholder-slate-600');
 
   // useStates for login
@@ -103,6 +104,7 @@ const ModeState = (props) => {
       setCardBtn("bg-blue-600 hover:bg-blue-700 text-white")
       setMainBox('bg-gray-700')
       setTextMain('text-white')
+      setTextMain2('text-gray-300')
       setTextArea('bg-slate-300 placeholder-slate-600')
       setBackG("bg-slate-400")
       setTagColor("bg-gray-200")
@@ -124,6 +126,7 @@ const ModeState = (props) => {
       setCardBtn("bg-orange-300 hover:bg-orange-200 text-black")
       setMainBox('bg-orange-50')
       setTextMain('text-black')
+      setTextMain2('text-gray-500')
       setTextArea('bg-white placeholder-slate-400')
       setBackG("bg-orange-200")
       setTagColor("bg-gray-300")
@@ -155,6 +158,14 @@ const ModeState = (props) => {
   // function to hide and unhide profileMenu 
   const [showWhenLogedIn, setShowWhenLoggedIn] = useState("hidden")
   const [hideWhenLoggedIn, setHideWhenLoggedIn] = useState("block")
+  const checkLogin = () => {
+    if (localStorage.getItem('token')) {
+        setLoggedIn(true)
+    }
+}
+useLayoutEffect(() => {
+  checkLogin()
+})
   const toggleProfile = () => {
     if (profile === "hidden") {
       setProfile('block opacity-0');
@@ -183,8 +194,9 @@ const ModeState = (props) => {
 
 
 
+
   return (
-    <modeContext.Provider value={{ mode, setMode, about, setAbout, navBtn, setNavBtn, navBtn2, setNavBtn2, navMenu, setNavMenu, profile, setProfile, mainBox, setMainBox, textMain, setTextMain, textArea, setTextArea, logsign, setLogsign, remText, setRemText, labelInp, setLabelInp, bordInp, setBordInp, backG, setBackG, tagColor, setTagColor, svg, setSvg, line, setLine, cardBtn, setCardBtn, cardBtnH, setCardBtnH, toggleMode, addOrCrClass, setAddOrCrClass, cancelBtn, setCancelBtn, open, setOpen, addQuestionBtn, home, showWhenLogedIn, setShowWhenLoggedIn, hideWhenLoggedIn, setHideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, setLoggedIn }}>
+    <modeContext.Provider value={{ mode, setMode, about, setAbout, navBtn, setNavBtn, navBtn2, setNavBtn2, navMenu, setNavMenu, profile, setProfile, mainBox, setMainBox, textMain, textMain2, setTextMain, textArea, setTextArea, logsign, setLogsign, remText, setRemText, labelInp, setLabelInp, bordInp, setBordInp, backG, setBackG, tagColor, setTagColor, svg, setSvg, line, setLine, cardBtn, setCardBtn, cardBtnH, setCardBtnH, toggleMode, addOrCrClass, setAddOrCrClass, cancelBtn, setCancelBtn, open, setOpen, addQuestionBtn, home, showWhenLogedIn, setShowWhenLoggedIn, hideWhenLoggedIn, setHideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, setLoggedIn }}>
       {props.children}
     </modeContext.Provider>
   )

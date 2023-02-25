@@ -43,7 +43,7 @@ const PostState = (props) => {
 
 
   // Add post
-  const addPosts = async (title, description, tag) => {
+  const addPost = async (title, description, tag) => {
     // To-Do API call
     // API call
     const response = await fetch(`${host}/api/posts/addpost`, {
@@ -140,7 +140,7 @@ const PostState = (props) => {
 
 
   return (
-    <postContext.Provider value={{ posts, deletePost, editPost, getPosts, addPosts }}>
+    <postContext.Provider value={{ posts, deletePost, editPost, getPosts, addPost }}>
       {props.children}
     </postContext.Provider>
   )
