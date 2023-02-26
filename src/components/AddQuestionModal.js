@@ -4,6 +4,8 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
+import { FaImage } from "react-icons/fa";
+import { MdRemoveCircle } from "react-icons/md";
 
 
 
@@ -37,10 +39,10 @@ export default function AddQuestionModal(props) {
         setSelectedBtn2("border-b-4 border-blue-500")
     }
 
-    
+
     // getting states from postContext
     const { addPost } = useContext(postContext);
-    
+
     const [post, setPost] = useState({ title: "", description: "", tag: "" })
 
     const onSubmitPost = (e) => {
@@ -54,6 +56,26 @@ export default function AddQuestionModal(props) {
     }
 
 
+    // To preview image
+    const [imgHide, setImgHide] = useState('hidden')
+    const [file, setFile] = useState();
+    function handleAttachImg(e) {
+        setFile(URL.createObjectURL(e.target.files[0]));
+        setImgHide('')
+    }
+    function handleRemoveImage(e) {
+        setImgHide('hidden')
+        setFile();
+    }
+
+
+
+
+    // to upload images
+    const folder_id = '1tb4d8fZUfRJWHTixZJdPYRsnlHmdau4j'
+    
+
+
 
     return (
         <div>
@@ -64,13 +86,13 @@ export default function AddQuestionModal(props) {
                     </Transition.Child>
 
                     <div className="fixed z-10 inset-0 overflow-y-auto">
-                        <div className="flex h-screen items-center sm:items-center justify-center p-4 text-center sm:p-0">
+                        <div className="flex h-screen items-start mt-20 justify-center p-4 text-center sm:p-0">
                             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enterTo="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 sm:scale-100" leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
 
 
                                 <Dialog.Panel className="">
                                     {/* Apna code */}
-                                    <div className={` ${mainBox} relative container max-w-sm px-9 py-10 sm:px-10 sm:pb-10 sm:pt-5 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left `}>
+                                    <div className={` ${mainBox} relative container max-w-sm px-9 py-10 sm:px-10 sm:pb-6 sm:pt-4 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left`}>
 
                                         <div className='flex justify-end'>
                                             <Link to={"/"}><button onClick={() => setOpen(false)} className='hover:fill-slate-500 fill-slate-400'>
@@ -85,11 +107,11 @@ export default function AddQuestionModal(props) {
                                         {/* To select add question or create post */}
                                         <div className='flex justify-between font-semibold border-b-2 border-gray-400 mb-4'>
 
-                                            <button className={`${addOrCrClass} ${selectedBtn1} w-72 py-2 px-4 rounded-l-md text-center cursor-pointer`} onClick={addQuestionOnModal}>
+                                            <button className={`${addOrCrClass} ${selectedBtn1} w-72 py-1 px-4 rounded-l-md text-center cursor-pointer`} onClick={addQuestionOnModal}>
                                                 <span className={`${textMain} text-xl `}>Add Question</span>
                                             </button>
 
-                                            <button className={`${addOrCrClass} ${selectedBtn2} w-72 py-2 px-4 rounded-r-md text-center cursor-pointer`} onClick={createPostOnModal}>
+                                            <button className={`${addOrCrClass} ${selectedBtn2} w-72 py-1 px-4 rounded-r-md text-center cursor-pointer`} onClick={createPostOnModal}>
                                                 <span className={`${textMain} text-xl `}>Create Post</span>
                                             </button>
 
@@ -168,7 +190,7 @@ export default function AddQuestionModal(props) {
                                                 <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Description</label>
 
                                                 <textarea value={post.description} id="edescription" minLength={3} required type="text" name="description" onChange={onChange}
-                                                    className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" rows="3"
+                                                    className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" rows="2"
                                                     placeholder="Description..." autoComplete="off" />
                                             </div>
 
@@ -181,6 +203,19 @@ export default function AddQuestionModal(props) {
                                                 <input value={post.tag} id="etag" name="tag" onChange={onChange}
                                                     className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`}
                                                     rows="1" autoComplete="off" placeholder="Tag..."></input>
+                                            </div>
+
+
+
+                                            {/* Upload Image */}
+
+                                            <div className={`${textMain} mb-3`}>
+                                                <div className='flex gap-2 mb-1'>
+                                                    <input onChange={handleAttachImg} accept="image/jpeg" type="file" id="files" className="hidden" />
+                                                    <label type='button' htmlFor="files" className={`ml-2 cursor-pointer`}><FaImage title='Attach Image' className='h-8 w-8' /></label>
+                                                    <label onClick={handleRemoveImage} type='button' htmlFor="" className={`${imgHide} mr-4 cursor-pointer`}><MdRemoveCircle title='Remove Image' className='h-7 w-7' /></label>
+                                                </div>
+                                                <img className={`${imgHide} max-w-prose`} alt='to be attached' src={file} />
                                             </div>
 
 

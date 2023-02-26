@@ -21,6 +21,10 @@ import modeContext from './context/mode/modeContext';
 import AuthState from './context/auth/AuthState';
 import { Myprofile } from './components/Myprofile';
 
+// add alert component
+// add question to backend
+// upload images to drive
+
 
 function App() {
 

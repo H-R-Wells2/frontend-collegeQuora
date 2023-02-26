@@ -18,7 +18,7 @@ const PostItem = (props) => {
 
     // getting states from context
     const context = useContext(modeContext)
-    const { mainBox, textMain, cardBtn, cardBtnH } = context;
+    const { mainBox, textMain, textmain2, cardBtn, cardBtnH } = context;
     const { post } = props;
 
 
@@ -37,12 +37,15 @@ const PostItem = (props) => {
                     </div>
                 </div>
 
-                {/* <img className="" src="https://img.collegequora.workers.dev/0:/cqimg1.jpg" alt="" /> */}
+                <img className="" src="https://img.collegequora.workers.dev/0:/cqimg1.jpg" alt="" />
 
                 <div className="p-6">
                     <h5 className="text-2xl font-medium mb-2">{post.title}</h5>
                     <p className="text-base mb-4 ">
                         {post.description}
+                    </p>
+                    <p className={`${textmain2} mb-4`}>
+                        #{post.tag}
                     </p>
                     <div className='flex justify-between'>
                         <div className='flex'>

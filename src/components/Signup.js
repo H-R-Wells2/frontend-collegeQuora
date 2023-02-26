@@ -5,7 +5,7 @@ import { IoMdCloseCircleOutline } from 'react-icons/io';
 import modeContext from '../context/mode/modeContext';
 
 
-const Signup = (props) => {
+const Signup = () => {
 
 
     // getting states from context

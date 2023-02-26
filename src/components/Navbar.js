@@ -1,8 +1,7 @@
 import React, { useEffect, useContext } from 'react';
-// import hrwells from "./hrwells.jpg";
 import blankprofile from "./blankprofile.jpg"
 import CQlogo1 from "./CQlogo1.png"
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import AddQuestionModal from './AddQuestionModal';
 import { IoLogIn } from "react-icons/io5";
 import { BsFillPersonFill } from "react-icons/bs";
@@ -12,17 +11,29 @@ import modeContext from '../context/mode/modeContext';
 
 
 
-export default function Navbar(props) {
+export default function Navbar() {
 
 
     // getting states from context
     const context = useContext(modeContext)
-    const {  mode, about, navBtn, navBtn2, navMenu, profile, mainBox, textMain, textArea, svg, toggleMode, addOrCrClass, cancelBtn, open, setOpen, addQuestionBtn, home, showWhenLogedIn, hideWhenLoggedIn, toggleProfile, toggleNavMenu } = context
+    const { mode, about, navBtn, navBtn2, navMenu, profile, mainBox, textMain, textArea, svg, toggleMode, addOrCrClass, cancelBtn, open, setOpen, home, showWhenLogedIn, hideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn } = context
 
-
+    let navigate = useNavigate();
     let location = useLocation();
     useEffect(() => {
     }, [location]);
+
+
+    //to check if logged in and navigate to login page when click on add question
+    const addQuestionBtn = () => {
+        if (loggedIn) {
+            setOpen(true)
+        }
+        else {
+            navigate('/login')
+        }
+    }
+
 
     // log out
     const logout = () => {
@@ -154,9 +165,9 @@ export default function Navbar(props) {
                                 <span className="w-7 h-7 flex items-center flex-shrink-0 p-1 bg-blue-600 rounded-full ease-in-out peer-checked:bg-gray-300 ">{svg}</span>
                             </label>
 
-                            
 
-                            
+
+
 
 
 

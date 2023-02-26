@@ -7,7 +7,7 @@ const ModeState = (props) => {
 
 
 
-    
+
 
   // useStates for Navbar
   const [mode, setMode] = useState("bg-gray-800 text-gray-300");
@@ -36,33 +36,14 @@ const ModeState = (props) => {
   const [tagColor, setTagColor] = useState("bg-gray-200")
 
 
-    // useStates for modal buttons
-    const [addOrCrClass, setAddOrCrClass] = useState("hover:bg-orange-200")
+  // useStates for modal buttons
+  const [addOrCrClass, setAddOrCrClass] = useState("hover:bg-gray-500")
 
-    // useStates for cancel button in modal
-    const [cancelBtn, setCancelBtn] = useState("hover:bg-gray-600")
+  // useStates for cancel button in modal
+  const [cancelBtn, setCancelBtn] = useState("hover:bg-gray-600")
 
 
-    const [open, setOpen] = useState(false)
-
-    const addQuestionBtn = () => {
-        setOpen(true)
-        if (mode === "bg-gray-800 text-gray-300") {
-            setMainBox('bg-gray-700')
-            setTextMain('text-white')
-            setTextArea('bg-slate-300 placeholder-slate-600')
-            setAddOrCrClass('hover:bg-gray-500')
-            setCancelBtn("hover:bg-gray-600 ")
-        }
-        else {
-            setMainBox('bg-orange-100')
-            setTextMain('text-black')
-            setTextArea('bg-white placeholder-slate-400')
-            setAddOrCrClass('hover:bg-orange-200')
-            setCancelBtn("hover:bg-orange-200")
-        }
-
-    }
+  const [open, setOpen] = useState(false)
 
 
 
@@ -90,7 +71,7 @@ const ModeState = (props) => {
 
 
 
-     // function to change mode (dark/light)
+  // function to change mode (dark/light)
   const toggleMode = () => {
     // set dark mode
     if (mode === "bg-orange-100 text-black") {
@@ -113,6 +94,8 @@ const ModeState = (props) => {
       setBordInp("focus:border-sky-400")
       setLabelInp("peer-focus:text-blue-400")
       setCardBtnH("hover:bg-slate-500")
+      setAddOrCrClass('hover:bg-gray-500')
+      setCancelBtn("hover:bg-gray-600 ")
     }
     // set light mode
     else {
@@ -135,24 +118,26 @@ const ModeState = (props) => {
       setBordInp("focus:border-blue-600")
       setLabelInp("peer-focus:text-blue-600")
       setCardBtnH("hover:bg-orange-200")
+      setAddOrCrClass('hover:bg-orange-200')
+      setCancelBtn("hover:bg-orange-200")
     }
   }
 
 
-    // function to hide and unhide mobile navbar
-    const toggleNavMenu = () => {
-      if (navBtn === "block") {
-        setNavBtn('hidden');
-        setNavBtn2('block');
-        setNavMenu('hidden');
-      }
-      else {
-        setNavBtn('block');
-        setNavBtn2('hidden');
-        setNavMenu('block');
-      }
+  // function to hide and unhide mobile navbar
+  const toggleNavMenu = () => {
+    if (navBtn === "block") {
+      setNavBtn('hidden');
+      setNavBtn2('block');
+      setNavMenu('hidden');
     }
-  
+    else {
+      setNavBtn('block');
+      setNavBtn2('hidden');
+      setNavMenu('block');
+    }
+  }
+
 
 
   // function to hide and unhide profileMenu 
@@ -160,12 +145,12 @@ const ModeState = (props) => {
   const [hideWhenLoggedIn, setHideWhenLoggedIn] = useState("block")
   const checkLogin = () => {
     if (localStorage.getItem('token')) {
-        setLoggedIn(true)
+      setLoggedIn(true)
     }
-}
-useLayoutEffect(() => {
-  checkLogin()
-})
+  }
+  useLayoutEffect(() => {
+    checkLogin()
+  })
   const toggleProfile = () => {
     if (profile === "hidden") {
       setProfile('block opacity-0');
@@ -196,7 +181,7 @@ useLayoutEffect(() => {
 
 
   return (
-    <modeContext.Provider value={{ mode, setMode, about, setAbout, navBtn, setNavBtn, navBtn2, setNavBtn2, navMenu, setNavMenu, profile, setProfile, mainBox, setMainBox, textMain, textMain2, setTextMain, textArea, setTextArea, logsign, setLogsign, remText, setRemText, labelInp, setLabelInp, bordInp, setBordInp, backG, setBackG, tagColor, setTagColor, svg, setSvg, line, setLine, cardBtn, setCardBtn, cardBtnH, setCardBtnH, toggleMode, addOrCrClass, setAddOrCrClass, cancelBtn, setCancelBtn, open, setOpen, addQuestionBtn, home, showWhenLogedIn, setShowWhenLoggedIn, hideWhenLoggedIn, setHideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, setLoggedIn }}>
+    <modeContext.Provider value={{ mode, setMode, about, setAbout, navBtn, setNavBtn, navBtn2, setNavBtn2, navMenu, setNavMenu, profile, setProfile, mainBox, setMainBox, textMain, textMain2, setTextMain, textArea, setTextArea, logsign, setLogsign, remText, setRemText, labelInp, setLabelInp, bordInp, setBordInp, backG, setBackG, tagColor, setTagColor, svg, setSvg, line, setLine, cardBtn, setCardBtn, cardBtnH, setCardBtnH, toggleMode, addOrCrClass, setAddOrCrClass, cancelBtn, setCancelBtn, open, setOpen, home, showWhenLogedIn, setShowWhenLoggedIn, hideWhenLoggedIn, setHideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, setLoggedIn }}>
       {props.children}
     </modeContext.Provider>
   )
