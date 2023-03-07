@@ -37,8 +37,9 @@ export default function Navbar() {
 
     // log out
     const logout = () => {
-        localStorage.removeItem('token');
+        navigate('/login')
         window.location.reload();
+        localStorage.removeItem('token');
     }
 
 
@@ -200,13 +201,13 @@ export default function Navbar() {
                                         id="user-menu-item-0">
                                         My Profile
                                     </Link>
-                                    <Link onClick={logout}
-                                        className={`border-t border-gray-400 px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${showWhenLogedIn}`}
+                                    <button onClick={logout}
+                                        className={`border-t border-gray-400 px-4 py-2 hover:bg-gray-200 text-sm w-full text-start text-gray-700 ${showWhenLogedIn}`}
                                         role="menuitem"
                                         tabIndex="-1"
                                         id="user-menu-item-0">
                                         Log Out
-                                    </Link>
+                                    </button>
                                     <Link onClick={toggleProfile} to='/login'
                                         className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 border-b-2 flex ${hideWhenLoggedIn}`}
                                         role="menuitem"

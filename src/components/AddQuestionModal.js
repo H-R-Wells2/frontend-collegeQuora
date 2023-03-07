@@ -44,15 +44,32 @@ export default function AddQuestionModal(props) {
     const { addPost } = useContext(postContext);
 
     const [post, setPost] = useState({ title: "", description: "", tag: "" })
+    const [question, setQuestion] = useState({ qtitle: "", qtag: "" })
 
+    // submit code for post
     const onSubmitPost = (e) => {
         e.preventDefault();
         addPost(post.title, post.description, post.tag);
+        // to clear form after submit
         setPost({ title: "", description: "", tag: "" });
     }
 
-    const onChange = (e) => {
+    // submit code for question
+    const onSubmitQuestion = (e) => {
+        e.preventDefault();
+        addPost("cqtempQuestion", question.qtitle, question.qtag);
+        // to clear form after submit
+        setQuestion({ qtitle: "", qtag: "" });
+    }
+
+    // onChange for post
+    const onChangePost = (e) => {
         setPost({ ...post, [e.target.name]: e.target.value })
+    }
+
+    // onChange for question
+    const onChangeQuestion = (e) => {
+        setQuestion({ ...question, [e.target.name]: e.target.value })
     }
 
 
@@ -72,8 +89,8 @@ export default function AddQuestionModal(props) {
 
 
     // to upload images
-    const folder_id = '1tb4d8fZUfRJWHTixZJdPYRsnlHmdau4j'
-    
+    // const folder_id = '1tb4d8fZUfRJWHTixZJdPYRsnlHmdau4j'
+
 
 
 
@@ -121,15 +138,23 @@ export default function AddQuestionModal(props) {
 
 
                                         {/* Add Question Form */}
-                                        <form className={`${viewFormAdd}`}>
+                                        <form onSubmit={onSubmitQuestion} className={`${viewFormAdd}`}>
 
-                                            {/* Title */}
+
+                                            <div className='bg-blue-200 rounded-xl py-2 px-2 mb-2'>
+                                                Tips on getting good answers quickly
+                                                <ul className='list-disc ml-5 '>
+                                                    <li>Make sure your question has not been asked already</li>
+                                                    <li>Keep your question short and to the point</li>
+                                                    <li>Double-check grammar and spelling</li>
+                                                </ul>
+                                            </div>
+
+                                            {/* Question */}
                                             <div id="titlediv" className="form-group mb-6">
                                                 <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Question</label>
 
-                                                <input id="etitle" minLength={3} required type="text" name="etitle"
-                                                    className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                    placeholder='Start your question with "What", "How", "Why", etc.' autoComplete="off" />
+                                                <textarea onChange={onChangeQuestion} name="qtitle" value={question.qtitle} id="etitle" minLength={3} required type="text" className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder='Start your question with "What", "How", "Why", etc.' autoComplete="off" />
                                             </div>
 
 
@@ -137,7 +162,7 @@ export default function AddQuestionModal(props) {
                                             <div className="form-group mb-6">
                                                 <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Tag</label>
 
-                                                <input id="etag" name="etag"
+                                                <input name='qtag' onChange={onChangeQuestion} value={question.qtag} id="etag"
                                                     className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`}
                                                     rows="1" autoComplete="off" placeholder="Enter related tags like #Educational"></input>
                                             </div>
@@ -179,7 +204,7 @@ export default function AddQuestionModal(props) {
                                             <div id="titlediv" className="form-group mb-6">
                                                 <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Title</label>
 
-                                                <input value={post.title} id="ptitle" minLength={3} required type="text" name="title" onChange={onChange}
+                                                <input value={post.title} id="ptitle" minLength={3} required type="text" name="title" onChange={onChangePost}
                                                     className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" rows="1"
                                                     placeholder="Title..." autoComplete="off" />
                                             </div>
@@ -189,7 +214,7 @@ export default function AddQuestionModal(props) {
                                             <div id="descriptiondiv" className="form-group mb-6">
                                                 <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Description</label>
 
-                                                <textarea value={post.description} id="edescription" minLength={3} required type="text" name="description" onChange={onChange}
+                                                <textarea value={post.description} id="edescription" minLength={3} required type="text" name="description" onChange={onChangePost}
                                                     className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" rows="2"
                                                     placeholder="Description..." autoComplete="off" />
                                             </div>
@@ -200,7 +225,7 @@ export default function AddQuestionModal(props) {
                                             <div className="form-group mb-6">
                                                 <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Tag</label>
 
-                                                <input value={post.tag} id="etag" name="tag" onChange={onChange}
+                                                <input value={post.tag} id="etag" name="tag" onChange={onChangePost} required
                                                     className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`}
                                                     rows="1" autoComplete="off" placeholder="Tag..."></input>
                                             </div>

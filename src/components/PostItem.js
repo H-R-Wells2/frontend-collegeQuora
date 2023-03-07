@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContext } from 'react';
 import blankprofile from "./blankprofile.jpg"
 import { BiUpvote, BiDownvote } from "react-icons/bi";
@@ -22,6 +22,20 @@ const PostItem = (props) => {
     const { post } = props;
 
 
+    const [Ptitle, setPtitle] = useState(post.title)
+    var titleForQuestion = post.description.split(' ').slice(0,5).join(' ') + '...';
+    // if (post.title === "cqtempQuestion"){
+    //     setPtitle(titleForQuestion)
+    // }
+    useEffect(() => {
+        //Runs only on the first render
+        if (post.title === "cqtempQuestion"){
+                setPtitle(titleForQuestion)
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+    
+
 
     return (
         <>
@@ -40,7 +54,7 @@ const PostItem = (props) => {
                 <img className="" src="https://img.collegequora.workers.dev/0:/cqimg1.jpg" alt="" />
 
                 <div className="p-6">
-                    <h5 className="text-2xl font-medium mb-2">{post.title}</h5>
+                    <h5 className="text-2xl font-medium mb-2">{Ptitle}</h5>
                     <p className="text-base mb-4 ">
                         {post.description}
                     </p>
