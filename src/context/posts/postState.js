@@ -11,6 +11,8 @@ const PostState = (props) => {
   const [posts, setPosts] = useState(postsInitial)
   // Try temp const by pushing value in text
 
+  // state for imagefile
+  const [file, setFile] = useState();
 
 
 
@@ -44,15 +46,21 @@ const PostState = (props) => {
 
   // Add post
   const addPost = async (title, description, tag) => {
+
+    let formData = new FormData();
+    formData.append("title", title)
+    formData.append("description", description)
+    formData.append("tag", tag)
+    formData.append("attachedImage", file)
     // To-Do API call
     // API call
     const response = await fetch(`${host}/api/posts/addpost`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         "auth-token": localStorage.getItem('token')
       },
-      body: JSON.stringify({ title, description, tag })
+      body: formData
     });
 
 
@@ -140,7 +148,7 @@ const PostState = (props) => {
 
 
   return (
-    <postContext.Provider value={{ posts, deletePost, editPost, getPosts, addPost }}>
+    <postContext.Provider value={{ posts, deletePost, editPost, getPosts, addPost, setFile }}>
       {props.children}
     </postContext.Provider>
   )

@@ -23,18 +23,21 @@ const PostItem = (props) => {
 
 
     const [Ptitle, setPtitle] = useState(post.title)
-    var titleForQuestion = post.description.split(' ').slice(0,5).join(' ') + '...';
+    var titleForQuestion = post.description.split(' ').slice(0, 5).join(' ') + '...';
     // if (post.title === "cqtempQuestion"){
     //     setPtitle(titleForQuestion)
     // }
     useEffect(() => {
         //Runs only on the first render
-        if (post.title === "cqtempQuestion"){
-                setPtitle(titleForQuestion)
-            }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
-    
+        if (post.title === "cqtempQuestion") {
+            setPtitle(titleForQuestion)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+
+                //
+    const img = "https://drive.google.com/uc?export=view&id=" + post.idOfImage;
 
 
     return (
@@ -51,7 +54,7 @@ const PostItem = (props) => {
                     </div>
                 </div>
 
-                <img className="" src="https://img.collegequora.workers.dev/0:/cqimg1.jpg" alt="" />
+                <img className="" src={img} alt="" />
 
                 <div className="p-6">
                     <h5 className="text-2xl font-medium mb-2">{Ptitle}</h5>

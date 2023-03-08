@@ -41,7 +41,7 @@ export default function AddQuestionModal(props) {
 
 
     // getting states from postContext
-    const { addPost } = useContext(postContext);
+    const { addPost, setFile } = useContext(postContext);
 
     const [post, setPost] = useState({ title: "", description: "", tag: "" })
     const [question, setQuestion] = useState({ qtitle: "", qtag: "" })
@@ -52,6 +52,8 @@ export default function AddQuestionModal(props) {
         addPost(post.title, post.description, post.tag);
         // to clear form after submit
         setPost({ title: "", description: "", tag: "" });
+        window.location.reload();
+        handleRemoveImage();
     }
 
     // submit code for question
@@ -60,6 +62,8 @@ export default function AddQuestionModal(props) {
         addPost("cqtempQuestion", question.qtitle, question.qtag);
         // to clear form after submit
         setQuestion({ qtitle: "", qtag: "" });
+        setOpen(false);
+        handleRemoveImage();
     }
 
     // onChange for post
@@ -75,14 +79,15 @@ export default function AddQuestionModal(props) {
 
     // To preview image
     const [imgHide, setImgHide] = useState('hidden')
-    const [file, setFile] = useState();
+    const [previewImg, setPreviewImg] = useState()
     function handleAttachImg(e) {
-        setFile(URL.createObjectURL(e.target.files[0]));
-        setImgHide('')
+        setFile(e.target.files[0]);
+        setImgHide('');
+        setPreviewImg(URL.createObjectURL(e.target.files[0]));
     }
     function handleRemoveImage(e) {
-        setImgHide('hidden')
-        setFile();
+        setImgHide('hidden');
+        setFile(null);
     }
 
 
@@ -240,7 +245,7 @@ export default function AddQuestionModal(props) {
                                                     <label type='button' htmlFor="files" className={`ml-2 cursor-pointer`}><FaImage title='Attach Image' className='h-8 w-8' /></label>
                                                     <label onClick={handleRemoveImage} type='button' htmlFor="" className={`${imgHide} mr-4 cursor-pointer`}><MdRemoveCircle title='Remove Image' className='h-7 w-7' /></label>
                                                 </div>
-                                                <img className={`${imgHide} max-w-prose`} alt='to be attached' src={file} />
+                                                <img className={`${imgHide} max-w-prose`} alt='to be attached' src={previewImg} />
                                             </div>
 
 
