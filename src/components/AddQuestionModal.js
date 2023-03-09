@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { Link } from "react-router-dom";
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import modeContext from '../context/mode/modeContext';
@@ -30,6 +29,7 @@ export default function AddQuestionModal(props) {
         setViewFormCr("hidden")
         setSelectedBtn1("border-b-4 border-blue-500")
         setSelectedBtn2("")
+        handleRemoveImage();
     }
 
     const createPostOnModal = () => {
@@ -37,6 +37,7 @@ export default function AddQuestionModal(props) {
         setViewFormCr("block")
         setSelectedBtn1("")
         setSelectedBtn2("border-b-4 border-blue-500")
+        handleRemoveImage();
     }
 
 
@@ -62,7 +63,7 @@ export default function AddQuestionModal(props) {
         addPost("cqtempQuestion", question.qtitle, question.qtag);
         // to clear form after submit
         setQuestion({ qtitle: "", qtag: "" });
-        setOpen(false);
+        window.location.reload();
         handleRemoveImage();
     }
 
@@ -75,6 +76,7 @@ export default function AddQuestionModal(props) {
     const onChangeQuestion = (e) => {
         setQuestion({ ...question, [e.target.name]: e.target.value })
     }
+    
 
 
     // To preview image
@@ -117,12 +119,12 @@ export default function AddQuestionModal(props) {
                                     <div className={` ${mainBox} relative container max-w-sm px-9 py-10 sm:px-10 sm:pb-6 sm:pt-4 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left`}>
 
                                         <div className='flex justify-end'>
-                                            <Link to={"/"}><button onClick={() => setOpen(false)} className='hover:fill-slate-500 fill-slate-400'>
+                                            <button onClick={() => setOpen(false)} className='hover:fill-slate-500 fill-slate-400'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20.000000pt"
                                                     height="20.000000pt" viewBox="0 0 200 512">
                                                     <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z" />
                                                 </svg>
-                                            </button></Link>
+                                            </button>
                                         </div>
 
 
@@ -170,6 +172,16 @@ export default function AddQuestionModal(props) {
                                                 <input name='qtag' onChange={onChangeQuestion} value={question.qtag} id="etag"
                                                     className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`}
                                                     rows="1" autoComplete="off" placeholder="Enter related tags like #Educational"></input>
+                                            </div>
+
+                                            {/* Upload Image */}
+                                            <div className={`${textMain} mb-3`}>
+                                                <div className='flex gap-2 mb-1'>
+                                                    <input onChange={handleAttachImg} accept="image/jpeg" type="file" id="files" className="hidden" />
+                                                    <label type='button' htmlFor="files" className={`ml-2 cursor-pointer`}><FaImage title='Attach Image' className='h-8 w-8' /></label>
+                                                    <label onClick={handleRemoveImage} type='button' htmlFor="" className={`${imgHide} mr-4 cursor-pointer`}><MdRemoveCircle title='Remove Image' className='h-7 w-7' /></label>
+                                                </div>
+                                                <img className={`${imgHide} max-w-prose`} alt='to be attached' src={previewImg} />
                                             </div>
 
 
@@ -238,7 +250,6 @@ export default function AddQuestionModal(props) {
 
 
                                             {/* Upload Image */}
-
                                             <div className={`${textMain} mb-3`}>
                                                 <div className='flex gap-2 mb-1'>
                                                     <input onChange={handleAttachImg} accept="image/jpeg" type="file" id="files" className="hidden" />

@@ -9,6 +9,8 @@ const PostState = (props) => {
 
   const postsInitial = []
   const [posts, setPosts] = useState(postsInitial)
+  const [searchedPosts, setSearchedPosts] = useState([]);
+
   // Try temp const by pushing value in text
 
   // state for imagefile
@@ -21,18 +23,48 @@ const PostState = (props) => {
 
   // Get all posts
   const getPosts = async () => {
+    try {
+      const response = await fetch(`${host}/api/posts/fetchallposts`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.status === 200) {
+        const json = await response.json();
+        setPosts(json);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+  // Get searched posts
+  // To search posts
+  const [searchParams, setSearchParams] = useState({
+    title: ''
+  });
+  const getSearchedPosts = async () => {
     // To-Do API call
     // API call
-    const response = await fetch(`${host}/api/posts/fetchallposts`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        // "auth-token": localStorage.getItem('token')
-      },
-    });
-    const json = await response.json()
-    setPosts(json)
+    try {
+      const response = await fetch(`${host}/api/posts/search?title=${searchParams.title}&description=${searchParams.title}&tag=${searchParams.title}`);
+      const data = await response.json();
+      setSearchedPosts(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
 
 
 
@@ -46,28 +78,29 @@ const PostState = (props) => {
 
   // Add post
   const addPost = async (title, description, tag) => {
+    try {
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('tag', tag);
+      formData.append('attachedImage', file);
 
-    let formData = new FormData();
-    formData.append("title", title)
-    formData.append("description", description)
-    formData.append("tag", tag)
-    formData.append("attachedImage", file)
-    // To-Do API call
-    // API call
-    const response = await fetch(`${host}/api/posts/addpost`, {
-      method: 'POST',
-      headers: {
-        // 'Content-Type': 'application/json',
-        "auth-token": localStorage.getItem('token')
-      },
-      body: formData
-    });
+      const response = await fetch(`${host}/api/posts/addpost`, {
+        method: 'POST',
+        headers: {
+          'auth-token': localStorage.getItem('token'),
+        },
+        body: formData,
+      });
 
-
-    const post = await response.json();
-    setPosts(posts.concat(post));
-  }
-
+      if (response.status === 200) {
+        const post = await response.json();
+        setPosts((prevPosts) => [...prevPosts, post]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
 
@@ -148,7 +181,7 @@ const PostState = (props) => {
 
 
   return (
-    <postContext.Provider value={{ posts, deletePost, editPost, getPosts, addPost, setFile }}>
+    <postContext.Provider value={{ posts, deletePost, editPost, getPosts, addPost, setFile, searchedPosts, setSearchedPosts, getSearchedPosts, searchParams, setSearchParams }}>
       {props.children}
     </postContext.Provider>
   )

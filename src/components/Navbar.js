@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useRef, useState } from 'react';
 import blankprofile from "./blankprofile.jpg"
 import CQlogo1 from "./CQlogo1.png"
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -6,8 +6,8 @@ import AddQuestionModal from './AddQuestionModal';
 import { IoLogIn } from "react-icons/io5";
 import { BsFillPersonFill } from "react-icons/bs";
 import modeContext from '../context/mode/modeContext';
-
-
+import postContext from '../context/posts/postContext';
+import Alert from './Alert';
 
 
 
@@ -16,7 +16,7 @@ export default function Navbar() {
 
     // getting states from context
     const context = useContext(modeContext)
-    const { mode, about, navBtn, navBtn2, navMenu, profile, mainBox, textMain, textArea, svg, toggleMode, addOrCrClass, cancelBtn, open, setOpen, home, showWhenLogedIn, hideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn } = context
+    const { mode, about, navBtn, navBtn2, navMenu, mainBox, textMain, textArea, svg, toggleMode, addOrCrClass, cancelBtn, open, setOpen, home, showWhenLogedIn, hideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, showAlert, setShowAlert, alertMessage, alertType, setAlertMessage, setAlertType } = context
 
     let navigate = useNavigate();
     let location = useLocation();
@@ -41,6 +41,69 @@ export default function Navbar() {
         window.location.reload();
         localStorage.removeItem('token');
     }
+
+
+
+    // for profile menu
+    const [isOpen, setIsOpen] = useState(false);
+    const menuRef = useRef(null);
+
+    const handleProfileClick = () => {
+        setIsOpen(!isOpen);
+        toggleProfile();
+    }
+
+
+    // to close the profile menu when clicks outside of the menu
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const handleClickOutside = (event) => {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    };
+
+
+    // To search posts
+    const { getSearchedPosts, searchParams, setSearchParams } = useContext(postContext);
+
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setSearchParams({ ...searchParams, [name]: value });
+    };
+
+
+    // Submit parameters to search
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setSearchParams({ title: "" });
+        navigate('/searched');
+        setShowAlert(true);
+        setAlertType('success');
+        setAlertMessage("Showing search results for " + searchParams.title);
+        setTimeout(() => {
+            setShowAlert(false);
+        }, 3500);
+        getSearchedPosts();
+    };
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     return (
@@ -127,14 +190,14 @@ export default function Navbar() {
 
 
                                     {/* Search bar */}
-                                    <form className="mt-1 relative flex items-center h-9 rounded-lg focus-within:shadow-lg border-gray-400 border-2 bg-white overflow-hidden">
+                                    <form onSubmit={handleSubmit} className="mt-1 relative flex items-center h-9 rounded-lg focus-within:shadow-lg border-gray-400 border-2 bg-white overflow-hidden">
                                         <button className="grid place-items-center h-full w-12 text-gray-300">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                             </svg>
                                         </button>
 
-                                        <input
+                                        <input name='title' value={searchParams.title} onChange={handleInputChange}
                                             className="peer h-full w-full outline-none text-sm text-gray-700 pr-2 pl-1"
                                             type="text"
                                             id="search"
@@ -176,7 +239,7 @@ export default function Navbar() {
                             <div className="ml-1 relative">
                                 <div>
                                     <button
-                                        type="button" onClick={toggleProfile}
+                                        type="button" onClick={handleProfileClick}
                                         className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 w-max"
                                         id="user-menu-button"
                                         aria-expanded="false"
@@ -188,41 +251,55 @@ export default function Navbar() {
 
 
                                 {/* profile */}
-                                <div
-                                    className={`${profile} origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none transition-all ease-in-out duration-300 `}
-                                    role="menu"
-                                    aria-orientation="vertical"
-                                    aria-labelledby="user-menu-button"
-                                    tabIndex="-1">
-                                    <Link onClick={toggleProfile} to='/myprofile'
-                                        className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${showWhenLogedIn}`}
-                                        role="menuitem"
-                                        tabIndex="-1"
-                                        id="user-menu-item-0">
-                                        My Profile
-                                    </Link>
-                                    <button onClick={logout}
-                                        className={`border-t border-gray-400 px-4 py-2 hover:bg-gray-200 text-sm w-full text-start text-gray-700 ${showWhenLogedIn}`}
-                                        role="menuitem"
-                                        tabIndex="-1"
-                                        id="user-menu-item-0">
-                                        Log Out
-                                    </button>
-                                    <Link onClick={toggleProfile} to='/login'
-                                        className={`px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 border-b-2 flex ${hideWhenLoggedIn}`}
-                                        role="menuitem"
-                                        tabIndex="-1"
-                                        id="user-menu-item-1">
-                                        <IoLogIn className='h-5 w-5 mx-1' />Log In
-                                    </Link>
-                                    <Link onClick={toggleProfile} to='/signup'
-                                        className={`flex px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${hideWhenLoggedIn}`}
-                                        role="menuitem"
-                                        tabIndex="-1"
-                                        id="user-menu-item-2">
-                                        <BsFillPersonFill className='h-5 w-4 mr-1 mx-1' />Sign Up
-                                    </Link>
-                                </div>
+
+
+                                {isOpen && (
+                                    <div
+                                        ref={menuRef}
+                                        className="absolute right-0 top-0 mt-10 w-48 rounded-lg shadow-lg bg-white z-10"
+                                    >
+                                        <Link onClick={()=>{
+                                            toggleProfile();
+                                            setIsOpen(false);
+                                        }} to='/myprofile'
+                                            className={`px-4 rounded-t-lg py-2 hover:bg-gray-200 text-sm text-gray-700 ${showWhenLogedIn}`}
+                                            role="menuitem"
+                                            tabIndex="-1"
+                                            id="user-menu-item-0">
+                                            My Profile
+                                        </Link>
+                                        <button onClick={()=>{
+                                            logout();
+                                            setIsOpen(false);
+                                        }}
+                                            className={`border-t rounded-b-lg border-gray-400 px-4 py-2 hover:bg-gray-200 text-sm w-full text-start text-gray-700 ${showWhenLogedIn}`}
+                                            role="menuitem"
+                                            tabIndex="-1"
+                                            id="user-menu-item-0">
+                                            Log Out
+                                        </button>
+                                        <Link onClick={()=>{
+                                            toggleProfile();
+                                            setIsOpen(false);
+                                        }} to='/login'
+                                            className={`rounded-t-lg px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 border-b-2 flex ${hideWhenLoggedIn}`}
+                                            role="menuitem"
+                                            tabIndex="-1"
+                                            id="user-menu-item-1">
+                                            <IoLogIn className='h-5 w-5 mx-1' />Log In
+                                        </Link>
+                                        <Link onClick={()=>{
+                                            toggleProfile();
+                                            setIsOpen(false);
+                                        }} to='/signup'
+                                            className={`rounded-b-lg flex px-4 py-2 hover:bg-gray-200 text-sm text-gray-700 ${hideWhenLoggedIn}`}
+                                            role="menuitem"
+                                            tabIndex="-1"
+                                            id="user-menu-item-2">
+                                            <BsFillPersonFill className='h-5 w-4 mr-1 mx-1' />Sign Up
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -261,6 +338,9 @@ export default function Navbar() {
                 </div>
             </nav >
             <AddQuestionModal open={open} setOpen={setOpen} mainBox={mainBox} textArea={textArea} textMain={textMain} addOrCrClass={addOrCrClass} cancelBtn={cancelBtn} />
+            {showAlert && (
+                <Alert type={alertType} message={alertMessage} />
+            )}
         </div >
     )
 }

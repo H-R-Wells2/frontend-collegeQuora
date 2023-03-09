@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import authContext from './authContext'
 
@@ -24,6 +24,26 @@ const AuthState = (props) => {
         }
     }
 
+
+
+    // to expire token
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const expirationTime = localStorage.getItem('expirationTime');
+    
+        if (token && expirationTime) {
+          const now = new Date().getTime();
+          if (now > expirationTime) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('expirationTime');
+          }
+        }
+      }, []);
+
+      useEffect(() => {
+        const expirationTime = new Date().getTime() + 2 * 24 * 60 * 60 * 1000;
+        localStorage.setItem('expirationTime', expirationTime);
+      }, []);
 
 
 

@@ -36,13 +36,15 @@ const PostItem = (props) => {
     }, []);
 
 
-                //
-    const img = "https://drive.google.com/uc?export=view&id=" + post.idOfImage;
+
+    // const img = "https://drive.google.com/uc?export=view&id=" + post.idOfImage;
+
+    
 
 
     return (
         <>
-            <div className={`shadow-lg rounded-lg max-w-2xl pt-2 transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
+            <div className={`mb-4 shadow-lg rounded-lg max-w-2xl pt-2 transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
                 <div className='flex justify-between mb-1'>
                     <div className='flex'>
                         <img className="ml-2 mb-2 h-8 w-8 rounded-full" src={blankprofile} alt="" />
@@ -54,7 +56,7 @@ const PostItem = (props) => {
                     </div>
                 </div>
 
-                <img className="" src={img} alt="" />
+                {post.idOfImage && <img className="" src={`https://drive.google.com/uc?export=view&id=${post.idOfImage}`} alt="" />}
 
                 <div className="p-6">
                     <h5 className="text-2xl font-medium mb-2">{Ptitle}</h5>

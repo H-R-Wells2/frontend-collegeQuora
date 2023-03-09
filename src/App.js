@@ -19,7 +19,8 @@ import PostState from './context/posts/PostState';
 import ModeState from './context/mode/ModeState';
 import modeContext from './context/mode/modeContext';
 import AuthState from './context/auth/AuthState';
-import { Myprofile } from './components/Myprofile';
+import Myprofile from './components/Myprofile';
+import Searched from './components/Searched';
 
 // add alert component
 // add question to backend
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/myprofile" element={<Myprofile />} />
+                <Route path="/searched" element={<Searched />} />
               </Routes>
             </AuthState>
           </Router>
