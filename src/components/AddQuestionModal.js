@@ -5,6 +5,7 @@ import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
 import { FaImage } from "react-icons/fa";
 import { MdRemoveCircle } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -15,6 +16,11 @@ export default function AddQuestionModal(props) {
     const context = useContext(modeContext);
     const { mainBox, textMain, textArea, addOrCrClass, cancelBtn, open, setOpen } = context;
 
+    // getting states for alert
+    const { alert } = context
+
+    // to navigate
+    let navigate = useNavigate();
 
 
     // useStates for selected form
@@ -42,8 +48,9 @@ export default function AddQuestionModal(props) {
 
 
     // getting states from postContext
-    const { addPost, setFile } = useContext(postContext);
+    const { addPost, setFile, getPosts } = useContext(postContext);
 
+    // to set post
     const [post, setPost] = useState({ title: "", description: "", tag: "" })
     const [question, setQuestion] = useState({ qtitle: "", qtag: "" })
 
@@ -53,8 +60,14 @@ export default function AddQuestionModal(props) {
         addPost(post.title, post.description, post.tag);
         // to clear form after submit
         setPost({ title: "", description: "", tag: "" });
-        window.location.reload();
+        getPosts();
         handleRemoveImage();
+        navigate('/');
+        setOpen(false);
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 1500);
+        alert('success', "Your post is added successfully");
     }
 
     // submit code for question
@@ -63,8 +76,14 @@ export default function AddQuestionModal(props) {
         addPost("cqtempQuestion", question.qtitle, question.qtag);
         // to clear form after submit
         setQuestion({ qtitle: "", qtag: "" });
-        window.location.reload();
+        getPosts();
         handleRemoveImage();
+        navigate('/');
+        setOpen(false);
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 1500);
+        alert('success', "Your question is added successfully");
     }
 
     // onChange for post
@@ -76,17 +95,24 @@ export default function AddQuestionModal(props) {
     const onChangeQuestion = (e) => {
         setQuestion({ ...question, [e.target.name]: e.target.value })
     }
-    
+
 
 
     // To preview image
     const [imgHide, setImgHide] = useState('hidden')
     const [previewImg, setPreviewImg] = useState()
     function handleAttachImg(e) {
-        setFile(e.target.files[0]);
-        setImgHide('');
-        setPreviewImg(URL.createObjectURL(e.target.files[0]));
+        const fileSizeInMB = e.target.files[0].size / (1024 * 1024);
+        if (fileSizeInMB <= 3) {
+            setFile(e.target.files[0]);
+            setImgHide('');
+            setPreviewImg(URL.createObjectURL(e.target.files[0]));
+        } else {
+            alert('error', "File size should be less than 3 MB");
+            return;
+        }
     }
+
     function handleRemoveImage(e) {
         setImgHide('hidden');
         setFile(null);
@@ -94,9 +120,6 @@ export default function AddQuestionModal(props) {
 
 
 
-
-    // to upload images
-    // const folder_id = '1tb4d8fZUfRJWHTixZJdPYRsnlHmdau4j'
 
 
 
@@ -177,7 +200,7 @@ export default function AddQuestionModal(props) {
                                             {/* Upload Image */}
                                             <div className={`${textMain} mb-3`}>
                                                 <div className='flex gap-2 mb-1'>
-                                                    <input onChange={handleAttachImg} accept="image/jpeg" type="file" id="files" className="hidden" />
+                                                    <input onChange={handleAttachImg} accept="image/jpeg, image/png" type="file" id="files" className="hidden" />
                                                     <label type='button' htmlFor="files" className={`ml-2 cursor-pointer`}><FaImage title='Attach Image' className='h-8 w-8' /></label>
                                                     <label onClick={handleRemoveImage} type='button' htmlFor="" className={`${imgHide} mr-4 cursor-pointer`}><MdRemoveCircle title='Remove Image' className='h-7 w-7' /></label>
                                                 </div>

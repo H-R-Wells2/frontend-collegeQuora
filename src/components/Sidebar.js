@@ -7,7 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import modeContext from "../context/mode/modeContext";
 
 
-export default function Sidebar(props) {
+export default function Sidebar() {
 
 
     // getting states from context
@@ -31,7 +31,7 @@ export default function Sidebar(props) {
 
 
                     <div className="flex-1">
-                        <ul className="pt-2 pb-4 mb-6 space-y-1 text-md">
+                        <ul className="pt-2 pb-4 mb-6 space-y-2 text-md">
                             <li className="rounded-sm">
                                 <Link to={'/spaces/general'}
                                     className={`${location.pathname === "/spaces/general" ? home : about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><AiFillProfile className="mr-2 h-6 w-6" />General</Link>
@@ -53,7 +53,7 @@ export default function Sidebar(props) {
                                     className={`${location.pathname === "/spaces/bcom" ? home : about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlineCalculate className="mr-2 h-6 w-6" />B.Com</Link>
                             </li>
                         </ul>
-                        <ul className={`${line} border-t pt-4 transition ease-in-out duration-500`}>
+                        <ul className={`${line} border-t pt-4 space-y-2 transition ease-in-out duration-500`}>
                             <li className="rounded-sm ">
                                 <Link to={'/about'}
                                     className={`${location.pathname === "/about" ? home : about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><AiOutlineTeam className="mr-2 h-6 w-6" />About</Link>
@@ -63,8 +63,8 @@ export default function Sidebar(props) {
                                     className={`${location.pathname === "/terms" ? home : about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><HiOutlineDocumentText className="mr-2 h-6 w-6" />Terms</Link>
                             </li>
                             <li className="rounded-sm">
-                                <Link to={'/privacy'}
-                                    className={`${location.pathname === "/privacy" ? home : about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlinePrivacyTip className="mr-2 h-6 w-6" />Privacy Policy</Link>
+                                <Link to={'/policy'}
+                                    className={`${location.pathname === "/policy" ? home : about} w-44 flex items-center p-2 space-x-3 rounded-md transition ease-in-out duration-500`}><MdOutlinePrivacyTip className="mr-2 h-6 w-6" />Privacy Policy</Link>
                             </li>
                         </ul>
                     </div>

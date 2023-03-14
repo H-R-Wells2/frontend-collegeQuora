@@ -16,7 +16,10 @@ export default function Navbar() {
 
     // getting states from context
     const context = useContext(modeContext)
-    const { mode, about, navBtn, navBtn2, navMenu, mainBox, textMain, textArea, svg, toggleMode, addOrCrClass, cancelBtn, open, setOpen, home, showWhenLogedIn, hideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, showAlert, setShowAlert, alertMessage, alertType, setAlertMessage, setAlertType } = context
+    const { mode, about, navBtn, navBtn2, navMenu, mainBox, textMain, textArea, svg, toggleMode, addOrCrClass, cancelBtn, open, setOpen, home, showWhenLogedIn, hideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn } = context
+
+    // getting states for alert
+    const { alert, showAlert, alertMessage, alertType } = context
 
     let navigate = useNavigate();
     let location = useLocation();
@@ -31,6 +34,7 @@ export default function Navbar() {
         }
         else {
             navigate('/login')
+            alert('error', "please login first")
         }
     }
 
@@ -76,23 +80,22 @@ export default function Navbar() {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setSearchParams({ ...searchParams, [name]: value });
+        if (event.target.validity.tooShort) {
+            event.target.setCustomValidity(`Please enter at least ${event.target.minLength} characters.`);
+        } else {
+            event.target.setCustomValidity('');
+        }
     };
 
 
+    
     // Submit parameters to search
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        setSearchParams({ title: "" });
+        await getSearchedPosts();
+        // setSearchParams({ title: "" });
         navigate('/searched');
-        setShowAlert(true);
-        setAlertType('success');
-        setAlertMessage("Showing search results for " + searchParams.title);
-        setTimeout(() => {
-            setShowAlert(false);
-        }, 3500);
-        getSearchedPosts();
     };
-
 
 
 
@@ -197,10 +200,12 @@ export default function Navbar() {
                                             </svg>
                                         </button>
 
-                                        <input name='title' value={searchParams.title} onChange={handleInputChange}
+                                        <input required name='title' value={searchParams.title} onChange={handleInputChange}
                                             className="peer h-full w-full outline-none text-sm text-gray-700 pr-2 pl-1"
                                             type="text"
                                             id="search"
+                                            minLength={3}
+                                            title={`Please enter at least 3 characters.`}
                                             placeholder="Search something.." />
                                     </form>
 
@@ -251,14 +256,12 @@ export default function Navbar() {
 
 
                                 {/* profile */}
-
-
                                 {isOpen && (
                                     <div
                                         ref={menuRef}
                                         className="absolute right-0 top-0 mt-10 w-48 rounded-lg shadow-lg bg-white z-10"
                                     >
-                                        <Link onClick={()=>{
+                                        <Link onClick={() => {
                                             toggleProfile();
                                             setIsOpen(false);
                                         }} to='/myprofile'
@@ -268,7 +271,7 @@ export default function Navbar() {
                                             id="user-menu-item-0">
                                             My Profile
                                         </Link>
-                                        <button onClick={()=>{
+                                        <button onClick={() => {
                                             logout();
                                             setIsOpen(false);
                                         }}
@@ -278,7 +281,7 @@ export default function Navbar() {
                                             id="user-menu-item-0">
                                             Log Out
                                         </button>
-                                        <Link onClick={()=>{
+                                        <Link onClick={() => {
                                             toggleProfile();
                                             setIsOpen(false);
                                         }} to='/login'
@@ -288,7 +291,7 @@ export default function Navbar() {
                                             id="user-menu-item-1">
                                             <IoLogIn className='h-5 w-5 mx-1' />Log In
                                         </Link>
-                                        <Link onClick={()=>{
+                                        <Link onClick={() => {
                                             toggleProfile();
                                             setIsOpen(false);
                                         }} to='/signup'

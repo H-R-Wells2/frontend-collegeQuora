@@ -178,11 +178,22 @@ const ModeState = (props) => {
   }
 
 
+  // ALert function
+  const alert = (type, message) => {
+    setShowAlert(true);
+    setAlertType(type);
+    setAlertMessage(message);
+    setTimeout(() => {
+        setShowAlert(false);
+    }, 3500);
+  }
+
+
 
 
 
   return (
-    <modeContext.Provider value={{ mode, setMode, about, setAbout, navBtn, setNavBtn, navBtn2, setNavBtn2, navMenu, setNavMenu, profile, setProfile, mainBox, setMainBox, textMain, textMain2, setTextMain, textArea, setTextArea, logsign, setLogsign, remText, setRemText, labelInp, setLabelInp, bordInp, setBordInp, backG, setBackG, tagColor, setTagColor, svg, setSvg, line, setLine, cardBtn, setCardBtn, cardBtnH, setCardBtnH, toggleMode, addOrCrClass, setAddOrCrClass, cancelBtn, setCancelBtn, open, setOpen, home, showWhenLogedIn, setShowWhenLoggedIn, hideWhenLoggedIn, setHideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, setLoggedIn, showAlert, setShowAlert, alertMessage, setAlertMessage, alertType, setAlertType }}>
+    <modeContext.Provider value={{ mode, setMode, about, setAbout, navBtn, setNavBtn, navBtn2, setNavBtn2, navMenu, setNavMenu, profile, setProfile, mainBox, setMainBox, textMain, textMain2, setTextMain, textArea, setTextArea, logsign, setLogsign, remText, setRemText, labelInp, setLabelInp, bordInp, setBordInp, backG, setBackG, tagColor, setTagColor, svg, setSvg, line, setLine, cardBtn, setCardBtn, cardBtnH, setCardBtnH, toggleMode, addOrCrClass, setAddOrCrClass, cancelBtn, setCancelBtn, open, setOpen, home, showWhenLogedIn, setShowWhenLoggedIn, hideWhenLoggedIn, setHideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, setLoggedIn, showAlert, alertMessage, alertType, alert }}>
       {props.children}
     </modeContext.Provider>
   )

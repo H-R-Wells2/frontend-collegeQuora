@@ -21,6 +21,8 @@ import modeContext from './context/mode/modeContext';
 import AuthState from './context/auth/AuthState';
 import Myprofile from './components/Myprofile';
 import Searched from './components/Searched';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsConditions from './components/TermsConditions';
 
 // add alert component
 // add question to backend
@@ -57,6 +59,8 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/myprofile" element={<Myprofile />} />
                 <Route path="/searched" element={<Searched />} />
+                <Route path="/policy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<TermsConditions />} />
               </Routes>
             </AuthState>
           </Router>

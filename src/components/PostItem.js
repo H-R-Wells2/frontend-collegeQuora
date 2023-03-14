@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useContext } from 'react';
 import blankprofile from "./blankprofile.jpg"
 import { BiUpvote, BiDownvote } from "react-icons/bi";
@@ -6,6 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaRegCommentDots } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 import modeContext from '../context/mode/modeContext';
+import postContext from '../context/posts/postContext';
 
 
 
@@ -17,16 +18,14 @@ import modeContext from '../context/mode/modeContext';
 const PostItem = (props) => {
 
     // getting states from context
-    const context = useContext(modeContext)
-    const { mainBox, textMain, textmain2, cardBtn, cardBtnH } = context;
+    const context = useContext(modeContext);
+    const { mainBox, textMain, textmain2, cardBtn, cardBtnH, textArea } = context;
     const { post } = props;
 
 
+    // to change title to question when submitting question
     const [Ptitle, setPtitle] = useState(post.title)
     var titleForQuestion = post.description.split(' ').slice(0, 5).join(' ') + '...';
-    // if (post.title === "cqtempQuestion"){
-    //     setPtitle(titleForQuestion)
-    // }
     useEffect(() => {
         //Runs only on the first render
         if (post.title === "cqtempQuestion") {
@@ -37,9 +36,54 @@ const PostItem = (props) => {
 
 
 
-    // const img = "https://drive.google.com/uc?export=view&id=" + post.idOfImage;
+    // to show the input when clicked on add comment button
+    const [addCommentState, setAddCommentState] = useState('hidden');
+    const inputRef = useRef(null);
 
+    useEffect(() => {
+        if (addCommentState === 'block') {
+            inputRef.current.focus();
+        }
+    }, [addCommentState]);
+
+    const [loadedComments, setLoadedComments] = useState('block');
+    const toggleAddComment = () => {
+        if (addCommentState === 'hidden') {
+            setAddCommentState('block');
+            setLoadedComments('hidden');
+        } else {
+            setAddCommentState('hidden');
+            setLoadedComments('block');
+        }
+    };
+
+
+    // onChange for comment
+    const [comment, setComment] = useState({ comment: "" });
+    const onChange = (e) => {
+        setComment({ ...comment, [e.target.name]: e.target.value });
+    };
+
+    // getting states/functions from postContext
+    const { addComment, getPosts } = useContext(postContext);
+
+    // function when submit comment
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        addComment(comment, post._id, 0);
+        console.log(post._id);
+        toggleAddComment();
+        setComment({comment:""});
+    };
+
+    useEffect(() => {
+        getPosts();
+        // eslint-disable-next-line
+    }, [comment]);
     
+
+
+
 
 
     return (
@@ -55,8 +99,9 @@ const PostItem = (props) => {
                         <IoCloseOutline className='cursor-pointer mt-1 h-6 w-6 mx-2' />
                     </div>
                 </div>
-
-                {post.idOfImage && <img className="" src={`https://drive.google.com/uc?export=view&id=${post.idOfImage}`} alt="" />}
+                <div className='mx-1'>
+                    {post.idOfImage && <img className="" src={`https://drive.google.com/uc?export=view&id=${post.idOfImage}`} alt="" />}
+                </div>
 
                 <div className="p-6">
                     <h5 className="text-2xl font-medium mb-2">{Ptitle}</h5>
@@ -72,13 +117,27 @@ const PostItem = (props) => {
                                 className={`${cardBtn} px-3 py-2 rounded-l-3xl text-sm font-medium transition ease-in-out duration-300 flex`}><BiUpvote className='h-5 mr-1' />Upvote</button>
                             <button type='button'
                                 className={`${cardBtn} border-l border-gray-400 px-3 py-2 rounded-r-3xl text-sm font-medium transition ease-in-out duration-300 flex`}><BiDownvote className='h-5 mr-1' /></button>
-                            <button className={`${cardBtnH} ml-2 rounded-full px-2`}>
+                            <button onClick={toggleAddComment} className={`${cardBtnH} ml-2 rounded-full px-2`}>
                                 <FaRegCommentDots className='h-5 w-6' />
                             </button>
                         </div>
                         <button className={`${cardBtnH} rounded-full px-2`}>
                             <BsThreeDots className='h-6 w-6' />
                         </button>
+                    </div>
+                </div>
+                <div className='bg-gray-500 flex rounded-b-lg py-4 px-4'>
+                    <div className={`w-full ${addCommentState}`}>
+                        <form onSubmit={handleSubmit} className="flex w-full justify-center">
+                            <input name='comment' value={comment.comment} onChange={onChange} ref={inputRef} className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`} autoComplete="off" placeholder="Write your comment..."></input>
+                        </form>
+                    </div>
+                    <div className={`${loadedComments} py-1.5`}>
+                        {post.comments && post.comments.length > 0 ? <div className="pl-3 flex">
+                            <img src={blankprofile} alt="profile" className='w-7 h-7 rounded-full mr-1' />
+                            <span className='font-bold cursor-pointer'>{post.user.username}</span>
+                            <span className='ml-2'>{post.comments[0].comment}</span>
+                        </div> : "No comments yet"}
                     </div>
                 </div>
             </div>
