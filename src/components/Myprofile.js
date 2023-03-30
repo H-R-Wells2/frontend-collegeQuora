@@ -12,16 +12,45 @@ export default function Myprofile() {
 
 
 
+
     // For getting user data
-    const { getUserData, userData, setUSerData } = useContext(authContext);
+    const { getUserData, userData, setUserData } = useContext(authContext);
     useEffect(() => {
         getUserData()
         // eslint-disable-next-line
     }, [])
 
 
+
+    // Handle Update
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+
+        const { firstName, lastName, email, password, username, collegeName } = userData;
+        const response = await fetch("http://localhost:5000/api/auth/updateuser", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem('token')
+            },
+            body: JSON.stringify({ firstName, lastName, email, password, username, collegeName })
+        });
+        const json = await response.json();
+        console.log(json);
+        if (json.success) {
+            alert('User data updated successfully!');
+        }
+        else {
+            alert(json.error);
+        }
+    }
+
+
+
+
+
     // getting states from modecontext
-    const { mainBox, textMain, backG, textMain2, textArea, cancelBtn } = useContext(modeContext)
+    const { mainBox, textMain, backG, textMain2, bordInp, labelInp } = useContext(modeContext)
 
 
 
@@ -29,9 +58,13 @@ export default function Myprofile() {
     // to populate the modal
     const [open, setOpen] = useState(false);
 
-      // on change
-      const onChange = (e) => {
-        setUSerData({ ...userData, [e.target.name]: e.target.value })
+    // on change
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setUserData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     }
 
 
@@ -49,13 +82,13 @@ export default function Myprofile() {
                     </Transition.Child>
 
                     <div className="fixed z-10 inset-0 overflow-y-auto">
-                        <div className="flex h-screen items-start mt-20 justify-center p-4 text-center sm:p-0">
+                        <div className="flex h-screen items-start mt-32 justify-center p-4 text-center sm:p-0">
                             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enterTo="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 sm:scale-100" leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
 
 
-                                <Dialog.Panel className="">
-                                    {/* Apna code */}
-                                    <div className={` ${mainBox} relative container max-w-sm px-9 py-10 sm:px-10 sm:pb-6 sm:pt-4 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left`}>
+                                <Dialog.Panel className="w-1/3">
+                                    {/* Main card code */}
+                                    <div className={` ${mainBox} relative container max-w-lg px-9 py-10 sm:px-10 sm:pb-6 sm:pt-4 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left`}>
 
                                         <div className='flex justify-end'>
                                             <button onClick={() => setOpen(false)} className='hover:fill-slate-500 fill-slate-400'>
@@ -71,46 +104,60 @@ export default function Myprofile() {
 
 
                                         {/* Create Post Form */}
-                                        <form >
-
-                                            {/* First Name */}
-                                            <div id="FirstName" className="form-group mb-6">
-                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Title</label>
-
-                                                <input onChange={onChange} value={userData.firstName} id="firstName" minLength={3} required type="text" name="firstName"
-                                                    className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" rows="1"
-                                                    placeholder="Title..." autoComplete="off" />
-                                            </div>
+                                        <form onSubmit={handleUpdate}>
 
 
-                                            {/* Last Name */}
-                                            <div id="FirstName" className="form-group mb-6">
-                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Title</label>
-
-                                                <input onChange={onChange} value={userData.lastName} id="lastName" minLength={3} required type="text" name="lastName"
-                                                    className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" rows="1"
-                                                    placeholder="Title..." autoComplete="off" />
-                                            </div>
 
 
-                                            {/* Description */}
-                                            <div id="descriptiondiv" className="form-group mb-6">
-                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Description</label>
 
-                                                <textarea id="edescription" minLength={3} required type="text" name="description"
-                                                    className="form-control block w-full px-3 py-1.5 text-base font-medium text-gray-900 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" rows="2"
-                                                    placeholder="Description..." autoComplete="off" />
+                                            {/* Name */}
+                                            <div className="mt-2 grid xl:grid-cols-2 xl:gap-6">
+                                                <div className="relative z-0 w-full mb-6 group">
+                                                    <input onChange={onChange} value={userData.firstName} type="text" name="firstName" id="first_name" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  ${bordInp} peer`} placeholder=" " required />
+                                                    <label htmlFor="first_name" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${labelInp} peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>First name</label>
+                                                </div>
+                                                <div className="relative z-0 w-full mb-6 group">
+                                                    <input onChange={onChange} value={userData.lastName} type="text" name="lastName" id="last_name" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  ${bordInp} peer`} placeholder=" " />
+                                                    <label htmlFor="last_name" className={`peer-focus:font-medium absolute text-lg text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Last name</label>
+                                                </div>
                                             </div>
 
 
 
-                                            {/* Tag */}
-                                            <div className="form-group mb-6">
-                                                <label className={`text-xl form-label transition  ease-in-out duration-500 inline-block mb-2 font-semibold ${textMain}`}>Tag</label>
+                                            {/* Email id */}
+                                            <div className="relative z-0 w-full mb-6 group">
+                                                <input onChange={onChange} value={userData.email} type="email" name="email" id='email' className={` block py-2 mt-3 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
+                                                <label htmlFor="email" className={`peer-focus:font-medium absolute text-lg text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Email address</label>
+                                            </div>
 
-                                                <input id="etag" name="tag" required
-                                                    className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`}
-                                                    rows="1" autoComplete="off" placeholder="Tag..."></input>
+
+
+
+                                            {/* Username */}
+                                            <div className="relative z-0 w-full mb-6 group">
+                                                <input onChange={onChange} value={userData.username} name="username" id="username" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
+                                                <label htmlFor="cpassword" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Username</label>
+                                            </div>
+
+
+                                            <div className="relative z-0 w-full mb-4 group">
+                                                <input onChange={onChange} value={userData.collegeName} name="username" id="username" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
+                                                <label htmlFor="cpassword" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>College Name</label>
+                                            </div>
+
+
+
+
+
+                                            <div className="col-span-6 sm:col-span-3 relative z-0 w-full mb-6 group ">
+                                                <label htmlFor="country" className={`block font-medium ${textMain}`}>
+                                                    Gender</label>
+                                                <select id="country" name="country" autoComplete="country"
+                                                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                    <option>Male</option>
+                                                    <option>Female</option>
+                                                    <option>Other</option>
+                                                </select>
                                             </div>
 
 
@@ -120,17 +167,14 @@ export default function Myprofile() {
 
 
                                             {/* Button */}
-                                            <div className="flex justify-end">
+                                            <div className="flex justify-center">
 
-                                                <button type='reset' onClick={() => setOpen(false)} className={`text-lg px-3 ${textMain}  ${cancelBtn} rounded-2xl mx-1`}>
-                                                    Cancel
-                                                </button>
-
-                                                <button type="submit"
-                                                    className=" w-1/4 px-2 py-3 md:py-2.5 bg-blue-600 text-white font-medium text-sm leading-tight uppercase rounded-2xl shadow-md md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400  transition  duration-150 ease-in-out disabled:bg-blue-500 disabled:md:hover:bg-blue-500 disabled:focus:bg-blue-500 disabled:text-gray-400 disabled:cursor-not-allowed">
-                                                    Post
+                                                <button type='submit'
+                                                    className=" w-full px-2 py-3 md:py-2.5 bg-blue-600 text-white font-medium text-lg leading-tight  rounded shadow-md md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 transition  duration-150 ease-in-out">
+                                                    Update Information
                                                 </button>
                                             </div>
+
                                         </form>
 
 
@@ -188,17 +232,19 @@ export default function Myprofile() {
                                 <div className="flex flex-wrap justify-center">
                                     <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                                         <div className="relative">
-                                            <img
-                                                alt="..."
-                                                src={"https://img.collegequora.workers.dev/0:/CQimg10.jpg"}
-                                                className="shadow-xl rounded-full h-auto align-middle border-none absolute -my-24 -ml-24"
-                                                style={{ maxWidth: "220px" }}
-                                            />
+                                            <div className="pl-3 flex">
+                                                <img
+                                                    alt="..."
+                                                    src={userData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${userData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                    className="shadow-xl rounded-full h-auto align-middle border-none absolute -my-24 -ml-24"
+                                                    style={{ maxWidth: "220px" }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
                                         <div className="py-6 px-3 mt-32 sm:mt-0">
-                                            <button onClick={()=>{setOpen(true)}}
+                                            <button onClick={() => { setOpen(true) }}
                                                 className="ml-60 mr-0 px-2 flex py-2 font-medium text-sm leading-tight uppercase rounded-2xl shadow-md transition  duration-150 ease-in-out md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 bg-blue-600 text-white "
                                                 type="button"
                                                 style={{ transition: "all .15s ease" }}

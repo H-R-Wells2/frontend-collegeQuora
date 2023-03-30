@@ -70,6 +70,7 @@ const AuthState = (props) => {
         });
         const json = await response.json()
         setUserData(json)
+        console.log(json)
     }
 
 
@@ -77,7 +78,7 @@ const AuthState = (props) => {
 
 
     return (
-        <authContext.Provider value={{ handleLoggedIn, checkLogin, getUserData, userData }}>
+        <authContext.Provider value={{ handleLoggedIn, checkLogin, getUserData, userData, setUserData }}>
             {props.children}
         </authContext.Provider>
     )

@@ -80,7 +80,7 @@ const PostState = (props) => {
 
 
 
-  // Add post
+  // Add Post
   const addPost = async (title, description, tag) => {
     try {
       const formData = new FormData();
