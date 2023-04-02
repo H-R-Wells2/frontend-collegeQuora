@@ -23,10 +23,8 @@ import Myprofile from './components/Myprofile';
 import Searched from './components/Searched';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsConditions from './components/TermsConditions';
-
-// add alert component
-// add question to backend
-// upload images to drive
+import About from './components/About';
+// import SelectedPost from './components/SelectedPost';
 
 
 function App() {
@@ -50,6 +48,7 @@ function App() {
               <Sidebar />
               <Routes>
                 <Route path="/" element={<Content />} />
+                <Route path="/spaces/general" element={<Content />} />
                 <Route path="/spaces/bscit" element={<Bscit />} />
                 <Route path="/spaces/bms" element={<Bms />} />
                 <Route path="/spaces/baf" element={<Baf />} />
@@ -61,6 +60,8 @@ function App() {
                 <Route path="/searched" element={<Searched />} />
                 <Route path="/policy" element={<PrivacyPolicy />} />
                 <Route path="/terms" element={<TermsConditions />} />
+                <Route path="/about" element={<About />} />
+                {/* <Route path="/post/:id" element={<SelectedPost />} /> */}
               </Routes>
             </AuthState>
           </Router>

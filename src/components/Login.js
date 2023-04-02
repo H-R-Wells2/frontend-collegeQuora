@@ -12,7 +12,7 @@ const Login = (props) => {
 
       // getting states from context
       const context = useContext(modeContext)
-      const { mainBox, textMain, logsign, remText, setLoggedIn } = context
+      const { mainBox, textMain, logsign, remText, setLoggedIn, alert } = context
 
 
     // useStates for credentials
@@ -28,26 +28,33 @@ const Login = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const response = await fetch("http://localhost:5000/api/auth/login", {
+      
+        try {
+          const response = await fetch("http://localhost:5000/api/auth/login", {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: credentials.email, password: credentials.password })
-        });
-        const json = await response.json()
-        console.log(json);
-        if (json.success) {
-            // save the auth token and redirect
-            localStorage.setItem('token', json.authToken)
-            navigate('/')
-            setLoggedIn(true)
-        } else {
-            alert("Invalid credentials");
+            body: JSON.stringify(credentials)
+          });
+      
+          const { success, authToken } = await response.json();
+      
+          if (success) {
+            localStorage.setItem('token', authToken);
+            navigate('/');
+            setLoggedIn(true);
+            alert('success','Logged In successfully');
+          } else {
+            alert('error',"Please enter valid username and password");
+          }
+      
+        } catch (error) {
+          console.error(error);
+          alert('error', 'An error occurred. Please try again later.');
         }
-    }
-
+      };
+      
 
     const [showPass, setShowPass] = useState("password")
     const [hideEye, setHideEye] = useState("hidden")
@@ -76,13 +83,14 @@ const Login = (props) => {
 
 
                     <form onSubmit={handleSubmit}>
+
+                        {/* Email */}
                         <div className=" mb-6">
                             <div className='flex justify-between'>
                                 <label htmlFor='email' className={` ${textMain} text-xl form-label transition ease-in-out duration-500 inline-block mb-2 font-semibold`}>Email ID</label>
                                 <p className={` ${textMain} transition ease-in-out duration-500  mt-2 text-sm`}>Need an account?
                                     <Link to={'/signup'} className={`${logsign} font-medium transition ease-in-out duration-500 mx-1`} >sign up</Link></p>
                             </div>
-
                             <input id="email" type="email" onChange={onChange} value={credentials.email} name="email"
                                 className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding  border border-solid border-gray-300  rounded transition ease-in-out  m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 placeholder="Enter Email ID" required />

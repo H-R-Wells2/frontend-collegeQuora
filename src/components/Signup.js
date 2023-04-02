@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import modeContext from '../context/mode/modeContext';
-
+import postContext from '../context/posts/postContext';
 
 const Signup = () => {
 
 
+
     // getting states from context
-    const context = useContext(modeContext)
-    const { mainBox, textMain, logsign, labelInp, bordInp, setLoggedIn } = context
+    const { mainBox, textMain, logsign, labelInp, bordInp, setLoggedIn, alert } = useContext(modeContext)
+    const { host } = useContext(postContext)
+
 
 
     // useStates for credentials
@@ -21,29 +23,40 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { firstName, lastName, email, password, username, collegeName } = credentials;
-        const response = await fetch("http://localhost:5000/api/auth/createuser", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ firstName, lastName, email, password, username, collegeName })
-        });
-        const json = await response.json()
-        console.log(json);
-        if (json.success) {
-            // save the auth token and redirect
-            localStorage.setItem('token', json.authToken);
-            navigate('/');
-            setLoggedIn(true)
-        }
-        else {
-            alert(json.error)
-        }
+        try {
+            const { firstName, lastName, email, password, username, collegeName } = credentials;
+            const response = await fetch(`${host}/api/auth/createuser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ firstName, lastName, email, password, username, collegeName })
+            });
+            const json = await response.json();
 
-    }
+            console.log(json);
 
-    // on change
+            if (json.success) {
+                localStorage.setItem('token', json.authToken);
+                alert('success', "User registered successfully");
+                navigate('/');
+                setLoggedIn(true);
+            } else {
+                alert('error', json.error);
+            }
+        } catch (error) {
+            console.error(error);
+            alert('error', 'An error occurred. Please try again later.');
+        }
+    };
+
+
+
+
+
+
+
+    // on change to check repeate pssword
     const [disabledBtn, setDisabledBtn] = useState("hidden")
     const validating = () => {
         if (document.getElementById("password").value === document.getElementById("cpassword").value) {
@@ -57,8 +70,18 @@ const Signup = () => {
 
     }
     const onChange = (e) => {
-        setCredetials({ ...credentials, [e.target.name]: e.target.value })
+        const inputName = e.target.name;
+        let inputValue = e.target.value;
+
+        // Disallow capital letters in the "username" input field
+        if (inputName === "username" && inputValue !== inputValue.toLowerCase()) {
+            inputValue = inputValue.toLowerCase();
+            e.target.value = inputValue;
+        }
+
+        setCredetials({ ...credentials, [inputName]: inputValue });
     }
+
 
 
     return (
@@ -141,7 +164,7 @@ const Signup = () => {
 
                             <button type='submit'
                                 className=" w-full px-2 py-3 md:py-2.5 bg-blue-600 text-white font-medium text-lg leading-tight  rounded shadow-md md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 transition  duration-150 ease-in-out">
-                                Sign up for free
+                                Sign up
                             </button>
                         </div>
 

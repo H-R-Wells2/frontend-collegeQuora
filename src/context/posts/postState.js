@@ -11,14 +11,11 @@ const PostState = (props) => {
   const [posts, setPosts] = useState(postsInitial);
   const [searchedPosts, setSearchedPosts] = useState([]);
 
-  // Try temp const by pushing value in text
-
   // state for imagefile
   const [file, setFile] = useState();
 
   // states for comments
   const [comments, setComments] = useState([]);
-
 
 
 
@@ -37,6 +34,7 @@ const PostState = (props) => {
       if (response.status === 200) {
         const json = await response.json();
         setPosts(json);
+        // console.log(json)
       }
     } catch (error) {
       console.error(error);
@@ -53,7 +51,6 @@ const PostState = (props) => {
 
 
   // Get searched posts
-  // To search posts
   const [searchParams, setSearchParams] = useState({
     title: ''
   });
@@ -64,6 +61,7 @@ const PostState = (props) => {
       const response = await fetch(`${host}/api/posts/search?title=${searchParams.title}&description=${searchParams.title}&tag=${searchParams.title}`);
       const data = await response.json();
       setSearchedPosts(data);
+      // console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -110,26 +108,30 @@ const PostState = (props) => {
 
 
 
-// Add Comment
-const addComment = async (comment, postId) => {
-  try {
-    const response = await fetch(`${host}/api/comments/addComment`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('token'),
-      },
-      body: JSON.stringify({ comment: comment.comment, postId }),
-    });
+  // Add Comment
+  const addComment = async (comment, postId) => {
+    try {
+      const response = await fetch(`${host}/api/comments/addComment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('token'),
+        },
+        body: JSON.stringify({ comment: comment.comment, postId }),
+      });
 
-    if (response.status === 200) {
-      const newComment = await response.json();
-      setComments((prevComments) => [...prevComments, newComment]);
+      if (response.status === 200) {
+        const newComment = await response.json();
+        setComments((prevComments) => [...prevComments, newComment]);
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
+
+
+
+
 
 
 
@@ -210,7 +212,7 @@ const addComment = async (comment, postId) => {
 
 
   return (
-    <postContext.Provider value={{ posts, deletePost, editPost, getPosts, addPost, setFile, searchedPosts, setSearchedPosts, getSearchedPosts, searchParams, setSearchParams, addComment, comments }}>
+    <postContext.Provider value={{ host, posts, deletePost, editPost, getPosts, addPost, setFile, searchedPosts, setSearchedPosts, getSearchedPosts, searchParams, setSearchParams, addComment, comments }}>
       {props.children}
     </postContext.Provider>
   )

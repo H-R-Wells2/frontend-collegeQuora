@@ -7,7 +7,7 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
-
+import { FiSend } from "react-icons/fi";
 
 
 
@@ -36,7 +36,7 @@ const PostItem = (props) => {
 
 
 
-    // to show the input when clicked on add comment button
+    // to show the input box when clicked on add comment button
     const [addCommentState, setAddCommentState] = useState('hidden');
     const inputRef = useRef(null);
 
@@ -45,6 +45,7 @@ const PostItem = (props) => {
             inputRef.current.focus();
         }
     }, [addCommentState]);
+
 
     const [loadedComments, setLoadedComments] = useState('block');
     const toggleAddComment = () => {
@@ -73,15 +74,19 @@ const PostItem = (props) => {
         addComment(comment, post._id, 0);
         console.log(post._id);
         toggleAddComment();
-        setComment({comment:""});
+        setComment({ comment: "" });
     };
 
     useEffect(() => {
         getPosts();
         // eslint-disable-next-line
     }, [comment]);
-    
 
+
+    // To show post on saperate page
+    function handlePostClick(postId) {
+        window.location.href = `/post/${postId}`;
+    }
 
 
 
@@ -99,18 +104,23 @@ const PostItem = (props) => {
                         <IoCloseOutline className='cursor-pointer mt-1 h-6 w-6 mx-2' />
                     </div>
                 </div>
+
+                {/* Image */}
                 <div className='mx-1'>
                     {post.idOfImage && <img className="" src={`https://drive.google.com/uc?export=view&id=${post.idOfImage}`} alt="" />}
                 </div>
 
+                {/* Main Post */}
                 <div className="p-6">
-                    <h5 className="text-2xl font-medium mb-2">{Ptitle}</h5>
+                    <h5 onClick={() => handlePostClick(post._id)} className="cursor-pointer text-2xl font-medium mb-2">{Ptitle}</h5>
                     <p className="text-base mb-4 ">
                         {post.description}
                     </p>
                     <p className={`${textmain2} mb-4`}>
                         #{post.tag}
                     </p>
+
+                    {/* Bottom Buttons */}
                     <div className='flex justify-between'>
                         <div className='flex'>
                             <button type='button'
@@ -127,15 +137,23 @@ const PostItem = (props) => {
                     </div>
                 </div>
                 <div className='bg-gray-500 flex rounded-b-lg py-4 px-4'>
+
+
+                    {/* add comment */}
                     <div className={`w-full ${addCommentState}`}>
                         <form onSubmit={handleSubmit} className="flex w-full justify-center">
-                            <input name='comment' value={comment.comment} onChange={onChange} ref={inputRef} className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`} autoComplete="off" placeholder="Write your comment..."></input>
+                            <textarea name='comment' value={comment.comment} onChange={onChange} ref={inputRef} className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`} autoComplete="off" placeholder="Write your comment... OR Give Answer..."></textarea>
+                            <button type='submit' className={`hover:bg-gray-600 h-10 ml-2 rounded-full px-2`}>
+                                <FiSend className='h-5 w-6' />
+                            </button>
                         </form>
                     </div>
+
+                    {/* loadedComments */}
                     <div className={`${loadedComments} py-1.5`}>
                         {post.comments && post.comments.length > 0 ? <div className="pl-3 flex">
                             <img src={blankprofile} alt="profile" className='w-7 h-7 rounded-full mr-1' />
-                            <span className='font-bold cursor-pointer'>{post.user.username}</span>
+                            <span className='font-bold cursor-pointer'>{post.comments[0].user.username}</span>
                             <span className='ml-2'>{post.comments[0].comment}</span>
                         </div> : "No comments yet"}
                     </div>

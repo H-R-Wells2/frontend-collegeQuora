@@ -9,15 +9,16 @@ export default function Content() {
   const { searchedPosts, searchParams } = useContext(postContext);
   const { textMain2, alert } = useContext(modeContext);
 
-//   // to show alert if there is data available or not
+  // to show alert if there is data available or not
   useEffect(() => {
     if (searchedPosts.length === 0) {
-        alert('error', 'No results found');
+      alert('error', 'No results found for ' + searchParams.title);
     } else {
-        alert('success', "Showing search results for " + searchParams.title);
+      alert('success', "Showing search results for " + searchParams.title);
     }
-    console.log(searchedPosts)
-}, [searchedPosts])
+    // console.log(searchedPosts)
+    // eslint-disable-next-line
+  }, [])
 
 
   return (
