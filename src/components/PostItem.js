@@ -8,7 +8,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
 import { FiSend } from "react-icons/fi";
-
+import { Link } from 'react-router-dom';
 
 
 
@@ -19,7 +19,7 @@ const PostItem = (props) => {
 
     // getting states from context
     const context = useContext(modeContext);
-    const { mainBox, textMain, textmain2, cardBtn, cardBtnH, textArea } = context;
+    const { mainBox, textMain, textmain2, cardBtn, cardBtnH, textArea, alert } = context;
     const { post } = props;
 
 
@@ -71,11 +71,17 @@ const PostItem = (props) => {
     // function when submit comment
     const handleSubmit = (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('error', 'Please log in to add a comment.');
+            return;
+        }
         addComment(comment, post._id, 0);
         console.log(post._id);
         toggleAddComment();
         setComment({ comment: "" });
     };
+
 
     useEffect(() => {
         getPosts();
@@ -83,10 +89,7 @@ const PostItem = (props) => {
     }, [comment]);
 
 
-    // To show post on saperate page
-    function handlePostClick(postId) {
-        window.location.href = `/post/${postId}`;
-    }
+
 
 
 
@@ -112,7 +115,7 @@ const PostItem = (props) => {
 
                 {/* Main Post */}
                 <div className="p-6">
-                    <h5 onClick={() => handlePostClick(post._id)} className="cursor-pointer text-2xl font-medium mb-2">{Ptitle}</h5>
+                    <Link to={`/post/${post._id}`} className="cursor-pointer text-2xl font-medium mb-2">{Ptitle}</Link>
                     <p className="text-base mb-4 ">
                         {post.description}
                     </p>

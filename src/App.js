@@ -24,7 +24,7 @@ import Searched from './components/Searched';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsConditions from './components/TermsConditions';
 import About from './components/About';
-// import SelectedPost from './components/SelectedPost';
+import SelectedPost from './components/SelectedPost';
 
 
 function App() {
@@ -61,7 +61,7 @@ function App() {
                 <Route path="/policy" element={<PrivacyPolicy />} />
                 <Route path="/terms" element={<TermsConditions />} />
                 <Route path="/about" element={<About />} />
-                {/* <Route path="/post/:id" element={<SelectedPost />} /> */}
+                <Route path="/post/:id" element={<SelectedPost />} />
               </Routes>
             </AuthState>
           </Router>
