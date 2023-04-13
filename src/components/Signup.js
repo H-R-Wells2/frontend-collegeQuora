@@ -16,7 +16,7 @@ const Signup = () => {
 
 
     // useStates for credentials
-    const [credentials, setCredetials] = useState({ firstName: "", lastName: "", email: "", password: "", username: "", collegeName: "" })
+    const [credentials, setCredetials] = useState({ firstName: "", lastName: "", email: "", password: "", username: "", collegeName: "", gender: "", bio: "" })
     let navigate = useNavigate();
 
 
@@ -24,13 +24,13 @@ const Signup = () => {
         e.preventDefault();
 
         try {
-            const { firstName, lastName, email, password, username, collegeName } = credentials;
+            const { firstName, lastName, email, password, username, collegeName, gender, bio } = credentials;
             const response = await fetch(`${host}/api/auth/createuser`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ firstName, lastName, email, password, username, collegeName })
+                body: JSON.stringify({ firstName, lastName, email, password, username, collegeName, gender, bio })
             });
             const json = await response.json();
 
@@ -135,6 +135,26 @@ const Signup = () => {
                             <label htmlFor="cpassword" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>College Name</label>
                         </div>
 
+
+                        {/* gender */}
+                        <div className="col-span-6 sm:col-span-3 relative z-0 w-full mb-6 group">
+                            <label htmlFor="gender" className={`block font-medium ${textMain}`}>
+                                Gender
+                            </label>
+                            <select id="gender" name="gender" autoComplete="gender" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value={credentials.gender} onChange={onChange} required>
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+
+                        {/* Bio */}
+                        <div className="relative z-0 w-full mb-4 group">
+                            <input onChange={onChange} name="bio" id="bio" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
+                            <label htmlFor="bio" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Bio</label>
+                        </div>
 
 
                         {/* Password */}

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useRef, useState } from 'react';
-import blankprofile from "./blankprofile.jpg"
-import CQlogo1 from "./CQlogo1.png"
+import blankprofile from "../images/blankprofile.jpg";
+import CQlogo1 from "../images/CQlogo1.png"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AddQuestionModal from './AddQuestionModal';
 import { IoLogIn } from "react-icons/io5";
@@ -319,7 +319,7 @@ export default function Navbar() {
                         <Link to='/'
                             className={`${home} block border-2 transition  ease-in-out duration-500  px-3 py-2 rounded-md text-base font-medium`}
                             aria-current="page">
-                            Text Control
+                            Home
                         </Link>
 
                         <Link to='/about'
@@ -329,12 +329,12 @@ export default function Navbar() {
 
                         <Link to='/'
                             className={`${about} block px-3 py-2 rounded-md text-base border-2 border-gray-400 font-medium`}>
-                            Projects
+                            Terms
                         </Link>
 
                         <Link to='/'
                             className={`${about} block px-3 py-2 rounded-md text-base border-2 border-gray-400 font-medium`}>
-                            Calender
+                            Privacy Policy
                         </Link>
 
                     </div>

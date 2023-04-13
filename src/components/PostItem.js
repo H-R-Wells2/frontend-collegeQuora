@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useContext } from 'react';
-import blankprofile from "./blankprofile.jpg"
+import blankprofile from "../images/blankprofile.jpg";
 import { BiUpvote, BiDownvote } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegCommentDots } from "react-icons/fa";
-import { IoCloseOutline } from "react-icons/io5";
+// import { IoCloseOutline } from "react-icons/io5";
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
 import { FiSend } from "react-icons/fi";
@@ -19,7 +19,7 @@ const PostItem = (props) => {
 
     // getting states from context
     const context = useContext(modeContext);
-    const { mainBox, textMain, textmain2, cardBtn, cardBtnH, textArea, alert } = context;
+    const { mainBox, textMain, textmain2, cardBtn, cardBtnH, textArea, alert, commentBox } = context;
     const { post } = props;
 
 
@@ -29,7 +29,7 @@ const PostItem = (props) => {
     useEffect(() => {
         //Runs only on the first render
         if (post.title === "cqtempQuestion") {
-            setPtitle(titleForQuestion)
+            setPtitle(titleForQuestion);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -77,9 +77,10 @@ const PostItem = (props) => {
             return;
         }
         addComment(comment, post._id, 0);
-        console.log(post._id);
+        // console.log(post._id);
         toggleAddComment();
         setComment({ comment: "" });
+        getPosts();
     };
 
 
@@ -100,16 +101,20 @@ const PostItem = (props) => {
                 <div className='flex justify-between mb-1'>
                     <div className='flex'>
                         <img className="ml-2 mb-2 h-8 w-8 rounded-full" src={blankprofile} alt="" />
-                        <span className='text-base ml-2 h-max cursor-pointer mt-1'>{post.user.username}</span>
+                        <Link className='text-base ml-2 h-max cursor-pointer mt-1' to={`/users/${post.user.username}`}>{post.user.username}</Link>
                         <span className='text-sm ml-1 h-max text-blue-500 cursor-pointer'>Follow</span>
+
                     </div>
                     <div className=''>
-                        <IoCloseOutline className='cursor-pointer mt-1 h-6 w-6 mx-2' />
+                        <p className={`${textmain2} text-xs mt-3 mr-6`}>
+                            {new Date(post.date).toLocaleDateString()} {new Date(post.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                        </p>
+
                     </div>
                 </div>
 
                 {/* Image */}
-                <div className='mx-1'>
+                <div className='mx-1 flex justify-center'>
                     {post.idOfImage && <img className="" src={`https://drive.google.com/uc?export=view&id=${post.idOfImage}`} alt="" />}
                 </div>
 
@@ -127,9 +132,9 @@ const PostItem = (props) => {
                     <div className='flex justify-between'>
                         <div className='flex'>
                             <button type='button'
-                                className={`${cardBtn} px-3 py-2 rounded-l-3xl text-sm font-medium transition ease-in-out duration-300 flex`}><BiUpvote className='h-5 mr-1' />Upvote</button>
+                                className={`${cardBtn} px-3 py-2 rounded-l-3xl text-sm font-medium transition ease-in-out duration-500 flex`}><BiUpvote className='h-5 mr-1' />Upvote</button>
                             <button type='button'
-                                className={`${cardBtn} border-l border-gray-400 px-3 py-2 rounded-r-3xl text-sm font-medium transition ease-in-out duration-300 flex`}><BiDownvote className='h-5 mr-1' /></button>
+                                className={`${cardBtn} border-l border-gray-400 px-3 py-2 rounded-r-3xl text-sm font-medium transition ease-in-out duration-500 flex`}><BiDownvote className='h-5 mr-1' /></button>
                             <button onClick={toggleAddComment} className={`${cardBtnH} ml-2 rounded-full px-2`}>
                                 <FaRegCommentDots className='h-5 w-6' />
                             </button>
@@ -139,26 +144,33 @@ const PostItem = (props) => {
                         </button>
                     </div>
                 </div>
-                <div className='bg-gray-500 flex rounded-b-lg py-4 px-4'>
 
+
+                {/* Comment Card */}
+                <div className={`${commentBox} transition ease-in-out duration-500 flex rounded-b-lg py-4 px-4`}>
 
                     {/* add comment */}
                     <div className={`w-full ${addCommentState}`}>
                         <form onSubmit={handleSubmit} className="flex w-full justify-center">
                             <textarea name='comment' value={comment.comment} onChange={onChange} ref={inputRef} className={`form-control block  w-full  px-3  py-1.5  text-base  font-normal text-gray-900   bg-clip-padding  border border-solid border-gray-300  rounded  transition  ease-in-out duration-500  focus:text-gray-700 focus:border-blue-600 focus:outline-none ${textArea}`} autoComplete="off" placeholder="Write your comment... OR Give Answer..."></textarea>
-                            <button type='submit' className={`hover:bg-gray-600 h-10 ml-2 rounded-full px-2`}>
+                            <button type='submit' className={`${textMain} transition ease-in-out duration-500 hover:bg-gray-600 h-10 ml-2 rounded-full px-2`}>
                                 <FiSend className='h-5 w-6' />
                             </button>
                         </form>
                     </div>
 
                     {/* loadedComments */}
-                    <div className={`${loadedComments} py-1.5`}>
+                    <div className={`${loadedComments} ${textMain} transition ease-in-out duration-500 py-1.5`}>
                         {post.comments && post.comments.length > 0 ? <div className="pl-3 flex">
                             <img src={blankprofile} alt="profile" className='w-7 h-7 rounded-full mr-1' />
-                            <span className='font-bold cursor-pointer'>{post.comments[0].user.username}</span>
-                            <span className='ml-2'>{post.comments[0].comment}</span>
-                        </div> : "No comments yet"}
+                            <span className='font-bold cursor-pointer'>{post.comments[post.comments.length - 1].user.username}</span>
+                            <span className='ml-2'>{post.comments.length > 0 && (
+                                <span className='ml-2'>
+                                    {post.comments[post.comments.length - 1].comment}
+                                </span>
+                            )}
+                            </span>
+                        </div> : <div className={`${textMain} transition ease-in-out duration-500`}>No comments yet</div>}
                     </div>
                 </div>
             </div>

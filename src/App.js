@@ -25,6 +25,9 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsConditions from './components/TermsConditions';
 import About from './components/About';
 import SelectedPost from './components/SelectedPost';
+import Answer from './components/Answer';
+import ProfilePage from './components/ProfilePage';
+
 
 
 function App() {
@@ -61,7 +64,9 @@ function App() {
                 <Route path="/policy" element={<PrivacyPolicy />} />
                 <Route path="/terms" element={<TermsConditions />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/answer" element={<Answer />} />
                 <Route path="/post/:id" element={<SelectedPost />} />
+                <Route path="/users/:username" element={<ProfilePage />} />
               </Routes>
             </AuthState>
           </Router>

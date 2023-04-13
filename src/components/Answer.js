@@ -2,33 +2,39 @@ import React, { useContext, useEffect, useState } from 'react';
 import postContext from '../context/posts/postContext';
 import PostItem from './PostItem';
 import modeContext from '../context/mode/modeContext';
-import { HiOutlineCalculator } from "react-icons/hi";
+import { BsFillQuestionSquareFill } from "react-icons/bs";
+
+const Answer = () => {
 
 
-export default function Baf() {
-
-    // getting states from context
+    // Getting states from context
     const { host } = useContext(postContext);
     const { mainBox, textMain } = useContext(modeContext);
 
+    const [NoComPosts, setNoComPosts] = useState([]);
 
-    const [searchedPosts, setSearchedPosts] = useState([]);
 
-
-    // Get searched posts
-    const getSearchedPosts = async () => {
-        // API call
+    // Get all posts with no comments
+    const getNoComPosts = async () => {
         try {
-            const response = await fetch(`${host}/api/posts/search?title=${"baf"}&description=${"baf"}&tag=${"baf"}`);
-            const data = await response.json();
-            setSearchedPosts(data);
-            // console.log(data)
+            const response = await fetch(`${host}/api/posts/no-comments`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.status === 200) {
+                const json = await response.json();
+                setNoComPosts(json);
+                // console.log(json)
+            }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
-    }
+    };
+
     useEffect(() => {
-        getSearchedPosts();
+        getNoComPosts();
         // eslint-disable-next-line
     }, [])
 
@@ -37,9 +43,12 @@ export default function Baf() {
 
 
 
+
+
+
     return (
         <div className="flex justify-start ml-64 mr-4 py-3">
-            {searchedPosts.length === 0 ? (
+            {NoComPosts.length === 0 ? (
                 <div role="status" className='ml-72 mt-48'>
                     <svg aria-hidden="true" className="w-20 h-20 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
@@ -51,15 +60,18 @@ export default function Baf() {
                 <div className="flex flex-col gap-y-4">
                     <div className={`shadow-lg text-center justify-center py-10 rounded-lg max-w-2xl transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
                         <div className='text-4xl flex font-semibold justify-center'>
-                            <HiOutlineCalculator className='mt-1' />
-                            <span className='ml-2'>BAF</span>
+                            <BsFillQuestionSquareFill className='mt-1' />
+                            <span className='ml-2'>Questions With No Answers</span>
                         </div>
+                        <span className='ml-2 text-2xl'>Answer these questions</span>
                     </div>
-                    {searchedPosts.map((post) => {
+                    {NoComPosts.map((post) => {
                         return <PostItem key={post._id} post={post} />;
                     })}
                 </div>
             )}
         </div>
-    );
+    )
 }
+
+export default Answer

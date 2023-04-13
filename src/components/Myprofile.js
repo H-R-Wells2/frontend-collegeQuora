@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import authContext from '../context/auth/authContext';
 import modeContext from '../context/mode/modeContext';
-
-import { Fragment } from 'react'
+import cover from "../images/cover.jpg";
+import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react'
+import { FaUserEdit } from "react-icons/fa";
 
 
 
@@ -20,28 +21,35 @@ export default function Myprofile() {
         // eslint-disable-next-line
     }, [])
 
+    // getting states from modecontext
+    const { mainBox, textMain, backG, textMain2, bordInp, labelInp, alert } = useContext(modeContext)
 
+
+    // to populate the modal
+    const [open, setOpen] = useState(false);
 
     // Handle Update
     const handleUpdate = async (e) => {
         e.preventDefault();
 
-        const { firstName, lastName, email, password, username, collegeName } = userData;
-        const response = await fetch("http://localhost:5000/api/auth/updateuser", {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                "auth-token": localStorage.getItem('token')
-            },
-            body: JSON.stringify({ firstName, lastName, email, password, username, collegeName })
-        });
-        const json = await response.json();
-        console.log(json);
-        if (json.success) {
-            alert('User data updated successfully!');
-        }
-        else {
-            alert(json.error);
+        const { firstName, lastName, email, password, username, collegeName, gender, bio } = userData;
+
+        try {
+            const response = await fetch("http://localhost:5000/api/auth/updateuser", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ firstName, lastName, email, password, username, collegeName, gender, bio })
+            });
+            const json = await response.json();
+            console.log(json);
+            setOpen(false);
+            alert('success', 'User data updated successfully!');
+        } catch (error) {
+            console.error(error);
+            alert('error', 'Failed to update user data.');
         }
     }
 
@@ -49,14 +57,11 @@ export default function Myprofile() {
 
 
 
-    // getting states from modecontext
-    const { mainBox, textMain, backG, textMain2, bordInp, labelInp } = useContext(modeContext)
 
 
 
 
-    // to populate the modal
-    const [open, setOpen] = useState(false);
+
 
     // on change
     const onChange = (e) => {
@@ -136,27 +141,35 @@ export default function Myprofile() {
                                             {/* Username */}
                                             <div className="relative z-0 w-full mb-6 group">
                                                 <input onChange={onChange} value={userData.username} name="username" id="username" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
-                                                <label htmlFor="cpassword" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Username</label>
+                                                <label htmlFor="username" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Username</label>
                                             </div>
 
 
+                                            {/* collegeName */}
                                             <div className="relative z-0 w-full mb-4 group">
-                                                <input onChange={onChange} value={userData.collegeName} name="username" id="username" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
-                                                <label htmlFor="cpassword" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>College Name</label>
+                                                <input onChange={onChange} value={userData.collegeName} name="collegeName" id="collegeName" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
+                                                <label htmlFor="collegeName" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>College Name</label>
+                                            </div>
+
+
+                                            {/* Bio */}
+                                            <div className="relative z-0 w-full mb-4 group">
+                                                <input onChange={onChange} value={userData.bio} name="bio" id="bio" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
+                                                <label htmlFor="bio" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Bio</label>
                                             </div>
 
 
 
 
-
+                                            {/* gender */}
                                             <div className="col-span-6 sm:col-span-3 relative z-0 w-full mb-6 group ">
-                                                <label htmlFor="country" className={`block font-medium ${textMain}`}>
+                                                <label htmlFor="gender" className={`block font-medium ${textMain}`}>
                                                     Gender</label>
-                                                <select id="country" name="country" autoComplete="country"
+                                                <select onChange={onChange} value={userData.gender} id="gender" name="gender" autoComplete="gender"
                                                     className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                                    <option>Male</option>
-                                                    <option>Female</option>
-                                                    <option>Other</option>
+                                                    <option>male</option>
+                                                    <option>female</option>
+                                                    <option>other</option>
                                                 </select>
                                             </div>
 
@@ -197,7 +210,7 @@ export default function Myprofile() {
                         className="absolute top-0 w-full h-full bg-center bg-cover"
                         style={{
                             backgroundImage:
-                                "url('https://img.collegequora.workers.dev/0:/CQimg11.jpg')"
+                                `url(${cover})`
                         }}
                     >
                         <span
@@ -249,7 +262,7 @@ export default function Myprofile() {
                                                 type="button"
                                                 style={{ transition: "all .15s ease" }}
                                             >
-                                                Edit Information
+                                                <FaUserEdit className='mx-2 text-lg' />Edit Profile
                                             </button>
                                         </div>
                                     </div>
@@ -286,6 +299,9 @@ export default function Myprofile() {
                                     <div className={`text-sm leading-normal mt-0 mb-1 ${textMain2} font-bold`}>
                                         {userData.email}
                                     </div>
+                                    <div className={`mb-2 font-serif ${textMain}`}>
+                                        Gender - {userData.gender ? userData.gender : 'No information added, please add.'}
+                                    </div>
                                     <div className={`mb-2 font-semibold ${textMain} mt-10`}>
                                         College Name - {userData.collegeName}
                                     </div>
@@ -294,19 +310,15 @@ export default function Myprofile() {
                                     <div className="flex flex-wrap justify-center">
                                         <div className="w-full lg:w-9/12 px-4">
                                             <p className={`mb-4 text-base leading-relaxed ${textMain}`}>
-                                                An artist of considerable range, Jenna the name taken by
-                                                Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                                                performs and records all of his own music, giving it a
-                                                warm, intimate feel with a solid groove structure. An
-                                                artist of considerable range.
+                                                {userData.bio ? userData.bio : 'No bio, please add using update information.'}
                                             </p>
-                                            <a
+                                            {/* <a
                                                 href="#pablo"
                                                 className="font-normal text-blue-500"
                                                 onClick={e => e.preventDefault()}
                                             >
                                                 Show more
-                                            </a>
+                                            </a> */}
                                         </div>
                                     </div>
                                 </div>

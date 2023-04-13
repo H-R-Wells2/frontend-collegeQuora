@@ -55,7 +55,6 @@ const PostState = (props) => {
     title: ''
   });
   const getSearchedPosts = async () => {
-    // To-Do API call
     // API call
     try {
       const response = await fetch(`${host}/api/posts/search?title=${searchParams.title}&description=${searchParams.title}&tag=${searchParams.title}`);
@@ -141,12 +140,6 @@ const PostState = (props) => {
 
 
 
-
-
-
-
-
-
   // Delete post
   const deletePost = async (id) => {
     // To-Do API call
@@ -203,8 +196,6 @@ const PostState = (props) => {
     }
     setPosts(newPosts);
   }
-
-
 
 
 

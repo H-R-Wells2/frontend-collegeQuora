@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
 import PostItem from './PostItem';
-import nothingMatched from "./nothingMatched.png"
+import nothingMatched from "../images/nothingMatched.png"
 
 
 export default function Content() {
