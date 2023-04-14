@@ -19,8 +19,12 @@ const PostItem = (props) => {
 
     // getting states from context
     const context = useContext(modeContext);
-    const { mainBox, textMain, textmain2, cardBtn, cardBtnH, textArea, alert, commentBox } = context;
+    const { mainBox, textMain, textmain2, cardBtn, cardBtnH, textArea, alert, commentBox, followBtn, unFollowBtn, toggleFollow } = context;
     const { post } = props;
+
+
+    // getting states/functions from postContext
+    const { addComment, getPosts, host } = useContext(postContext);
 
 
     // to change title to question when submitting question
@@ -65,8 +69,6 @@ const PostItem = (props) => {
         setComment({ ...comment, [e.target.name]: e.target.value });
     };
 
-    // getting states/functions from postContext
-    const { addComment, getPosts } = useContext(postContext);
 
     // function when submit comment
     const handleSubmit = (e) => {
@@ -95,6 +97,83 @@ const PostItem = (props) => {
 
 
 
+
+    // To upvote a post
+    const handleUpvoteClick = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("error", "Please log in to upvote a post.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${host}/api/posts/${post._id}/upvote`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem("token"),
+                },
+            });
+
+            if (response.status >= 400 && response.status < 600) {
+                const data = await response.json();
+                alert("error", data.error);
+                return;
+            }
+
+            const data = await response.json();
+            getPosts();
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+            alert("error", "An error occurred while upvoting the post.");
+        }
+    };
+
+
+
+
+
+    // To downvote a post
+    const handleDownvoteClick = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("error", "Please log in to downvote a post.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${host}/api/posts/${post._id}/downvote`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem("token"),
+                },
+            });
+
+            if (response.status >= 400 && response.status < 600) {
+                const data = await response.json();
+                alert("error", data.error);
+                return;
+            }
+
+            const data = await response.json();
+            getPosts();
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+            alert("error", "An error occurred while downvoting the post.");
+        }
+    };
+
+
+
+
+
+
+
+
+
     return (
         <>
             <div className={`mb-4 shadow-lg rounded-lg max-w-2xl pt-2 transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
@@ -102,7 +181,8 @@ const PostItem = (props) => {
                     <div className='flex'>
                         <img className="ml-2 mb-2 h-8 w-8 rounded-full" src={blankprofile} alt="" />
                         <Link className='text-base ml-2 h-max cursor-pointer mt-1' to={`/users/${post.user.username}`}>{post.user.username}</Link>
-                        <span className='text-sm ml-1 h-max text-blue-500 cursor-pointer'>Follow</span>
+                        <button onClick={toggleFollow} className={`${followBtn} text-sm ml-1 h-max text-blue-500 cursor-pointer`}>Follow</button>
+                        <button onClick={toggleFollow} className={`${unFollowBtn} text-sm ml-1 h-max text-blue-500 cursor-pointer`}>Unfollow</button>
 
                     </div>
                     <div className=''>
@@ -131,10 +211,10 @@ const PostItem = (props) => {
                     {/* Bottom Buttons */}
                     <div className='flex justify-between'>
                         <div className='flex'>
-                            <button type='button'
-                                className={`${cardBtn} px-3 py-2 rounded-l-3xl text-sm font-medium transition ease-in-out duration-500 flex`}><BiUpvote className='h-5 mr-1' />Upvote</button>
-                            <button type='button'
-                                className={`${cardBtn} border-l border-gray-400 px-3 py-2 rounded-r-3xl text-sm font-medium transition ease-in-out duration-500 flex`}><BiDownvote className='h-5 mr-1' /></button>
+                            <button onClick={() => { handleUpvoteClick() }} type='button'
+                                className={`${cardBtn} px-3 py-2 rounded-l-3xl text-sm font-medium transition ease-in-out duration-500 flex`}><BiUpvote className='h-5 mr-1' />{post.upvotes.length} Upvotes </button>
+                            <button onClick={() => { handleDownvoteClick() }} type='button'
+                                className={`${cardBtn} border-l border-gray-400 px-3 py-2 rounded-r-3xl text-sm font-medium transition ease-in-out duration-500 flex`}><BiDownvote className='h-5 mr-1' />{post.downvotes.length}</button>
                             <button onClick={toggleAddComment} className={`${cardBtnH} ml-2 rounded-full px-2`}>
                                 <FaRegCommentDots className='h-5 w-6' />
                             </button>

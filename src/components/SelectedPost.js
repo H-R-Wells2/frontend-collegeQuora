@@ -84,8 +84,8 @@ export default function SelectedPost(props) {
 
 
                 {/* Card for Question */}
-                <div className={`shadow-lg min-w-full text-center justify-center pb-5 pt-10 rounded-lg max-w-2xl transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
-                    <div className='ml-8 flex justify-between mb-1'>
+                <div className={`shadow-lg min-w-full text-center justify-center pb-5 pt-6 rounded-lg max-w-2xl transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
+                    <div className='ml-8 flex justify-between mb-2'>
                         <div className='flex'>
                             <img className="ml-2 mb-2 h-8 w-8 rounded-full" src={blankprofile} alt="" />
                             <Link className='text-base ml-2 h-max cursor-pointer mt-1' to={`/users/${selectedPost.user.username}`}>{selectedPost.user.username}</Link>

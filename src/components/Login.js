@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import postContext from '../context/posts/postContext';
 import modeContext from '../context/mode/modeContext';
 
 
@@ -13,6 +14,7 @@ const Login = (props) => {
       // getting states from context
       const context = useContext(modeContext)
       const { mainBox, textMain, logsign, remText, setLoggedIn, alert } = context
+      const { host } = useContext(postContext)
 
 
     // useStates for credentials
@@ -30,7 +32,7 @@ const Login = (props) => {
         e.preventDefault();
       
         try {
-          const response = await fetch("http://localhost:5000/api/auth/login", {
+          const response = await fetch(`${host}/api/auth/login`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
