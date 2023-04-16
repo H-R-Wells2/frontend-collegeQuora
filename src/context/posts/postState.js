@@ -203,7 +203,7 @@ const PostState = (props) => {
 
 
   return (
-    <postContext.Provider value={{ host, posts, deletePost, editPost, getPosts, addPost, setFile, searchedPosts, setSearchedPosts, getSearchedPosts, searchParams, setSearchParams, addComment, comments }}>
+    <postContext.Provider value={{ host, posts, deletePost, editPost, getPosts, addPost, setFile, searchedPosts, setSearchedPosts, getSearchedPosts, searchParams, setSearchParams, addComment, comments, setPosts }}>
       {props.children}
     </postContext.Provider>
   )

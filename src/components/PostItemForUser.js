@@ -15,16 +15,16 @@ import { Link } from 'react-router-dom';
 
 
 
-const PostItem = (props) => {
+const PostItemForUser = (props) => {
 
     // getting states from context
     const context = useContext(modeContext);
     const { mainBox, textMain, textmain2, cardBtn, cardBtnH, textArea, alert, commentBox } = context;
-    const { post } = props;
+    const { post, setUserPosts } = props;
 
 
     // getting states/functions from postContext
-    const { addComment, getPosts, host, setPosts } = useContext(postContext);
+    const { addComment, getPosts, host } = useContext(postContext);
 
 
     // to change title to question when submitting question
@@ -123,7 +123,7 @@ const PostItem = (props) => {
 
             const updatedPost = await response.json();
             // Update the userPosts state with the updated post data
-            setPosts(prevPosts => prevPosts.map(prevPost => prevPost._id === updatedPost._id ? updatedPost : prevPost));
+            setUserPosts(prevPosts => prevPosts.map(prevPost => prevPost._id === updatedPost._id ? updatedPost : prevPost));
         } catch (error) {
             console.error(error);
             alert("error", "An error occurred while upvoting the post.");
@@ -160,7 +160,7 @@ const PostItem = (props) => {
 
             const updatedPost = await response.json();
             // Update the userPosts state with the updated post data
-            setPosts(prevPosts => prevPosts.map(prevPost => prevPost._id === updatedPost._id ? updatedPost : prevPost));
+            setUserPosts(prevPosts => prevPosts.map(prevPost => prevPost._id === updatedPost._id ? updatedPost : prevPost));
         } catch (error) {
             console.error(error);
             alert("error", "An error occurred while downvoting the post.");
@@ -183,9 +183,6 @@ const PostItem = (props) => {
                     <div className='flex'>
                         <img className="ml-2 mb-2 h-8 w-8 rounded-full" src={blankprofile} alt="" />
                         <Link className='text-base ml-2 h-max cursor-pointer mt-1' to={`/users/${post.user.username}`}>{post.user.username}</Link>
-                        {/* <button onClick={toggleFollow} className={`${followBtn} text-sm ml-1 h-max text-blue-500 cursor-pointer`}>Follow</button>
-                        <button onClick={toggleFollow} className={`${unFollowBtn} text-sm ml-1 h-max text-blue-500 cursor-pointer`}>Unfollow</button> */}
-
                     </div>
                     <div className=''>
                         <p className={`${textmain2} text-xs mt-3 mr-6`}>
@@ -260,4 +257,4 @@ const PostItem = (props) => {
     )
 }
 
-export default PostItem
+export default PostItemForUser

@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import postContext from '../context/posts/postContext';
 import modeContext from '../context/mode/modeContext';
+import { SlUserFollow } from "react-icons/sl";
 import cover from "../images/cover.jpg";
+import PostItemForUser from './PostItemForUser';
 
 
 
@@ -16,8 +18,10 @@ export default function ProfilePage() {
     const [user, setUser] = useState(null);
     const { username } = useParams();
 
+    const [userPosts, setUserPosts] = useState([]);
 
 
+    // Function to get user data and posts
     const fetchUser = useCallback(async (username) => {
         try {
             const response = await fetch(`${host}/api/auth/${username}`, {
@@ -26,18 +30,24 @@ export default function ProfilePage() {
                     'auth-token': localStorage.getItem('token'),
                 },
             });
-            const data = await response.json();
-            setUser(data);
+            const userData = await response.json();
+            setUser(userData);
+
+            // fetch posts for the user
+            const postsResponse = await fetch(`${host}/api/posts/${userData._id}`);
+            const postsData = await postsResponse.json();
+            setUserPosts(postsData);
         } catch (error) {
             console.error(error.message);
         }
-        // eslint-disable-next-line
-    }, [host, username]);
+    }, [host]);
 
 
+    // call fetchUser when the component mounts
     useEffect(() => {
         fetchUser(username);
     }, [fetchUser, username]);
+
 
 
 
@@ -85,37 +95,26 @@ export default function ProfilePage() {
                         <div className="container mx-auto px-4">
                             <div className={`relative flex flex-col min-w-0 break-words w-full mb-6 shadow-xl rounded-lg -mt-64 transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
                                 <div className="px-6">
-                                    <div className="flex justify-between mx-56">
-                                        {/* Profile Image */}
-                                        <div className="w-full lg:w-3/12 px-4 flex justify-center">
-                                            <div className="relative">
-                                                <div className="pl-3 flex">
-                                                    <img
-                                                        alt="..."
-                                                        src={user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
-                                                        className="shadow-xl rounded-full h-auto align-middle border-none absolute -my-24 -ml-24"
-                                                        style={{ maxWidth: "220px" }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
+
+
+                                    <div className="flex justify-between mx-32">
 
                                         {/* Data */}
-                                        <div className="w-full lg:w-4/12 px-4">
+                                        <div className="w-1/2 px-4">
                                             <div className="flex justify-center py-4 lg:pt-4 pt-8">
-                                                <div className="mr-4 p-3 text-center">
+                                                <div className=" p-3 text-center">
                                                     <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
                                                         22
                                                     </span>
                                                     <span className={`text-sm ${textMain2}`}>Connections</span>
                                                 </div>
-                                                <div className="mr-4 p-3 text-center">
+                                                <div className="p-3 text-center">
                                                     <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
-                                                        10
+                                                        {userPosts.length}
                                                     </span>
                                                     <span className={`text-sm ${textMain2}`}>Questions</span>
                                                 </div>
-                                                <div className="lg:mr-4 p-3 text-center">
+                                                <div className="p-3 text-center">
                                                     <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
                                                         89
                                                     </span>
@@ -123,7 +122,45 @@ export default function ProfilePage() {
                                                 </div>
                                             </div>
                                         </div>
+
+
+
+
+                                        {/* Profile Image */}
+                                        <div className="w-1/4 px-4 flex justify-center">
+                                            <div className="relative">
+                                                <div className="flex">
+                                                    <img
+                                                        alt="..."
+                                                        src={user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                        className="shadow-xl rounded-full h-auto align-middle border-none absolute -my-24 -ml-28"
+                                                        style={{ maxWidth: "220px" }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <div className="w-1/2 px-4">
+                                            <div className="flex justify-center py-4 pt-4 ">
+                                                <div className="p-3 text-center">
+                                                    <button className="px-3 flex py-2 font-medium text-sm leading-tight uppercase rounded-2xl shadow-md transition  duration-150 ease-in-out md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 bg-blue-600 text-white "
+                                                        type="button"
+                                                        style={{ transition: "all .15s ease" }}
+                                                    >
+                                                        <SlUserFollow className='mr-2 text-lg' />Follow
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+
+
+
+
 
                                     {/* User Data */}
                                     <div className="text-center mt-12">
@@ -154,6 +191,25 @@ export default function ProfilePage() {
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+
+                            {/* Posts By User */}
+                            <div className="flex flex-wrap justify-center">
+                                {userPosts.map((post) => (
+                                    <div key={post._id} className="w-1/2 p-2">
+                                        <PostItemForUser post={post} setUserPosts={setUserPosts} />
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className={`flex justify-center text-2xl font-bold transition ease-in-out duration-500 ${textMain}`}>
+                                No More Posts...
+                            </div>
+
+
                         </div>
                     </section>
                 </main>
