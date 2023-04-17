@@ -302,13 +302,13 @@ export default function Myprofile() {
                                         <div className="flex justify-center py-4 lg:pt-4 pt-8">
                                             <div className="mr-4 p-3 text-center">
                                                 <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
-                                                    {loggedInUserData.following.length}
+                                                    {loggedInUserData.following ? loggedInUserData.following.length : 0}
                                                 </span>
                                                 <span className={`text-sm ${textMain2}`}>Following</span>
                                             </div>
                                             <div className="mr-4 p-3 text-center">
                                                 <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
-                                                    {loggedInUserData.followers.length}
+                                                    {loggedInUserData.followers ? loggedInUserData.followers.length : 0}
                                                 </span>
                                                 <span className={`text-sm ${textMain2}`}>Followers</span>
                                             </div>
