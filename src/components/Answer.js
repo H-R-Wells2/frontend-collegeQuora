@@ -58,7 +58,7 @@ const Answer = () => {
                 </div>
             ) : (
                 <div className="flex flex-col gap-y-4">
-                    <div className={`shadow-lg text-center justify-center py-10 rounded-lg max-w-2xl transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
+                    <div className={`px-10 shadow-lg text-center justify-center py-10 rounded-lg max-w-2xl transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
                         <div className='text-4xl flex font-semibold justify-center'>
                             <BsFillQuestionSquareFill className='mt-1' />
                             <span className='ml-2'>Questions With No Answers</span>

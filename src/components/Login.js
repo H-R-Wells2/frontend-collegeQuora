@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import postContext from '../context/posts/postContext';
 import modeContext from '../context/mode/modeContext';
+import authContext from '../context/auth/authContext';
 
 
 
@@ -13,8 +14,9 @@ const Login = (props) => {
 
       // getting states from context
       const context = useContext(modeContext)
-      const { mainBox, textMain, logsign, remText, setLoggedIn, alert } = context
-      const { host } = useContext(postContext)
+      const { mainBox, textMain, logsign, remText, setLoggedIn, alert, checkLogin } = context
+      const { host } = useContext(postContext);
+      const { getLoggedInUserData } = useContext(authContext);
 
 
     // useStates for credentials
@@ -46,7 +48,9 @@ const Login = (props) => {
             localStorage.setItem('token', authToken);
             navigate('/');
             setLoggedIn(true);
+            checkLogin();
             alert('success','Logged In successfully');
+            getLoggedInUserData();
           } else {
             alert('error',"Please enter valid username and password");
           }

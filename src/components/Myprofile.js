@@ -5,6 +5,7 @@ import cover from "../images/cover.jpg";
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react'
 import { FaUserEdit } from "react-icons/fa";
+import PostItem from './PostItem';
 
 
 
@@ -15,9 +16,9 @@ export default function Myprofile() {
 
 
     // For getting user data
-    const { getUserData, userData, setUserData } = useContext(authContext);
+    const { getLoggedInUserData, loggedInUserData, setLoggedInUserData, loggedInUserPosts, setLoggedInUserPosts, host } = useContext(authContext);
     useEffect(() => {
-        getUserData()
+        getLoggedInUserData()
         // eslint-disable-next-line
     }, [])
 
@@ -32,10 +33,10 @@ export default function Myprofile() {
     const handleUpdate = async (e) => {
         e.preventDefault();
 
-        const { firstName, lastName, email, password, username, collegeName, gender, bio } = userData;
+        const { firstName, lastName, email, password, username, collegeName, gender, bio } = loggedInUserData;
 
         try {
-            const response = await fetch("http://localhost:5000/api/auth/updateuser", {
+            const response = await fetch(`${host}/api/auth/updateuser`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -55,8 +56,10 @@ export default function Myprofile() {
 
 
 
-
-
+    // To go on top
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
 
 
@@ -66,7 +69,7 @@ export default function Myprofile() {
     // on change
     const onChange = (e) => {
         const { name, value } = e.target;
-        setUserData((prevState) => ({
+        setLoggedInUserData((prevState) => ({
             ...prevState,
             [name]: value,
         }));
@@ -118,11 +121,11 @@ export default function Myprofile() {
                                             {/* Name */}
                                             <div className="mt-2 grid xl:grid-cols-2 xl:gap-6">
                                                 <div className="relative z-0 w-full mb-6 group">
-                                                    <input onChange={onChange} value={userData.firstName} type="text" name="firstName" id="first_name" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  ${bordInp} peer`} placeholder=" " required />
+                                                    <input onChange={onChange} value={loggedInUserData.firstName} type="text" name="firstName" id="first_name" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  ${bordInp} peer`} placeholder=" " required />
                                                     <label htmlFor="first_name" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${labelInp} peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>First name</label>
                                                 </div>
                                                 <div className="relative z-0 w-full mb-6 group">
-                                                    <input onChange={onChange} value={userData.lastName} type="text" name="lastName" id="last_name" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  ${bordInp} peer`} placeholder=" " />
+                                                    <input onChange={onChange} value={loggedInUserData.lastName} type="text" name="lastName" id="last_name" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  ${bordInp} peer`} placeholder=" " />
                                                     <label htmlFor="last_name" className={`peer-focus:font-medium absolute text-lg text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Last name</label>
                                                 </div>
                                             </div>
@@ -131,7 +134,7 @@ export default function Myprofile() {
 
                                             {/* Email id */}
                                             <div className="relative z-0 w-full mb-6 group">
-                                                <input onChange={onChange} value={userData.email} type="email" name="email" id='email' className={` block py-2 mt-3 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
+                                                <input onChange={onChange} value={loggedInUserData.email} type="email" name="email" id='email' className={` block py-2 mt-3 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
                                                 <label htmlFor="email" className={`peer-focus:font-medium absolute text-lg text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Email address</label>
                                             </div>
 
@@ -140,21 +143,21 @@ export default function Myprofile() {
 
                                             {/* Username */}
                                             <div className="relative z-0 w-full mb-6 group">
-                                                <input onChange={onChange} value={userData.username} name="username" id="username" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
+                                                <input onChange={onChange} value={loggedInUserData.username} name="username" id="username" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
                                                 <label htmlFor="username" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Username</label>
                                             </div>
 
 
                                             {/* collegeName */}
                                             <div className="relative z-0 w-full mb-4 group">
-                                                <input onChange={onChange} value={userData.collegeName} name="collegeName" id="collegeName" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
+                                                <input onChange={onChange} value={loggedInUserData.collegeName} name="collegeName" id="collegeName" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
                                                 <label htmlFor="collegeName" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>College Name</label>
                                             </div>
 
 
                                             {/* Bio */}
                                             <div className="relative z-0 w-full mb-4 group">
-                                                <input onChange={onChange} value={userData.bio} name="bio" id="bio" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
+                                                <input onChange={onChange} value={loggedInUserData.bio} name="bio" id="bio" className={`block py-2.5 px-0 w-full text-base ${textMain} transition ease-in-out duration-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 ${bordInp} peer`} placeholder=" " required />
                                                 <label htmlFor="bio" className={`peer-focus:font-medium absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Bio</label>
                                             </div>
 
@@ -165,7 +168,7 @@ export default function Myprofile() {
                                             <div className="col-span-6 sm:col-span-3 relative z-0 w-full mb-6 group ">
                                                 <label htmlFor="gender" className={`block font-medium ${textMain}`}>
                                                     Gender</label>
-                                                <select onChange={onChange} value={userData.gender} id="gender" name="gender" autoComplete="gender"
+                                                <select onChange={onChange} value={loggedInUserData.gender} id="gender" name="gender" autoComplete="gender"
                                                     className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                                     <option>male</option>
                                                     <option>female</option>
@@ -248,7 +251,7 @@ export default function Myprofile() {
                                             <div className="pl-3 flex">
                                                 <img
                                                     alt="..."
-                                                    src={userData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${userData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                    src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                                     className="shadow-xl rounded-full h-auto align-middle border-none absolute -my-24 -ml-24"
                                                     style={{ maxWidth: "220px" }}
                                                 />
@@ -276,7 +279,7 @@ export default function Myprofile() {
                                             </div>
                                             <div className="mr-4 p-3 text-center">
                                                 <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
-                                                    10
+                                                    {loggedInUserPosts.length}
                                                 </span>
                                                 <span className={`text-sm ${textMain2}`}>Questions</span>
                                             </div>
@@ -291,39 +294,49 @@ export default function Myprofile() {
                                 </div>
                                 <div className="text-center mt-12">
                                     <h3 className={`text-3xl font-semibold leading-normal mb-1 ${textMain}`}>
-                                        {userData.firstName} {userData.lastName}
+                                        {loggedInUserData.firstName} {loggedInUserData.lastName}
                                     </h3>
                                     <div className={`leading-normal mt-0 mb-1 font-bold text-lg ${textMain}`}>
-                                        {userData.username}
+                                        {loggedInUserData.username}
                                     </div>
                                     <div className={`text-sm leading-normal mt-0 mb-1 ${textMain2} font-bold`}>
-                                        {userData.email}
+                                        {loggedInUserData.email}
                                     </div>
                                     <div className={`mb-2 font-serif ${textMain}`}>
-                                        Gender - {userData.gender ? userData.gender : 'No information added, please add.'}
+                                        Gender - {loggedInUserData.gender ? loggedInUserData.gender : 'No information added, please add.'}
                                     </div>
                                     <div className={`mb-2 font-semibold ${textMain} mt-10`}>
-                                        College Name - {userData.collegeName}
+                                        College Name - {loggedInUserData.collegeName}
                                     </div>
                                 </div>
                                 <div className={`mt-10 py-10 border-t border-gray-300 text-center`}>
                                     <div className="flex flex-wrap justify-center">
                                         <div className="w-full lg:w-9/12 px-4">
                                             <p className={`mb-4 text-base leading-relaxed ${textMain}`}>
-                                                {userData.bio ? userData.bio : 'No bio, please add using update information.'}
+                                                {loggedInUserData.bio ? loggedInUserData.bio : 'No bio, please add using update information.'}
                                             </p>
-                                            {/* <a
-                                                href="#pablo"
-                                                className="font-normal text-blue-500"
-                                                onClick={e => e.preventDefault()}
-                                            >
-                                                Show more
-                                            </a> */}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
+
+                        {/* Posts By User */}
+                        <div className="mx-10 flex flex-wrap justify-center">
+                            {loggedInUserPosts.map((post) => (
+                                <div key={post._id} className="w-1/2 p-2">
+                                    <PostItem post={post} setLoggedInUserPosts={setLoggedInUserPosts} />
+                                </div>
+                            ))}
+                        </div>
+
+
+
+
+
+
                     </div>
                 </section>
             </main>

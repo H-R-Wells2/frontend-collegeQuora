@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import modeContext from "./modeContext";
 import { useState } from "react";
 
@@ -145,16 +145,42 @@ const ModeState = (props) => {
 
 
   // function to hide and unhide profileMenu 
-  const [showWhenLogedIn, setShowWhenLoggedIn] = useState("hidden");
-  const [hideWhenLoggedIn, setHideWhenLoggedIn] = useState("block");
-  const checkLogin = () => {
-    if (localStorage.getItem('token')) {
-      setLoggedIn(true);
+  const checkLogin = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
+
+      // Fetch user data
+      const response = await fetch(`http://localhost:5000/api/auth/verify`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      });
+      const json = await response.json();
+      if (json.success) {
+        setLoggedIn(true);
+      } else {
+        localStorage.removeItem('token');
+        setLoggedIn(false);
+      }
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem('token');
     }
   }
   useLayoutEffect(() => {
     checkLogin();
-  })
+  });
+  useEffect(() => {
+    checkLogin();
+  }, [loggedIn])
+
+  const [showWhenLogedIn, setShowWhenLoggedIn] = useState("hidden");
+  const [hideWhenLoggedIn, setHideWhenLoggedIn] = useState("block");
   const toggleProfile = () => {
     if (profile === "hidden") {
       setProfile('block opacity-0');
@@ -187,7 +213,7 @@ const ModeState = (props) => {
     setAlertType(type);
     setAlertMessage(message);
     setTimeout(() => {
-        setShowAlert(false);
+      setShowAlert(false);
     }, 3500);
   }
 
@@ -199,7 +225,7 @@ const ModeState = (props) => {
   const [unFollowBtn, setUnFollowBtn] = useState('hidden')
   // Function to toggle follow button
   const toggleFollow = () => {
-    if (followBtn === 'hidden'){
+    if (followBtn === 'hidden') {
       setFollowBtn('block');
       setUnFollowBtn('hidden');
     }
@@ -213,7 +239,7 @@ const ModeState = (props) => {
 
 
   return (
-    <modeContext.Provider value={{ mode, setMode, about, setAbout, navBtn, setNavBtn, navBtn2, setNavBtn2, navMenu, setNavMenu, profile, setProfile, mainBox, setMainBox, textMain, textMain2, setTextMain, textArea, setTextArea, logsign, setLogsign, remText, setRemText, labelInp, setLabelInp, bordInp, setBordInp, backG, setBackG, tagColor, setTagColor, svg, setSvg, line, setLine, cardBtn, setCardBtn, cardBtnH, setCardBtnH, toggleMode, addOrCrClass, setAddOrCrClass, cancelBtn, setCancelBtn, open, setOpen, home, showWhenLogedIn, setShowWhenLoggedIn, hideWhenLoggedIn, setHideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, setLoggedIn, showAlert, setShowAlert, alertMessage, alertType, alert, commentBox, followBtn, unFollowBtn,toggleFollow }}>
+    <modeContext.Provider value={{ mode, setMode, about, setAbout, navBtn, setNavBtn, navBtn2, setNavBtn2, navMenu, setNavMenu, profile, setProfile, mainBox, setMainBox, textMain, textMain2, setTextMain, textArea, setTextArea, logsign, setLogsign, remText, setRemText, labelInp, setLabelInp, bordInp, setBordInp, backG, setBackG, tagColor, setTagColor, svg, setSvg, line, setLine, cardBtn, setCardBtn, cardBtnH, setCardBtnH, toggleMode, addOrCrClass, setAddOrCrClass, cancelBtn, setCancelBtn, open, setOpen, home, showWhenLogedIn, setShowWhenLoggedIn, hideWhenLoggedIn, setHideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, setLoggedIn, showAlert, setShowAlert, alertMessage, alertType, alert, commentBox, followBtn, unFollowBtn, toggleFollow, checkLogin }}>
       {props.children}
     </modeContext.Provider>
   )

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import postContext from '../context/posts/postContext';
 import modeContext from '../context/mode/modeContext';
 import { SlUserFollow } from "react-icons/sl";
+import { SlUserUnfollow } from "react-icons/sl";
 import cover from "../images/cover.jpg";
 import PostItemForUser from './PostItemForUser';
 
@@ -12,7 +13,7 @@ import PostItemForUser from './PostItemForUser';
 export default function ProfilePage() {
 
     // getting states from modecontext
-    const { mainBox, textMain, backG, textMain2 } = useContext(modeContext)
+    const { mainBox, textMain, backG, textMain2, followBtn, unFollowBtn, toggleFollow } = useContext(modeContext)
     const { host } = useContext(postContext);
 
     const [user, setUser] = useState(null);
@@ -34,7 +35,7 @@ export default function ProfilePage() {
             setUser(userData);
 
             // fetch posts for the user
-            const postsResponse = await fetch(`${host}/api/posts/${userData._id}`);
+            const postsResponse = await fetch(`${host}/api/posts/user/${userData._id}`);
             const postsData = await postsResponse.json();
             setUserPosts(postsData);
         } catch (error) {
@@ -143,19 +144,27 @@ export default function ProfilePage() {
 
 
 
-
+                                        {/* Follow/Unfollow */}
                                         <div className="w-1/2 px-4">
                                             <div className="flex justify-center py-4 pt-4 ">
                                                 <div className="p-3 text-center">
-                                                    <button className="px-3 flex py-2 font-medium text-sm leading-tight uppercase rounded-2xl shadow-md transition  duration-150 ease-in-out md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 bg-blue-600 text-white "
+                                                    <button onClick={toggleFollow} className={`${followBtn} px-3 flex py-2 font-medium text-sm leading-tight uppercase rounded-2xl shadow-md transition  duration-150 ease-in-out md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 bg-blue-600 text-white `}
                                                         type="button"
                                                         style={{ transition: "all .15s ease" }}
                                                     >
                                                         <SlUserFollow className='mr-2 text-lg' />Follow
                                                     </button>
+                                                    <button onClick={toggleFollow} className={`${unFollowBtn} px-3 flex py-2 font-medium text-sm leading-tight uppercase rounded-2xl shadow-md transition  duration-150 ease-in-out md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 bg-blue-600 text-white `}
+                                                        type="button"
+                                                        style={{ transition: "all .15s ease" }}
+                                                    >
+                                                        <SlUserUnfollow className='mr-2 text-lg' />Unfollow
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
+
+
                                     </div>
 
 
@@ -203,10 +212,6 @@ export default function ProfilePage() {
                                         <PostItemForUser post={post} setUserPosts={setUserPosts} />
                                     </div>
                                 ))}
-                            </div>
-
-                            <div className={`flex justify-center text-2xl font-bold transition ease-in-out duration-500 ${textMain}`}>
-                                No More Posts...
                             </div>
 
 

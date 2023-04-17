@@ -7,6 +7,7 @@ import { FaRegCommentDots } from "react-icons/fa";
 // import { IoCloseOutline } from "react-icons/io5";
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
+import authContext from '../context/auth/authContext';
 import { FiSend } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 
@@ -23,8 +24,9 @@ const PostItem = (props) => {
     const { post } = props;
 
 
-    // getting states/functions from postContext
+    // getting states/functions from Context
     const { addComment, getPosts, host, setPosts } = useContext(postContext);
+    const { loggedInUserData } = useContext(authContext);
 
 
     // to change title to question when submitting question
@@ -182,7 +184,16 @@ const PostItem = (props) => {
                 <div className='flex justify-between mb-1'>
                     <div className='flex'>
                         <img className="ml-2 mb-2 h-8 w-8 rounded-full" src={blankprofile} alt="" />
-                        <Link className='text-base ml-2 h-max cursor-pointer mt-1' to={`/users/${post.user.username}`}>{post.user.username}</Link>
+                        <Link
+                            className='text-base ml-2 h-max cursor-pointer mt-1'
+                            to={
+                                post.user.username === loggedInUserData.username
+                                    ? '/myprofile'
+                                    : `/users/${post.user.username}`
+                            }
+                        >
+                            {post.user.username}
+                        </Link>
                         {/* <button onClick={toggleFollow} className={`${followBtn} text-sm ml-1 h-max text-blue-500 cursor-pointer`}>Follow</button>
                         <button onClick={toggleFollow} className={`${unFollowBtn} text-sm ml-1 h-max text-blue-500 cursor-pointer`}>Unfollow</button> */}
 
@@ -197,7 +208,7 @@ const PostItem = (props) => {
 
                 {/* Image */}
                 <div className='mx-1 flex justify-center'>
-                    {post.idOfImage && <img className="" src={`https://drive.google.com/uc?export=view&id=${post.idOfImage}`} alt="" />}
+                    {post.idOfImage && <img className="w-full" src={`https://drive.google.com/uc?export=view&id=${post.idOfImage}`} alt="" />}
                 </div>
 
                 {/* Main Post */}

@@ -194,7 +194,7 @@ const PostItemForUser = (props) => {
 
                 {/* Image */}
                 <div className='mx-1 flex justify-center'>
-                    {post.idOfImage && <img className="" src={`https://drive.google.com/uc?export=view&id=${post.idOfImage}`} alt="" />}
+                    {post.idOfImage && <img className="w-full" src={`https://drive.google.com/uc?export=view&id=${post.idOfImage}`} alt="" />}
                 </div>
 
                 {/* Main Post */}

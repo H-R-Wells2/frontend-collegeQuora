@@ -4,14 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
+import authContext from '../context/auth/authContext';
 
 const Signup = () => {
 
 
 
     // getting states from context
-    const { mainBox, textMain, logsign, labelInp, bordInp, setLoggedIn, alert } = useContext(modeContext)
-    const { host } = useContext(postContext)
+    const { mainBox, textMain, logsign, labelInp, bordInp, setLoggedIn, alert, checkLogin } = useContext(modeContext);
+    const { host } = useContext(postContext);
+    const { getLoggedInUserData } = useContext(authContext);
 
 
 
@@ -34,11 +36,12 @@ const Signup = () => {
             });
             const json = await response.json();
 
-            console.log(json);
 
             if (json.success) {
                 localStorage.setItem('token', json.authToken);
                 alert('success', "User registered successfully");
+                getLoggedInUserData();
+                checkLogin();
                 navigate('/');
                 setLoggedIn(true);
             } else {
