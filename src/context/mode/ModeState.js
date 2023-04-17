@@ -169,7 +169,6 @@ const ModeState = (props) => {
       }
     } catch (error) {
       console.error(error);
-      localStorage.removeItem('token');
     }
   }
   useLayoutEffect(() => {
@@ -223,23 +222,13 @@ const ModeState = (props) => {
   // States for toggle follow
   const [followBtn, setFollowBtn] = useState('block')
   const [unFollowBtn, setUnFollowBtn] = useState('hidden')
-  // Function to toggle follow button
-  const toggleFollow = () => {
-    if (followBtn === 'hidden') {
-      setFollowBtn('block');
-      setUnFollowBtn('hidden');
-    }
-    else {
-      setFollowBtn('hidden');
-      setUnFollowBtn('block');
-    }
-  }
+
 
 
 
 
   return (
-    <modeContext.Provider value={{ mode, setMode, about, setAbout, navBtn, setNavBtn, navBtn2, setNavBtn2, navMenu, setNavMenu, profile, setProfile, mainBox, setMainBox, textMain, textMain2, setTextMain, textArea, setTextArea, logsign, setLogsign, remText, setRemText, labelInp, setLabelInp, bordInp, setBordInp, backG, setBackG, tagColor, setTagColor, svg, setSvg, line, setLine, cardBtn, setCardBtn, cardBtnH, setCardBtnH, toggleMode, addOrCrClass, setAddOrCrClass, cancelBtn, setCancelBtn, open, setOpen, home, showWhenLogedIn, setShowWhenLoggedIn, hideWhenLoggedIn, setHideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, setLoggedIn, showAlert, setShowAlert, alertMessage, alertType, alert, commentBox, followBtn, unFollowBtn, toggleFollow, checkLogin }}>
+    <modeContext.Provider value={{ mode, setMode, about, setAbout, navBtn, setNavBtn, navBtn2, setNavBtn2, navMenu, setNavMenu, profile, setProfile, mainBox, setMainBox, textMain, textMain2, setTextMain, textArea, setTextArea, logsign, setLogsign, remText, setRemText, labelInp, setLabelInp, bordInp, setBordInp, backG, setBackG, tagColor, setTagColor, svg, setSvg, line, setLine, cardBtn, setCardBtn, cardBtnH, setCardBtnH, toggleMode, addOrCrClass, setAddOrCrClass, cancelBtn, setCancelBtn, open, setOpen, home, showWhenLogedIn, setShowWhenLoggedIn, hideWhenLoggedIn, setHideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn, setLoggedIn, showAlert, setShowAlert, alertMessage, alertType, alert, commentBox, followBtn, unFollowBtn, setFollowBtn, setUnFollowBtn, checkLogin }}>
       {props.children}
     </modeContext.Provider>
   )

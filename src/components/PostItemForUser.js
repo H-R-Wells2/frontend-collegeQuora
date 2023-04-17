@@ -4,7 +4,6 @@ import blankprofile from "../images/blankprofile.jpg";
 import { BiUpvote, BiDownvote } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegCommentDots } from "react-icons/fa";
-// import { IoCloseOutline } from "react-icons/io5";
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
 import { FiSend } from "react-icons/fi";
@@ -242,7 +241,7 @@ const PostItemForUser = (props) => {
                     <div className={`${loadedComments} ${textMain} transition ease-in-out duration-500 py-1.5`}>
                         {post.comments && post.comments.length > 0 ? <div className="pl-3 flex">
                             <img src={blankprofile} alt="profile" className='w-7 h-7 rounded-full mr-1' />
-                            <span className='font-bold cursor-pointer'>{post.comments[post.comments.length - 1].user.username}</span>
+                            <Link to={`/users/${post.comments[post.comments.length - 1].user.username}`} className='font-bold cursor-pointer'>{post.comments[post.comments.length - 1].user.username}</Link>
                             <span className='ml-2'>{post.comments.length > 0 && (
                                 <span className='ml-2'>
                                     {post.comments[post.comments.length - 1].comment}

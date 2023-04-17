@@ -23,7 +23,6 @@ export default function ProfilePage() {
 
     const [userPosts, setUserPosts] = useState([]);
     const [userComments, setUserComments] = useState([]);
-    
 
 
     // Function to get user data and posts
@@ -60,6 +59,10 @@ export default function ProfilePage() {
     }, [fetchUser, username]);
 
 
+    useEffect(() => {
+        getLoggedInUserData();
+    }, [getLoggedInUserData]);
+
 
     // function to follow user
     async function followUser(username) {
@@ -74,6 +77,8 @@ export default function ProfilePage() {
 
             const data = await response.json();
             alert('success', data.msg);
+            // setFollowBtn('hidden');
+            // setUnFollowBtn('block');
             getLoggedInUserData();
             fetchUser(username);
         } catch (error) {
@@ -94,6 +99,8 @@ export default function ProfilePage() {
 
             const data = await response.json();
             alert('success', data.msg);
+            // setFollowBtn('block');
+            // setUnFollowBtn('hidden');
             getLoggedInUserData();
             fetchUser(username);
         } catch (error) {
@@ -102,9 +109,25 @@ export default function ProfilePage() {
     }
 
 
-    // Function to toggle follow button
+
+    const [isFollowing, setIsFollowing] = useState(false);
+
+    // check if the logged in user is following the current user
+    useEffect(() => {
+        if (loggedInUserData.following && user && user._id) {
+            setIsFollowing(loggedInUserData.following.includes(user._id));
+        }
+    }, [loggedInUserData, user]);
+
+
+    useEffect(() => {
+        toggleFollow();
+    });
+
+
+    // Update the follow/unfollow buttons based on whether the user is following or not
     const toggleFollow = () => {
-        if (loggedInUserData.following.includes(user._id)) {
+        if (isFollowing) {
             setFollowBtn('hidden');
             setUnFollowBtn('block');
         } else {
@@ -113,11 +136,11 @@ export default function ProfilePage() {
         }
     }
 
-    useEffect(() => {
-        if (user) {
-            toggleFollow();
-        }
-    });
+    // useEffect(() => {
+    //     if (user) {
+    //         toggleFollow();
+    //     }
+    // }, [user]);
 
 
 

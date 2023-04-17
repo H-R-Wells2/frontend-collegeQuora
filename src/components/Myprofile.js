@@ -252,7 +252,7 @@ export default function Myprofile() {
                                                 <img
                                                     alt="..."
                                                     src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
-                                                    className="shadow-xl rounded-full h-auto align-middle border-none absolute -my-24 -ml-24"
+                                                    className="shadow-xl rounded-full h-auto align-middle border-none absolute -my-24 -ml-28"
                                                     style={{ maxWidth: "220px" }}
                                                 />
                                             </div>

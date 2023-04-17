@@ -84,44 +84,18 @@ const AuthState = (props) => {
             setLoggedInUserPosts(postsData);
         } catch (error) {
             console.error(error);
-            localStorage.removeItem('token');
         }
     };
 
 
-    // useEffect(() => {
-    //     const checkToken = async () => {
-    //       const token = localStorage.getItem('token');
-    //       if (!token) return;
-          
-    //       try {
-    //         const response = await fetch(`${host}/api/auth/verify`, {
-    //           headers: {
-    //             'Content-Type': 'application/json',
-    //             'auth-token': token,
-    //           },
-    //         });
-    //         const { success } = await response.json();
-    //         if (!success) {
-    //           localStorage.removeItem('token');
-    //         }
-    //       } catch (error) {
-    //         console.error(error);
-    //       }
-    //     };
-    
-    //     checkToken();
-    //   }, []);
-
 
     // call getLoggedInUserData when component mounts
-    // useEffect(() => {
-    //     if (localStorage.getItem('token')) {
-    //         getLoggedInUserData();
-    //         console.log("getLoggedInUserData")
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            getLoggedInUserData();
+        }
+    }, []);
 
-    //     }
-    // }, []);
 
 
 

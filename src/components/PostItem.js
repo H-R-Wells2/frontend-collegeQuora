@@ -256,9 +256,18 @@ const PostItem = (props) => {
                     <div className={`${loadedComments} ${textMain} transition ease-in-out duration-500 py-1.5`}>
                         {post.comments && post.comments.length > 0 ? <div className="pl-3 flex">
                             <img src={blankprofile} alt="profile" className='w-7 h-7 rounded-full mr-1' />
-                            <span className='font-bold cursor-pointer'>{post.comments[post.comments.length - 1].user.username}</span>
+                            <span><Link
+                                className='font-bold cursor-pointer'
+                                to={
+                                    post.comments[post.comments.length - 1].user.username === loggedInUserData.username
+                                        ? '/myprofile'
+                                        : `/users/${post.comments[post.comments.length - 1].user.username}`
+                                }
+                            >
+                                {post.comments[post.comments.length - 1].user.username}
+                            </Link></span>
                             <span className='ml-2'>{post.comments.length > 0 && (
-                                <span className='ml-2'>
+                                <span className=''>
                                     {post.comments[post.comments.length - 1].comment}
                                 </span>
                             )}
