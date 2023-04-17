@@ -56,36 +56,43 @@ const AuthState = (props) => {
 
     const [loggedInUserData, setLoggedInUserData] = useState([]);
     const [loggedInUserPosts, setLoggedInUserPosts] = useState([]);
+    const [loggedInUserComments, setLoggedInUserComments] = useState([]);
 
 
 
     // Get data of logged in user
     const getLoggedInUserData = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem('token');
             if (!token) {
                 return;
             }
-
+    
             // Fetch user data
             const response = await fetch(`${host}/api/auth/getuser`, {
-                method: "POST",
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
-                    "auth-token": token,
+                    'Content-Type': 'application/json',
+                    'auth-token': token,
                 },
             });
             const loggedInUserData = await response.json();
             setLoggedInUserData(loggedInUserData);
-
-            // Fetch user's posts
-            const postsResponse = await fetch(`${host}/api/posts/user/${loggedInUserData._id}`);
+    
+            // Fetch user's posts and comments in parallel
+            const [postsResponse, commentsResponse] = await Promise.all([
+                fetch(`${host}/api/posts/user/${loggedInUserData._id}`),
+                fetch(`${host}/api/comments/user/${loggedInUserData._id}/posts`),
+            ]);
             const postsData = await postsResponse.json();
+            const commentsData = await commentsResponse.json();
             setLoggedInUserPosts(postsData);
+            setLoggedInUserComments(commentsData);
         } catch (error) {
             console.error(error);
         }
     };
+    
 
 
 
@@ -103,7 +110,7 @@ const AuthState = (props) => {
 
 
     return (
-        <authContext.Provider value={{ host, handleLoggedIn, checkLogin, getLoggedInUserData, loggedInUserData, setLoggedInUserData, loggedInUserPosts, setLoggedInUserPosts }}>
+        <authContext.Provider value={{ host, handleLoggedIn, checkLogin, getLoggedInUserData, loggedInUserData, setLoggedInUserData, loggedInUserPosts, setLoggedInUserPosts, loggedInUserComments }}>
             {props.children}
         </authContext.Provider>
     )

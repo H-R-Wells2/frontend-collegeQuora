@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useRef, useState } from 'react';
-import blankprofile from "../images/blankprofile.jpg";
 import CQlogo1 from "../images/CQlogo1.png"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AddQuestionModal from './AddQuestionModal';
@@ -7,6 +6,7 @@ import { IoLogIn } from "react-icons/io5";
 import { BsFillPersonFill } from "react-icons/bs";
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
+import authContext from '../context/auth/authContext';
 import Alert from './Alert';
 
 
@@ -15,11 +15,14 @@ export default function Navbar() {
 
 
     // getting states from context
-    const context = useContext(modeContext)
-    const { mode, about, navBtn, navBtn2, navMenu, mainBox, textMain, textArea, svg, toggleMode, addOrCrClass, cancelBtn, open, setOpen, home, showWhenLogedIn, hideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn } = context
+    const context = useContext(modeContext);
+    const { mode, about, navBtn, navBtn2, navMenu, mainBox, textMain, textArea, svg, toggleMode, addOrCrClass, cancelBtn, open, setOpen, home, showWhenLogedIn, hideWhenLoggedIn, toggleProfile, toggleNavMenu, loggedIn } = context;
 
     // getting states for alert
-    const { alert, showAlert, alertMessage, alertType } = context
+    const { alert, showAlert, alertMessage, alertType } = context;
+
+    // states from authState
+    const { loggedInUserData } = useContext(authContext);
 
     let navigate = useNavigate();
     let location = useLocation();
@@ -88,7 +91,7 @@ export default function Navbar() {
     };
 
 
-    
+
     // Submit parameters to search
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -250,7 +253,9 @@ export default function Navbar() {
                                         aria-expanded="false"
                                         aria-haspopup="true">
                                         <span className="sr-only">Open user menu</span>
-                                        <img className="h-8 w-8 rounded-full" src={blankprofile} alt="" />
+                                        <img className="h-9 w-9 rounded-full border border-blue-500"
+                                            src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                            alt="" />
                                     </button>
                                 </div>
 

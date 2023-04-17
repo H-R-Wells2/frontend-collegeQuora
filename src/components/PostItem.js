@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useContext } from 'react';
-import blankprofile from "../images/blankprofile.jpg";
 import { BiUpvote, BiDownvote } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegCommentDots } from "react-icons/fa";
-// import { IoCloseOutline } from "react-icons/io5";
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
 import authContext from '../context/auth/authContext';
@@ -181,11 +179,15 @@ const PostItem = (props) => {
     return (
         <>
             <div className={`mb-4 shadow-lg rounded-lg max-w-2xl pt-2 transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
-                <div className='flex justify-between mb-1'>
+                <div className='flex justify-between mb-1 mt-2'>
                     <div className='flex'>
-                        <img className="ml-2 mb-2 h-8 w-8 rounded-full" src={blankprofile} alt="" />
+                        <div className='ml-4 mb-2 w-10 h-10 overflow-hidden'>
+                            <img className="h-full w-full rounded-full border border-blue-500 object-cover"
+                                src={post.user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${post.user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                alt="" />
+                        </div>
                         <Link
-                            className='text-base ml-2 h-max cursor-pointer mt-1'
+                            className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
                             to={
                                 post.user.username === loggedInUserData.username
                                     ? '/myprofile'
@@ -194,8 +196,7 @@ const PostItem = (props) => {
                         >
                             {post.user.username}
                         </Link>
-                        {/* <button onClick={toggleFollow} className={`${followBtn} text-sm ml-1 h-max text-blue-500 cursor-pointer`}>Follow</button>
-                        <button onClick={toggleFollow} className={`${unFollowBtn} text-sm ml-1 h-max text-blue-500 cursor-pointer`}>Unfollow</button> */}
+
 
                     </div>
                     <div className=''>
@@ -254,18 +255,21 @@ const PostItem = (props) => {
 
                     {/* loadedComments */}
                     <div className={`${loadedComments} ${textMain} transition ease-in-out duration-500 py-1.5`}>
-                        {post.comments && post.comments.length > 0 ? <div className="pl-3 flex">
-                            <img src={blankprofile} alt="profile" className='w-7 h-7 rounded-full mr-1' />
-                            <span><Link
-                                className='font-bold cursor-pointer'
-                                to={
-                                    post.comments[post.comments.length - 1].user.username === loggedInUserData.username
-                                        ? '/myprofile'
-                                        : `/users/${post.comments[post.comments.length - 1].user.username}`
-                                }
-                            >
-                                {post.comments[post.comments.length - 1].user.username}
-                            </Link></span>
+                        {post.comments && post.comments.length > 0 ? <div className=" flex">
+                            <img src={post.comments[post.comments.length - 1].user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${post.comments[post.comments.length - 1].user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                            alt="profile" className='w-9 h-9 rounded-full mr-1 border border-blue-500 object-cover ' />
+                            <span>
+                                <Link
+                                    className='font-bold cursor-pointer'
+                                    to={
+                                        post.comments[post.comments.length - 1].user.username === loggedInUserData.username
+                                            ? '/myprofile'
+                                            : `/users/${post.comments[post.comments.length - 1].user.username}`
+                                    }
+                                >
+                                    {post.comments[post.comments.length - 1].user.username}
+                                </Link>
+                            </span>
                             <span className='ml-2'>{post.comments.length > 0 && (
                                 <span className=''>
                                     {post.comments[post.comments.length - 1].comment}

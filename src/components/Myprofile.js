@@ -6,17 +6,14 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react'
 import { FaUserEdit } from "react-icons/fa";
 import PostItem from './PostItem';
-
+import { MdRemoveCircle } from "react-icons/md";
 
 
 export default function Myprofile() {
 
 
-
-
-
     // For getting user data
-    const { getLoggedInUserData, loggedInUserData, setLoggedInUserData, loggedInUserPosts, setLoggedInUserPosts, host } = useContext(authContext);
+    const { getLoggedInUserData, loggedInUserData, setLoggedInUserData, loggedInUserPosts, loggedInUserComments, setLoggedInUserPosts, host } = useContext(authContext);
     useEffect(() => {
         getLoggedInUserData()
         // eslint-disable-next-line
@@ -36,17 +33,28 @@ export default function Myprofile() {
         const { firstName, lastName, email, password, username, collegeName, gender, bio } = loggedInUserData;
 
         try {
+            const formData = new FormData();
+            formData.append('firstName', firstName);
+            formData.append('lastName', lastName);
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('username', username);
+            formData.append('collegeName', collegeName);
+            formData.append('gender', gender);
+            formData.append('bio', bio);
+            formData.append('attachedImage', file);
+
+            setOpen(false);
             const response = await fetch(`${host}/api/auth/updateuser`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
                     "auth-token": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ firstName, lastName, email, password, username, collegeName, gender, bio })
+                body: formData
             });
             const json = await response.json();
-            console.log(json);
-            setOpen(false);
+            console.log(json.username);
+            getLoggedInUserData();
             alert('success', 'User data updated successfully!');
         } catch (error) {
             console.error(error);
@@ -56,12 +64,11 @@ export default function Myprofile() {
 
 
 
+
     // To go on top
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
-
-
 
 
 
@@ -76,6 +83,30 @@ export default function Myprofile() {
     }
 
 
+
+    // To handle profile image
+    const [file, setFile] = useState();
+
+    // To preview image
+    const [imgHide, setImgHide] = useState('hidden');
+    const [previewImg, setPreviewImg] = useState(null);
+    function handleAttachImg(e) {
+        const fileSizeInMB = e.target.files[0].size / (1024 * 1024);
+        if (fileSizeInMB <= 1) {
+            setFile(e.target.files[0]);
+            setImgHide('');
+            setPreviewImg(URL.createObjectURL(e.target.files[0]));
+        } else {
+            alert('error', "File size should be less than 1 MB");
+            return;
+        }
+    }
+
+    function handleRemoveImage(e) {
+        setImgHide('hidden');
+        setPreviewImg(null);
+        setFile(null);
+    }
 
 
 
@@ -129,6 +160,23 @@ export default function Myprofile() {
                                                     <label htmlFor="last_name" className={`peer-focus:font-medium absolute text-lg text-gray-400 duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0  ${labelInp}  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Last name</label>
                                                 </div>
                                             </div>
+
+
+
+
+                                            {/* Profile Picture */}
+                                            <div className={`${textMain} mt-2 mb-8`}>
+                                                <div className="flex justify-end">
+                                                    <label onClick={handleRemoveImage} type='button' htmlFor="" className={`${imgHide} mr-4 cursor-pointer`}><MdRemoveCircle title='Remove Image' className='h-7 w-7' /></label>
+                                                </div>
+                                                <div className='flex justify-center gap-2 mb-1'>
+                                                    <input onChange={handleAttachImg} accept="image/jpeg, image/png" type="file" id="files" className="hidden" />
+                                                    <label type='button' htmlFor="files" className={`ml-2 cursor-pointer rounded-full`}>
+                                                        {previewImg ? <img className={` h-56 w-56 rounded-full object-cover`} alt='to be attached' src={previewImg} /> : <img onChange={handleAttachImg} src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`} className=' h-56 w-56 rounded-full object-cover' alt="" />}
+                                                    </label>
+                                                </div>
+                                            </div>
+
 
 
 
@@ -187,7 +235,7 @@ export default function Myprofile() {
 
                                                 <button type='submit'
                                                     className=" w-full px-2 py-3 md:py-2.5 bg-blue-600 text-white font-medium text-lg leading-tight  rounded shadow-md md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 transition  duration-150 ease-in-out">
-                                                    Update Information
+                                                    Update Profile
                                                 </button>
                                             </div>
 
@@ -245,37 +293,24 @@ export default function Myprofile() {
                     <div className="container mx-auto px-4">
                         <div className={`relative flex flex-col min-w-0 break-words w-full mb-6 shadow-xl rounded-lg -mt-64 transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
                             <div className="px-6">
+
+
                                 <div className="flex flex-wrap justify-center">
-                                    <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                                        <div className="relative">
-                                            <div className="pl-3 flex">
-                                                <img
-                                                    alt="..."
-                                                    src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
-                                                    className="shadow-xl rounded-full h-auto align-middle border-none absolute -my-24 -ml-28"
-                                                    style={{ maxWidth: "220px" }}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
-                                        <div className="py-6 px-3 mt-32 sm:mt-0">
-                                            <button onClick={() => { setOpen(true) }}
-                                                className="ml-60 mr-0 px-2 flex py-2 font-medium text-sm leading-tight uppercase rounded-2xl shadow-md transition  duration-150 ease-in-out md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 bg-blue-600 text-white "
-                                                type="button"
-                                                style={{ transition: "all .15s ease" }}
-                                            >
-                                                <FaUserEdit className='mx-2 text-lg' />Edit Profile
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="w-full lg:w-4/12 px-4 lg:order-1">
+
+
+                                    <div className="w-1/4 px-4">
                                         <div className="flex justify-center py-4 lg:pt-4 pt-8">
                                             <div className="mr-4 p-3 text-center">
                                                 <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
-                                                    22
+                                                    {loggedInUserData.following.length}
                                                 </span>
-                                                <span className={`text-sm ${textMain2}`}>Connections</span>
+                                                <span className={`text-sm ${textMain2}`}>Following</span>
+                                            </div>
+                                            <div className="mr-4 p-3 text-center">
+                                                <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
+                                                    {loggedInUserData.followers.length}
+                                                </span>
+                                                <span className={`text-sm ${textMain2}`}>Followers</span>
                                             </div>
                                             <div className="mr-4 p-3 text-center">
                                                 <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
@@ -285,13 +320,42 @@ export default function Myprofile() {
                                             </div>
                                             <div className="lg:mr-4 p-3 text-center">
                                                 <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
-                                                    89
+                                                    {loggedInUserComments.length}
                                                 </span>
                                                 <span className={`text-sm ${textMain2}`}>Answers</span>
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <div className="w-1/4 flex justify-center relative">
+                                        <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
+                                            <img
+                                                alt="..."
+                                                src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                className="object-cover w-full h-full"
+                                            />
+                                        </div>
+                                    </div>
+
+
+
+                                    <div className="w-1/4 px-4 flex justify-center">
+                                        <div className="py-6 px-3 ">
+                                            <button onClick={() => { setOpen(true) }}
+                                                className="mr-0 px-2 flex py-2 font-medium text-sm leading-tight uppercase rounded-2xl shadow-md transition  duration-150 ease-in-out md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 bg-blue-600 text-white"
+                                                type="button"
+                                            >
+                                                <FaUserEdit className='mx-2 text-lg' />Edit Profile
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
+
+
                                 <div className="text-center mt-12">
                                     <h3 className={`text-3xl font-semibold leading-normal mb-1 ${textMain}`}>
                                         {loggedInUserData.firstName} {loggedInUserData.lastName}

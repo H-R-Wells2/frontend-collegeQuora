@@ -64,9 +64,6 @@ export default function AddQuestionModal(props) {
         handleRemoveImage();
         navigate('/');
         setOpen(false);
-        // setTimeout(() => {
-        //     window.location.reload();
-        // }, 1500);
         alert('success', "Your post is added successfully");
     }
 
@@ -80,9 +77,6 @@ export default function AddQuestionModal(props) {
         handleRemoveImage();
         navigate('/');
         setOpen(false);
-        // setTimeout(() => {
-        //     window.location.reload();
-        // }, 1500);
         alert('success', "Your question is added successfully");
     }
 

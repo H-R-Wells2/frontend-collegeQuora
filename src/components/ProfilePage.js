@@ -173,7 +173,7 @@ export default function ProfilePage() {
                                     <div className="flex justify-between mx-32">
 
                                         {/* Data */}
-                                        <div className="w-1/2 px-4">
+                                        <div className="w-1/4 px-4">
                                             <div className="flex justify-center py-4 lg:pt-4 pt-8">
                                                 <div className=" p-3 text-center">
                                                     <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
@@ -206,24 +206,22 @@ export default function ProfilePage() {
 
 
                                         {/* Profile Image */}
-                                        <div className="w-1/4 px-4 flex justify-center">
-                                            <div className="relative">
-                                                <div className="flex">
-                                                    <img
-                                                        alt="..."
-                                                        src={user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
-                                                        className="shadow-xl rounded-full h-auto align-middle border-none absolute -my-24 -ml-28"
-                                                        style={{ maxWidth: "220px" }}
-                                                    />
-                                                </div>
-                                            </div>
+                                        <div className="w-1/4 flex justify-center relative">
+                                        <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
+                                            <img
+                                                alt="..."
+                                                src={user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                className="object-cover w-full h-full"
+                                            />
                                         </div>
+                                    </div>
+
 
 
 
 
                                         {/* Follow/Unfollow */}
-                                        <div className="w-1/2 px-4">
+                                        <div className="w-1/4 px-4">
                                             <div className="flex justify-center py-4 pt-4 ">
                                                 <div className="p-3 text-center">
                                                     <button

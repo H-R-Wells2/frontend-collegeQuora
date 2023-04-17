@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import React, { useContext } from 'react';
 import modeContext from '../context/mode/modeContext';
 import postContext from '../context/posts/postContext';
-import blankprofile from "../images/blankprofile.jpg";
 import { FiSend } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 
@@ -100,7 +99,11 @@ export default function SelectedPost(props) {
                     <div className={`shadow-lg min-w-full text-center justify-center pb-5 pt-6 rounded-lg max-w-2xl transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
                         <div className='ml-8 flex justify-between mb-2'>
                             <div className='flex'>
-                                <img className="ml-2 mb-2 h-8 w-8 rounded-full" src={blankprofile} alt="" />
+                                <div className='ml-4 mb-2 w-10 h-10 overflow-hidden'>
+                                    <img className="h-full w-full rounded-full border border-blue-500 object-cover"
+                                        src={selectedPost.user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${selectedPost.user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                        alt="" />
+                                </div>
                                 <Link className='text-base ml-2 h-max cursor-pointer mt-1' to={`/users/${selectedPost.user.username}`}>{selectedPost.user.username}</Link>
                             </div>
                         </div>
@@ -144,8 +147,10 @@ export default function SelectedPost(props) {
                         <div key={comment._id} className={`shadow-lg min-w-full text-left justify-center pb-5 pt-10 rounded-lg max-w-2xl transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
                             <div className='px-6'>
                                 <div className='flex mb-2'>
-                                    <img src={blankprofile} alt="profile" className='w-7 h-7 rounded-full mr-1' />
-                                    <span className='font-bold cursor-pointer'>{comment.user.username}</span>
+                                    <img
+                                        src={selectedPost.comments[selectedPost.comments.length - 1].user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${selectedPost.comments[selectedPost.comments.length - 1].user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                        alt="profile" className='w-9 h-9 rounded-full mr-1 border border-blue-500 object-cover' />
+                                    <span className='font-bold cursor-pointer mt-1 ml-1'>{comment.user.username}</span>
                                 </div>
                                 <p className='ml-8'>{comment.comment}</p>
                             </div>
