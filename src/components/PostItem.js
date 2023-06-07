@@ -247,16 +247,26 @@ const PostItem = (props) => {
                                 src={post.user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${post.user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                 alt="" />
                         </div>
-                        <Link
-                            className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
-                            to={
-                                post.user.username === loggedInUserData.username
-                                    ? '/myprofile'
-                                    : `/users/${post.user.username}`
-                            }
-                        >
-                            {post.user.username}
-                        </Link>
+                        {loggedInUserData.username ?
+                            <Link
+                                className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
+                                to={
+                                    post.user.username === loggedInUserData.username
+                                        ? '/myprofile'
+                                        : `/users/${post.user.username}`
+                                }
+                            >
+                                {post.user.username}
+                            </Link>
+                            :
+                            <button
+                                className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
+                                onClick={() => alert('error','Please log in to view user profiles.')}
+                            >
+                                {post.user.username}
+                            </button>
+                        }
+
 
 
                     </div>
@@ -307,15 +317,15 @@ const PostItem = (props) => {
                             >
                                 {post.user._id === loggedInUserData._id ? (
                                     <button onClick={() => { deletePost(post._id) }} className="flex text-start w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                                       <MdDeleteOutline className="mr-1 h-5 w-5"/> Delete
+                                        <MdDeleteOutline className="mr-1 h-5 w-5" /> Delete
                                     </button>
                                 ) : (
                                     <button className="flex text-start w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                                        <MdReportProblem className='mr-2 h-5 w-4'/>Report
+                                        <MdReportProblem className='mr-2 h-5 w-4' />Report
                                     </button>
                                 )}
                                 <button onClick={copyPostUrl} className="flex text-start w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                                    <MdOutlineShare className='mr-2 h-5 w-4'/> Share
+                                    <MdOutlineShare className='mr-2 h-5 w-4' /> Share
                                 </button>
                             </div>
                         </div>
@@ -344,6 +354,7 @@ const PostItem = (props) => {
                             <img src={post.comments[post.comments.length - 1].user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${post.comments[post.comments.length - 1].user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                 alt="profile" className='w-9 h-9 rounded-full mr-1 border border-blue-500 object-cover ' />
                             <span>
+                            {loggedInUserData.username ?
                                 <Link
                                     className='font-bold cursor-pointer'
                                     to={
@@ -354,6 +365,15 @@ const PostItem = (props) => {
                                 >
                                     {post.comments[post.comments.length - 1].user.username}
                                 </Link>
+                                  :
+                                  <button
+                                      className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
+                                      onClick={() => alert('error','Please log in to view user profiles.')}
+                                  >
+                                      {post.user.username}
+                                  </button>
+                              }
+
                             </span>
                             <span className='ml-2'>{post.comments.length > 0 && (
                                 <span className=''>

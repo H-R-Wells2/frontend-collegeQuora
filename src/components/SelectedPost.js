@@ -8,7 +8,7 @@ import { FiSend } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 import { BsThreeDots } from "react-icons/bs";
 import { MdReportProblem, MdDeleteOutline, MdOutlineShare } from "react-icons/md";
-
+import CommentsOfSPost from './CommentsOfSPost';
 
 
 
@@ -72,7 +72,7 @@ export default function SelectedPost(props) {
 
 
 
-    if (!selectedPost) {
+    if (!selectedPost || !comment) {
         return <div>Loading...</div>;
     }
 
@@ -99,7 +99,7 @@ export default function SelectedPost(props) {
     };
 
 
-    
+
 
     // To share post
     const copyPostUrl = async () => {
@@ -133,11 +133,11 @@ export default function SelectedPost(props) {
                 alert("success", "post has beeen deleted successfully");
             } else {
                 console.error(data);
-                // Handle the error
+                alert("error", "post not deleted");
             }
         } catch (error) {
             console.error(error);
-            // Handle the error
+            alert("success", "post not deleted");
         }
     }
 
@@ -145,14 +145,8 @@ export default function SelectedPost(props) {
 
 
 
-
-
-
     return (
         <div className='flex justify-start ml-64 mr-4 py-3'>
-
-
-
             {selectedPost === null ? (
                 <div role="status" className='ml-72 mt-48'>
                     <svg aria-hidden="true" className="w-20 h-20 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -177,7 +171,26 @@ export default function SelectedPost(props) {
                                         src={selectedPost.user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${selectedPost.user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                         alt="" />
                                 </div>
-                                <Link className='text-base ml-2 h-max cursor-pointer mt-1 font-bold' to={`/users/${selectedPost.user.username}`}>{selectedPost.user.username}</Link>
+                                {loggedInUserData.username ?
+                                    <Link
+                                        className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
+                                        to={
+                                            selectedPost.user.username === loggedInUserData.username
+                                                ? '/myprofile'
+                                                : `/users/${selectedPost.user.username}`
+                                        }
+                                    >
+                                        {selectedPost.user.username}
+                                    </Link>
+                                    :
+                                    <button
+                                        className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
+                                        onClick={() => alert('error', 'Please log in to view user profiles.')}
+                                    >
+                                        {selectedPost.user.username}
+                                    </button>
+                                }
+
                             </div>
                             <div className="relative inline-block text-left mr-8" ref={dropdownRef}>
                                 <button className={`${cardBtnH} rounded-full px-2`} onClick={() => setIsOpen(!isOpen)}>
@@ -215,7 +228,7 @@ export default function SelectedPost(props) {
                             </span>
                         </div>
                         <div className='flex flex-col justify-center items-center py-5 text-2xl'>
-                            {selectedPost.idOfImage && <img className="" src={`https://drive.google.com/uc?export=view&id=${selectedPost.idOfImage}`} alt="" />}
+                            {selectedPost.idOfImage && <img className="w-1/2" src={`https://drive.google.com/uc?export=view&id=${selectedPost.idOfImage}`} alt="" />}
                             <div className='px-3 py-2'>{selectedPost.description}</div>
                         </div>
 
@@ -231,6 +244,10 @@ export default function SelectedPost(props) {
                     </div>
 
 
+
+
+
+
                     {/* Answers */}
                     <div className={`shadow-lg text-center min-w-max justify-center py-10 rounded-lg transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
                         <div className='text-4xl flex font-semibold justify-center'>
@@ -240,23 +257,15 @@ export default function SelectedPost(props) {
                     </div>
 
 
+
+
+
+
+
                     {/* Card for Answers */}
-                    {selectedPost.comments.map(comment => (
-                        <div key={comment._id} className={`shadow-lg min-w-full text-left justify-center pb-5 pt-10 rounded-lg max-w-2xl transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
-                            <div className='px-6'>
-                                <div className='flex mb-2'>
-                                    <img
-                                        src={comment.user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${comment.user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
-                                        alt="profile" className='w-9 h-9 rounded-full mr-1 border border-blue-500 object-cover' />
-                                    {/* <span className='font-bold cursor-pointer mt-1 ml-1'>{comment.user.username}</span> */}
-                                    <span className='font-bold cursor-pointer mt-1 ml-1'>
-                                        <Link to={`/users/${comment.user.username}`} className='font-bold cursor-pointer'>{comment.user.username}</Link>
-                                    </span>
-                                </div>
-                                <p className='ml-8'>{comment.comment}</p>
-                            </div>
-                        </div>
-                    ))}
+                    {<selectedPost className="comments"></selectedPost> && selectedPost.comments.map(comment => {
+                        return <CommentsOfSPost key={comment._id} comment={comment} getSelectedPost={getSelectedPost} postId={id} selectedPost={selectedPost} />;
+                    })}
 
 
                 </div>
