@@ -51,7 +51,7 @@ const AuthState = (props) => {
 
 
 
-    const host = "http://localhost:5000";
+    const host = "https://college-quora-backend.onrender.com";
 
 
     const [loggedInUserData, setLoggedInUserData] = useState([]);

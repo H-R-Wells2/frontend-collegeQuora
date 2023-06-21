@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const PostState = (props) => {
 
-  const host = "http://localhost:5000"
+  const host = "https://college-quora-backend.onrender.com"
 
   const postsInitial = [];
   const [posts, setPosts] = useState(postsInitial);
