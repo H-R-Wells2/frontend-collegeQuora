@@ -133,7 +133,7 @@ export default function AddQuestionModal(props) {
 
                                 <Dialog.Panel className="">
                                     {/* Apna code */}
-                                    <div className={` ${mainBox} relative container max-w-sm px-9 py-10 sm:px-10 sm:pb-6 sm:pt-4 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left`}>
+                                    <div className={` ${mainBox} relative container max-w-sm px-4 py-6 sm:px-10 sm:pb-6 sm:pt-4 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left`}>
 
                                         <div className='flex justify-end'>
                                             <button onClick={() => setOpen(false)} className='hover:fill-slate-500 fill-slate-400'>
@@ -148,11 +148,11 @@ export default function AddQuestionModal(props) {
                                         {/* To select add question or create post */}
                                         <div className='flex justify-between font-semibold border-b-2 border-gray-400 mb-4'>
 
-                                            <button className={`${addOrCrClass} ${selectedBtn1} w-72 py-1 px-4 rounded-l-md text-center cursor-pointer`} onClick={addQuestionOnModal}>
+                                            <button className={`${addOrCrClass} ${selectedBtn1} w-40 sm:w-72 py-1 px-4 rounded-l-md text-center cursor-pointer`} onClick={addQuestionOnModal}>
                                                 <span className={`${textMain} text-xl `}>Add Question</span>
                                             </button>
 
-                                            <button className={`${addOrCrClass} ${selectedBtn2} w-72 py-1 px-4 rounded-r-md text-center cursor-pointer`} onClick={createPostOnModal}>
+                                            <button className={`${addOrCrClass} ${selectedBtn2} w-40 sm:w-72 py-1 px-4 rounded-r-md text-center cursor-pointer`} onClick={createPostOnModal}>
                                                 <span className={`${textMain} text-xl `}>Create Post</span>
                                             </button>
 
@@ -198,7 +198,7 @@ export default function AddQuestionModal(props) {
                                                     <label type='button' htmlFor="files" className={`ml-2 cursor-pointer`}><FaImage title='Attach Image' className='h-8 w-8' /></label>
                                                     <label onClick={handleRemoveImage} type='button' htmlFor="" className={`${imgHide} mr-4 cursor-pointer`}><MdRemoveCircle title='Remove Image' className='h-7 w-7' /></label>
                                                 </div>
-                                                <img className={`${imgHide} max-w-prose`} alt='to be attached' src={previewImg} />
+                                                <img className={`${imgHide} sm:max-w-prose`} alt='to be attached' src={previewImg} />
                                             </div>
 
 
@@ -273,7 +273,7 @@ export default function AddQuestionModal(props) {
                                                     <label type='button' htmlFor="files" className={`ml-2 cursor-pointer`}><FaImage title='Attach Image' className='h-8 w-8' /></label>
                                                     <label onClick={handleRemoveImage} type='button' htmlFor="" className={`${imgHide} mr-4 cursor-pointer`}><MdRemoveCircle title='Remove Image' className='h-7 w-7' /></label>
                                                 </div>
-                                                <img className={`${imgHide} max-w-prose`} alt='to be attached' src={previewImg} />
+                                                <img className={`${imgHide} sm:max-w-prose`} alt='to be attached' src={previewImg} />
                                             </div>
 
 

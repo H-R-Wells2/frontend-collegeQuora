@@ -27,6 +27,7 @@ import About from './components/About';
 import SelectedPost from './components/SelectedPost';
 import Answer from './components/Answer';
 import ProfilePage from './components/ProfilePage';
+import SidebarForMobile from './components/SidebarForMobile';
 
 
 
@@ -48,6 +49,7 @@ function App() {
           <Router>
             <AuthState>
               <Navbar />
+              <SidebarForMobile />
               <Sidebar />
               <Routes>
                 <Route path="/" element={<Content />} />

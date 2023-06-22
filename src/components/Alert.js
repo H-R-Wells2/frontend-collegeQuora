@@ -17,7 +17,7 @@ const Alert = ({ type, message }) => {
     const classes = `px-4 py-3 rounded border ${tailwindClasses[type]}`;
 
     return (
-        <div className={`${classes} mt-20 mr-6 absolute w-1/2 right-0 top-0 rounded-xl z-10`}>
+        <div className={`${classes} mt-20 sm:mr-6 absolute w-full sm:w-1/2 right-0 top-0 rounded-xl z-10`}>
             <div className='flex justify-between'>
             <p className="font-bold">{type}</p>
             <div className='flex justify-end'>

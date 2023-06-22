@@ -113,7 +113,6 @@ export default function Myprofile() {
 
     return (
         <>
-
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={setOpen} >
                     <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
@@ -121,13 +120,13 @@ export default function Myprofile() {
                     </Transition.Child>
 
                     <div className="fixed z-10 inset-0 overflow-y-auto">
-                        <div className="flex h-screen items-start mt-32 justify-center p-4 text-center sm:p-0">
+                        <div className="flex w-full h-screen items-start mt-24 sm:mt-32 justify-center text-center sm:p-0">
                             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enterTo="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 sm:scale-100" leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
 
 
-                                <Dialog.Panel className="w-1/3">
+                                <Dialog.Panel className="sm:w-1/3">
                                     {/* Main card code */}
-                                    <div className={` ${mainBox} relative container max-w-lg px-9 py-10 sm:px-10 sm:pb-6 sm:pt-4 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left`}>
+                                    <div className={` ${mainBox} relative container px-6 py-6 sm:px-10 sm:pb-6 sm:pt-4 rounded-lg shadow-xl w-full sm:max-w-4xl transform transition-all text-left mb-10`}>
 
                                         <div className='flex justify-end'>
                                             <button onClick={() => setOpen(false)} className='hover:fill-slate-500 fill-slate-400'>
@@ -291,13 +290,13 @@ export default function Myprofile() {
                 </section>
                 <section className={`relative py-16 ${backG} transition ease-in-out duration-500`}>
                     <div className="container mx-auto px-4">
-                        <div className={`relative flex flex-col min-w-0 break-words w-full mb-6 shadow-xl rounded-lg -mt-64 transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
-                            <div className="px-6">
+                        <div className={`relative flex flex-col min-w-0 break-words w-full mb-6 shadow-xl rounded-2xl sm:rounded-lg -mt-80 sm:-mt-64 transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
+                            <div className="hidden sm:block px-6">
 
 
                                 <div className="flex flex-wrap justify-center">
 
-
+                                    {/* Data */}
                                     <div className="w-1/4 px-4">
                                         <div className="flex justify-center py-4 lg:pt-4 pt-8">
                                             <div className="mr-4 p-3 text-center">
@@ -328,6 +327,7 @@ export default function Myprofile() {
                                     </div>
 
 
+                                    {/* Profile Image */}
                                     <div className="w-1/4 flex justify-center relative">
                                         <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
                                             <img
@@ -340,6 +340,7 @@ export default function Myprofile() {
 
 
 
+                                    {/* Edit Button */}
                                     <div className="w-1/4 px-4 flex justify-center">
                                         <div className="py-6 px-3 ">
                                             <button onClick={() => { setOpen(true) }}
@@ -351,11 +352,13 @@ export default function Myprofile() {
                                         </div>
                                     </div>
 
-
-
                                 </div>
 
 
+
+
+
+                                {/* User Data */}
                                 <div className="text-center mt-12">
                                     <h3 className={`text-3xl font-semibold leading-normal mb-1 ${textMain}`}>
                                         {loggedInUserData.firstName} {loggedInUserData.lastName}
@@ -383,14 +386,130 @@ export default function Myprofile() {
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            {/* For Mobile */}
+                            <div className=" sm:hidden px-6">
+                                <div className="flex justify-center mb-16">
+                                    <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
+                                        <img
+                                            alt="..."
+                                            src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                            className="object-cover w-full h-full"
+                                        />
+                                    </div>
+
+                                </div>
+
+
+
+
+                                {/* User Data */}
+                                <div className="text-center mt-28">
+                                    <h3 className={`text-3xl font-semibold leading-normal mb-1 ${textMain}`}>
+                                        {loggedInUserData.firstName} {loggedInUserData.lastName}
+                                    </h3>
+
+
+
+
+                                    {/* data */}
+                                    <div className="flex justify-center py-4 sm:pt-4 pt-8 sm:gap-0 gap-2">
+                                        <div className="mr-2 sm:p-3 text-center">
+                                            <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
+                                                {loggedInUserData.following ? loggedInUserData.following.length : 0}
+                                            </span>
+                                            <span className={`text-sm ${textMain2}`}>Following</span>
+                                        </div>
+                                        <div className="mr-2 sm:p-3 text-center">
+                                            <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
+                                                {loggedInUserData.followers ? loggedInUserData.followers.length : 0}
+                                            </span>
+                                            <span className={`text-sm ${textMain2}`}>Followers</span>
+                                        </div>
+                                        <div className="mr-2 sm:p-3 text-center">
+                                            <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
+                                                {loggedInUserPosts.length}
+                                            </span>
+                                            <span className={`text-sm ${textMain2}`}>Questions</span>
+                                        </div>
+                                        <div className="lg:mr-4 sm:p-3 text-center">
+                                            <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
+                                                {loggedInUserComments.length}
+                                            </span>
+                                            <span className={`text-sm ${textMain2}`}>Answers</span>
+                                        </div>
+                                    </div>
+
+
+
+                                    {/* Edit Button */}
+                                    <div className=" px-4 flex justify-center">
+                                        <div className="sm:py-6 mb-8 mt-5 sm:mt-0 sm:mb-0 px-3 ">
+                                            <button onClick={() => { setOpen(true) }}
+                                                className="mr-0 px-2 flex py-2 font-medium text-sm leading-tight uppercase rounded-2xl shadow-md transition  duration-150 ease-in-out md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 bg-blue-600 text-white"
+                                                type="button"
+                                            >
+                                                <FaUserEdit className='mx-2 text-lg' />Edit Profile
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div className={`leading-normal mt-0 mb-1 font-bold text-lg ${textMain}`}>
+                                        {loggedInUserData.username}
+                                    </div>
+                                    <div className={`text-sm leading-normal mt-0 mb-1 ${textMain2} font-bold`}>
+                                        {loggedInUserData.email}
+                                    </div>
+                                    <div className={`mb-2 font-serif ${textMain}`}>
+                                        Gender - {loggedInUserData.gender ? loggedInUserData.gender : 'No information added, please add.'}
+                                    </div>
+                                    <div className={`mb-2 font-semibold ${textMain} mt-10`}>
+                                        College Name - {loggedInUserData.collegeName}
+                                    </div>
+                                </div>
+                                <div className={`mt-10 py-10 border-t border-gray-300 text-center`}>
+                                    <div className="flex flex-wrap justify-center">
+                                        <div className="w-full lg:w-9/12 px-4">
+                                            <p className={`mb-4 text-base leading-relaxed ${textMain}`}>
+                                                {loggedInUserData.bio ? loggedInUserData.bio : 'No bio, please add using update information.'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
                         </div>
 
 
 
                         {/* Posts By User */}
-                        <div className="mx-10 flex flex-wrap justify-center">
+                        <div className=" mx-2 sm:mx-10 flex flex-wrap justify-center">
                             {loggedInUserPosts.map((post) => (
-                                <div key={post._id} className="w-1/2 p-2">
+                                <div key={post._id} className="w-full sm:w-1/2 p-2">
                                     <PostItem post={post} setLoggedInUserPosts={setLoggedInUserPosts} />
                                 </div>
                             ))}
@@ -403,7 +522,7 @@ export default function Myprofile() {
 
                     </div>
                 </section>
-            </main>
+            </main >
         </>
     )
 }

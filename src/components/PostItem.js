@@ -249,7 +249,7 @@ const PostItem = (props) => {
                         </div>
                         {loggedInUserData.username ?
                             <Link
-                                className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
+                                className='text-md sm:text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
                                 to={
                                     post.user.username === loggedInUserData.username
                                         ? '/myprofile'
@@ -260,8 +260,8 @@ const PostItem = (props) => {
                             </Link>
                             :
                             <button
-                                className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
-                                onClick={() => alert('error','Please log in to view user profiles.')}
+                                className='text-md sm:text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
+                                onClick={() => alert('error', 'Please log in to view user profiles.')}
                             >
                                 {post.user.username}
                             </button>
@@ -271,8 +271,9 @@ const PostItem = (props) => {
 
                     </div>
                     <div className=''>
-                        <p className={`${textmain2} text-xs mt-3 mr-6`}>
-                            {new Date(post.date).toLocaleDateString()} {new Date(post.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                        <p className={`${textmain2} font-extralight text-xs mt-1 mr-2 sm:mr-6 flex flex-col`}>
+                            <span>{new Date(post.date).toLocaleDateString()}</span>
+                            <span>{new Date(post.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</span>
                         </p>
 
                     </div>
@@ -353,26 +354,26 @@ const PostItem = (props) => {
                         {post.comments && post.comments.length > 0 ? <div className=" flex">
                             <img src={post.comments[post.comments.length - 1].user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${post.comments[post.comments.length - 1].user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                 alt="profile" className='w-9 h-9 rounded-full mr-1 border border-blue-500 object-cover ' />
-                            <span>
-                            {loggedInUserData.username ?
-                                <Link
-                                    className='font-bold cursor-pointer'
-                                    to={
-                                        post.comments[post.comments.length - 1].user.username === loggedInUserData.username
-                                            ? '/myprofile'
-                                            : `/users/${post.comments[post.comments.length - 1].user.username}`
-                                    }
-                                >
-                                    {post.comments[post.comments.length - 1].user.username}
-                                </Link>
-                                  :
-                                  <button
-                                      className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
-                                      onClick={() => alert('error','Please log in to view user profiles.')}
-                                  >
-                                      {post.user.username}
-                                  </button>
-                              }
+                            <span className='hidden sm:block'>
+                                {loggedInUserData.username ?
+                                    <Link
+                                        className='font-bold cursor-pointer'
+                                        to={
+                                            post.comments[post.comments.length - 1].user.username === loggedInUserData.username
+                                                ? '/myprofile'
+                                                : `/users/${post.comments[post.comments.length - 1].user.username}`
+                                        }
+                                    >
+                                        {post.comments[post.comments.length - 1].user.username}
+                                    </Link>
+                                    :
+                                    <button
+                                        className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1'
+                                        onClick={() => alert('error', 'Please log in to view user profiles.')}
+                                    >
+                                        {post.user.username}
+                                    </button>
+                                }
 
                             </span>
                             <span className='ml-2'>{post.comments.length > 0 && (

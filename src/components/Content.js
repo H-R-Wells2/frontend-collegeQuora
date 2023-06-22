@@ -16,7 +16,7 @@ export default function Content() {
 
 
   return (
-    <div className='flex justify-start ml-64 mr-4 py-3'>
+    <div className='flex justify-start mx-6 sm:ml-64 mr-4 py-3'>
       <div className='flex flex-col gap-y-4'>
 
 

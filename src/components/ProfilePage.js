@@ -23,7 +23,7 @@ export default function ProfilePage() {
 
     const [userPosts, setUserPosts] = useState([]);
     const [userComments, setUserComments] = useState([]);
-    
+
 
 
     // Function to get user data and posts
@@ -127,7 +127,7 @@ export default function ProfilePage() {
 
 
     return (
-        <div className='ml-60'>
+        <div className='sm:ml-60'>
 
             {user ? (
                 <main className="profile-page">
@@ -166,8 +166,8 @@ export default function ProfilePage() {
                     </section>
                     <section className={`relative py-16 ${backG} transition ease-in-out duration-500`}>
                         <div className="container mx-auto px-4">
-                            <div className={`relative flex flex-col min-w-0 break-words w-full mb-6 shadow-xl rounded-lg -mt-64 transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
-                                <div className="px-6">
+                            <div className={`relative flex flex-col min-w-0 break-words w-full mb-6 shadow-xl rounded-2xl sm:rounded-lg -mt-80 sm:-mt-64 transition ease-in-out duration-500 ${mainBox} ${textMain}`}>
+                                <div className="hidden sm:block px-6">
 
 
                                     <div className="flex justify-between mx-32">
@@ -207,14 +207,14 @@ export default function ProfilePage() {
 
                                         {/* Profile Image */}
                                         <div className="w-1/4 flex justify-center relative">
-                                        <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
-                                            <img
-                                                alt="..."
-                                                src={user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
-                                                className="object-cover w-full h-full"
-                                            />
+                                            <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
+                                                <img
+                                                    alt="..."
+                                                    src={user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                    className="object-cover w-full h-full"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
 
 
 
@@ -283,6 +283,134 @@ export default function ProfilePage() {
                                         </div>
                                     </div>
                                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                {/* For mobile */}
+                                <div className="sm:hidden px-6">
+
+
+                                    <div className="flex justify-center">
+
+
+                                        {/* Profile Image */}
+                                        <div className="flex justify-center relative mb-16">
+                                            <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
+                                                <img
+                                                    alt="..."
+                                                    src={user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                    className="object-cover w-full h-full"
+                                                />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+
+
+                                    {/* User Data */}
+                                    <div className="text-center mt-12">
+                                        <h3 className={`text-3xl font-semibold leading-normal mb-1 ${textMain}`}>
+                                            {user.firstName} {user.lastName}
+                                        </h3>
+
+
+                                        {/* Data */}
+                                        <div className="flex justify-center py-4 pt-4 sm:gap-0 gap-3">
+                                            <div className=" sm:p-3 text-center">
+                                                <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
+                                                    {user.following.length}
+                                                </span>
+                                                <span className={`text-sm ${textMain2}`}>Following</span>
+                                            </div>
+                                            <div className="sm:p-3 text-center">
+                                                <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
+                                                    {user.followers.length}
+                                                </span>
+                                                <span className={`text-sm ${textMain2}`}>Followers</span>
+                                            </div>
+                                            <div className="sm:p-3 text-center">
+                                                <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
+                                                    {userPosts.length}
+                                                </span>
+                                                <span className={`text-sm ${textMain2}`}>Questions</span>
+                                            </div>
+                                            <div className="sm:p-3 text-center">
+                                                <span className={`text-xl font-semibold block uppercase tracking-wide ${textMain}`}>
+                                                    {userComments.length}
+                                                </span>
+                                                <span className={`text-sm ${textMain2}`}>Answers</span>
+                                            </div>
+                                        </div>
+
+
+                                        {/* Follow/Unfollow */}
+                                        <div className="flex justify-center py-4 pt-1 mb-4">
+                                            <div className="px-3 text-center">
+                                                <button
+                                                    onClick={() => {
+                                                        followUser(user.username);
+                                                    }}
+                                                    className={`${followBtn} px-3 flex py-2 font-medium text-sm leading-tight uppercase rounded-2xl shadow-md transition  duration-150 ease-in-out md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 bg-blue-600 text-white `}
+                                                    type="button"
+                                                    style={{ transition: "all .15s ease" }}
+                                                >
+                                                    <SlUserFollow className='mr-2 text-lg' />Follow
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        unfollowUser(user.username);
+                                                    }}
+                                                    className={`${unFollowBtn} px-3 flex py-2 font-medium text-sm leading-tight uppercase rounded-2xl shadow-md transition  duration-150 ease-in-out md:hover:bg-blue-800 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg active:text-gray-400 bg-blue-600 text-white `}
+                                                    type="button"
+                                                    style={{ transition: "all .15s ease" }}
+                                                >
+                                                    <SlUserUnfollow className='mr-2 text-lg' />Unfollow
+                                                </button>
+                                            </div>
+                                        </div>
+
+
+                                        <div className={`leading-normal mt-0 mb-1 font-bold text-lg ${textMain}`}>
+                                            {user.username}
+                                        </div>
+                                        <div className={`text-sm leading-normal mt-0 mb-1 ${textMain2} font-bold`}>
+                                            {user.email}
+                                        </div>
+                                        <div className={`mb-2 font-serif ${textMain}`}>
+                                            Gender - {user.gender ? user.gender : 'No information added, please add.'}
+                                        </div>
+                                        <div className={`mb-2 font-semibold ${textMain} mt-10`}>
+                                            College Name - {user.collegeName}
+                                        </div>
+                                    </div>
+                                    <div className={`mt-10 py-10 border-t border-gray-300 text-center`}>
+                                        <div className="flex flex-wrap justify-center">
+                                            <div className="w-full lg:w-9/12 px-4">
+                                                <p className={`mb-4 text-base leading-relaxed ${textMain}`}>
+                                                    {user.bio ? user.bio : 'No bio, please add using update information.'}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
 
 
@@ -292,7 +420,7 @@ export default function ProfilePage() {
                             {/* Posts By User */}
                             <div className="flex flex-wrap justify-center">
                                 {userPosts.map((post) => (
-                                    <div key={post._id} className="w-1/2 p-2">
+                                    <div key={post._id} className="sm:w-1/2 p-2">
                                         <PostItemForUser post={post} setUserPosts={setUserPosts} />
                                     </div>
                                 ))}

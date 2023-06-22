@@ -22,9 +22,9 @@ export default function Content() {
 
 
   return (
-    <div className="flex justify-start ml-64 mr-4 py-3">
+    <div className="flex justify-start mx-6 sm:ml-64 mr-4 py-3">
       {searchedPosts.length === 0 ? (
-        <div className={`flex flex-col items-center justify-center gap-y-4 ml-10 mt-10 transition ease-in-out duration-500 ${textMain2}`}>
+        <div className={`flex flex-col items-center justify-center gap-y-4 sm:ml-10 mt-10 transition ease-in-out duration-500 ${textMain2}`}>
           <img alt='' className="" src={nothingMatched} />
           <p className="text-xl font-bold ">Oh crap!</p>
           <p className="text-lg font-medium ">You've got nothing.</p>

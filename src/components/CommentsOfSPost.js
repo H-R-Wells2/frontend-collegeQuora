@@ -171,16 +171,17 @@ const CommentsOfSPost = (props) => {
                             </span>
                         </div>
                         <div className=''>
-                            <p className={`${textmain2} text-xs mt-3 mr-6`}>
-                                {new Date(comment.date).toLocaleDateString()} {new Date(comment.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                            <p className={`${textmain2} font-extralight text-xs mt-1 mr-2 sm:mr-6 flex flex-col`}>
+                                <span>{new Date(comment.date).toLocaleDateString()}</span>
+                                <span>{new Date(comment.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</span>
                             </p>
                         </div>
                     </div>
-                    <p className='ml-8'>{comment.comment}</p>
+                    <p className='sm:ml-8 ml-1 mt-6 sm:mt-0'>{comment.comment}</p>
                 </div>
 
                 {/* Buttons */}
-                <div className='flex justify-between px-14 py-5'>
+                <div className='flex justify-between sm:px-14 px-4 py-5'>
                     <div className='flex'>
                         <button onClick={() => { handleCommentUpvoteClick() }} type='button'
                             className={`${cardBtn} px-3 py-2 rounded-l-3xl text-sm font-medium transition ease-in-out duration-500 flex`}><BiUpvote className='h-5 mr-1' />{comment.upvotes.length} Upvotes </button>

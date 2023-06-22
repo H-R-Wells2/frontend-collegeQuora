@@ -184,13 +184,13 @@ const PostItemForUser = (props) => {
                                 src={post.user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${post.user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                 alt="" />
                         </div>
-                        <Link className='text-lg font-semibold ml-2 h-max cursor-pointer mt-1 ' to={`/users/${post.user.username}`}>{post.user.username}</Link>
+                        <Link className='text-md sm:text-lg font-semibold ml-2 h-max cursor-pointer mt-1 ' to={`/users/${post.user.username}`}>{post.user.username}</Link>
                     </div>
                     <div className=''>
-                        <p className={`${textmain2} text-xs mt-3 mr-6`}>
-                            {new Date(post.date).toLocaleDateString()} {new Date(post.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                        <p className={`${textmain2} font-extralight text-xs mt-1 mr-2 sm:mr-6 flex flex-col`}>
+                            <span>{new Date(post.date).toLocaleDateString()}</span>
+                            <span>{new Date(post.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</span>
                         </p>
-
                     </div>
                 </div>
 
@@ -246,7 +246,7 @@ const PostItemForUser = (props) => {
                             <img
                                 src={post.comments[post.comments.length - 1].user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${post.comments[post.comments.length - 1].user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                 alt="profile" className='w-9 h-9 rounded-full mr-1 border border-blue-500 object-cover' />
-                            <span>
+                            <span className='hidden sm:block'>
                                 <Link to={`/users/${post.comments[post.comments.length - 1].user.username}`} className='font-bold cursor-pointer'>{post.comments[post.comments.length - 1].user.username}</Link>
                             </span>
                             <span className='ml-2'>{post.comments.length > 0 && (
