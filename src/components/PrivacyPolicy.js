@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
 
   return (
     <div className={`flex justify-center items-center`}>
-      <div className={`w-full max-w-4xl transition ease-in-out duration-500 p-8 my-4 rounded-lg ${mainBox} ${textMain}`}>
+      <div className={`mx-4 w-full max-w-4xl transition ease-in-out duration-500 p-8 my-4 rounded-lg ${mainBox} ${textMain}`}>
         <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
         <p className="mb-4">
           At College-Quora, we take your privacy seriously. We collect only the

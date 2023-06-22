@@ -7,7 +7,7 @@ const TermsConditions = () => {
 
     return (
         <div className={`flex justify-center items-center`}>
-            <div className={`w-full max-w-4xl transition ease-in-out duration-500 p-8 my-4 rounded-lg ${mainBox} ${textMain}`}>
+            <div className={`mx-4 w-full max-w-4xl transition ease-in-out duration-500 p-8 my-4 rounded-lg ${mainBox} ${textMain}`}>
                 <h1 className="text-3xl font-bold mb-6">Terms and Conditions</h1>
                 <p className="mb-4">
                     Welcome to College-Quora. By accessing or using our platform, you agree to be bound by the following terms and conditions:

@@ -12,14 +12,13 @@ const About = () => {
 
     return (
         <div className={`flex justify-center items-center`}>
-            <div className={`w-full max-w-4xl transition ease-in-out duration-500 p-8 my-4 rounded-lg ${mainBox} ${textMain}`}>
+            <div className={`mx-4 w-full max-w-4xl transition ease-in-out duration-500 p-8 my-4 rounded-lg ${mainBox} ${textMain}`}>
 
 
 
-                {/* <!-- Container for demo purpose --> */}
-                <div className="container my-24 px-6 mx-auto">
+                {/* <!-- Container  --> */}
+                <div className="container my-24 sm:px-6 mx-auto">
 
-                    {/* <!-- Section: Design Block --> */}
                     <section className="mb-32">
                         <div className="flex flex-wrap">
                             <div className="grow-0 shrink-0 basis-auto mb-6 md:mb-0 w-full md:w-6/12 px-3 lg:px-6">
@@ -64,10 +63,8 @@ const About = () => {
                             </div>
                         </div>
                     </section>
-                    {/* <!-- Section: Design Block --> */}
 
                 </div>
-                {/* <!-- Container for demo purpose --> */}
 
 
                 {/* Who I am */}
@@ -79,7 +76,7 @@ const About = () => {
                                     <h2 className={`${textMain} transition ease-in-out duration-500 text-3xl font-bold `}>Who am I?</h2>
 
                                     <p className={`mt-4 ${textSec} transition ease-in-out duration-500  lg:max-w-md`}>
-                                        Hi, I am Shubham Kadam, developer of this site. I am a BScIt student from Mumbai University. and motivated college student looking to apply extensive skills in developement by myself till now but trying to find good works in which I can grab the opportunity to learn and earn simultenusly. Thank You!
+                                        Hi, I'm Shubham Kadam, a skilled developer with a strong background in web development. I recently graduated with a BScIT degree from Mumbai University. As an enthusiastic and motivated professional, I am actively seeking new opportunities to apply my extensive development skills.
                                     </p>
 
                                     <div className="flex items-center mt-6 -mx-2">

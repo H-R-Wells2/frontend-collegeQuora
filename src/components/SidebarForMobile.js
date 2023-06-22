@@ -76,7 +76,7 @@ export default function SidebarForMobile() {
                     <input required name='title' value={searchParams.title} onChange={handleInputChange}
                         className="peer h-full w-full outline-none text-sm text-gray-700 pr-2 pl-1"
                         type="text"
-                        id="search"
+                        id="searchf"
                         minLength={3}
                         title={`Please enter at least 3 characters.`}
                         placeholder="Search something.." />
