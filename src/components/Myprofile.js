@@ -171,7 +171,7 @@ export default function Myprofile() {
                                                 <div className='flex justify-center gap-2 mb-1'>
                                                     <input onChange={handleAttachImg} accept="image/jpeg, image/png" type="file" id="files" className="hidden" />
                                                     <label type='button' htmlFor="files" className={`ml-2 cursor-pointer rounded-full`}>
-                                                        {previewImg ? <img className={` h-56 w-56 rounded-full object-cover`} alt='to be attached' src={previewImg} /> : <img onChange={handleAttachImg} src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`} className=' h-56 w-56 rounded-full object-cover' alt="" />}
+                                                        {previewImg ? <img className={` h-56 w-56 rounded-full object-cover`} alt='to be attached' src={previewImg} /> : <img onChange={handleAttachImg} src={loggedInUserData.idOfAvatar ? `https://drive.google.com/thumbnail?id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`} className=' h-56 w-56 rounded-full object-cover' alt="" />}
                                                     </label>
                                                 </div>
                                             </div>
@@ -332,7 +332,7 @@ export default function Myprofile() {
                                         <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
                                             <img
                                                 alt="..."
-                                                src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                src={loggedInUserData.idOfAvatar ? `https://drive.google.com/thumbnail?id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                                 className="object-cover w-full h-full"
                                             />
                                         </div>
@@ -410,7 +410,7 @@ export default function Myprofile() {
                                     <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
                                         <img
                                             alt="..."
-                                            src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                            src={loggedInUserData.idOfAvatar ? `https://drive.google.com/thumbnail?id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                             className="object-cover w-full h-full"
                                         />
                                     </div>

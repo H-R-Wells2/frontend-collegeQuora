@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import modeContext from '../context/mode/modeContext';
 import { IoCloseOutline } from "react-icons/io5";
 
+
 const Alert = ({ type, message }) => {
     
     const { setShowAlert } = useContext(modeContext);

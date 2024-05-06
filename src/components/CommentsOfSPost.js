@@ -154,7 +154,7 @@ const CommentsOfSPost = (props) => {
                     <div className='flex mb-2 justify-between'>
                         <div className='flex'>
                             <img
-                                src={comment.user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${comment.user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                src={comment.user.idOfAvatar ? `https://drive.google.com/thumbnail?id=${comment.user.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                 alt="profile" className='w-9 h-9 rounded-full mr-1 border border-blue-500 object-cover' />
                             {/* <span className='font-bold cursor-pointer mt-1 ml-1'>{comment.user.username}</span> */}
                             <span className='font-bold cursor-pointer mt-1 ml-1'>

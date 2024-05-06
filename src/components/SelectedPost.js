@@ -168,7 +168,7 @@ export default function SelectedPost(props) {
                             <div className='flex'>
                                 <div className='sm:ml-4 mb-2 w-10 h-10 overflow-hidden'>
                                     <img className="h-full w-full rounded-full border border-blue-500 object-cover"
-                                        src={selectedPost.user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${selectedPost.user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                        src={selectedPost.user.idOfAvatar ? `https://drive.google.com/thumbnail?id=${selectedPost.user.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                         alt="" />
                                 </div>
                                 {loggedInUserData.username ?
@@ -228,7 +228,7 @@ export default function SelectedPost(props) {
                             </span>
                         </div>
                         <div className='flex flex-col justify-center items-center py-5 text-2xl'>
-                            {selectedPost.idOfImage && <img className="sm:w-1/2 w-full" src={`https://drive.google.com/uc?export=view&id=${selectedPost.idOfImage}`} alt="" />}
+                            {selectedPost.idOfImage && <img className="sm:w-1/2 w-full" src={`https://drive.google.com/thumbnail?id=${selectedPost.idOfImage}`} alt="" />}
                             <div className='px-3 py-2'>{selectedPost.description}</div>
                         </div>
 

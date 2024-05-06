@@ -256,7 +256,7 @@ export default function Navbar() {
                                         aria-haspopup="true">
                                         <span className="sr-only">Open user menu</span>
                                         <img className="h-9 w-9 rounded-full border border-blue-500"
-                                            src={loggedInUserData.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                            src={loggedInUserData.idOfAvatar ? `https://drive.google.com/thumbnail?id=${loggedInUserData.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                             alt="" />
                                     </button>
                                 </div>

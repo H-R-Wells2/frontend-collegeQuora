@@ -7,9 +7,10 @@ import authContext from './authContext'
 const AuthState = (props) => {
 
 
+    const host = process.env.REACT_APP_HOST;
 
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
     const checkLogin = () => {
@@ -51,7 +52,6 @@ const AuthState = (props) => {
 
 
 
-    const host = "https://college-quora-backend.onrender.com";
 
 
     const [loggedInUserData, setLoggedInUserData] = useState([]);
@@ -101,6 +101,7 @@ const AuthState = (props) => {
         if (localStorage.getItem('token')) {
             getLoggedInUserData();
         }
+        // eslint-disable-next-line
     }, []);
 
 

@@ -234,7 +234,7 @@ export default function ProfilePage() {
                                                 <div className="flex">
                                                     <img
                                                         alt="..."
-                                                        src={user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                        src={user.idOfAvatar ? `https://drive.google.com/thumbnail?id=${user.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                                         className="shadow-xl rounded-full h-auto align-middle border-none absolute -my-24 -ml-28"
                                                         style={{ maxWidth: "220px" }}
                                                     />

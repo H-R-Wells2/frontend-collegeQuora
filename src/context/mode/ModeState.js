@@ -153,7 +153,7 @@ const ModeState = (props) => {
       }
 
       // Fetch user data
-      const response = await fetch(`https://college-quora-backend.onrender.com/api/auth/verify`, {
+      const response = await fetch(`${process.env.REACT_APP_HOST}/api/auth/verify`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -12,11 +12,11 @@ const Login = (props) => {
 
 
 
-      // getting states from context
-      const context = useContext(modeContext)
-      const { mainBox, textMain, logsign, remText, setLoggedIn, alert, checkLogin } = context
-      const { host } = useContext(postContext);
-      const { getLoggedInUserData } = useContext(authContext);
+    // getting states from context
+    const context = useContext(modeContext)
+    const { mainBox, textMain, logsign, remText, setLoggedIn, alert, checkLogin } = context
+    const { host } = useContext(postContext);
+    const { getLoggedInUserData } = useContext(authContext);
 
 
     // useStates for credentials
@@ -32,35 +32,35 @@ const Login = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
+
         try {
-          const response = await fetch(`${host}/api/auth/login`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(credentials)
-          });
-      
-          const { success, authToken } = await response.json();
-      
-          if (success) {
-            localStorage.setItem('token', authToken);
-            navigate('/');
-            setLoggedIn(true);
-            checkLogin();
-            alert('success','Logged In successfully');
-            getLoggedInUserData();
-          } else {
-            alert('error',"Please enter valid username and password");
-          }
-      
+            const response = await fetch(`${host}/api/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(credentials)
+            });
+
+            const { success, authToken } = await response.json();
+
+            if (success) {
+                localStorage.setItem('token', authToken);
+                navigate('/');
+                setLoggedIn(true);
+                checkLogin();
+                alert('success', 'Logged In successfully');
+                getLoggedInUserData();
+            } else {
+                alert('error', "Please enter valid username and password");
+            }
+
         } catch (error) {
-          console.error(error);
-          alert('error', 'An error occurred. Please try again later.');
+            console.error(error);
+            alert('error', 'An error occurred. Please try again later.');
         }
-      };
-      
+    };
+
 
     const [showPass, setShowPass] = useState("password")
     const [hideEye, setHideEye] = useState("hidden")

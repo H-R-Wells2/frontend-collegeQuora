@@ -23,6 +23,9 @@ const PostItem = (props) => {
     const { post } = props;
 
 
+    // console.log(post)
+
+
     // getting states/functions from Context
     const { addComment, getPosts, host, setPosts } = useContext(postContext);
     const { loggedInUserData, getLoggedInUserData } = useContext(authContext);
@@ -244,7 +247,7 @@ const PostItem = (props) => {
                     <div className='flex'>
                         <div className='ml-4 mb-2 w-10 h-10 overflow-hidden'>
                             <img className="h-full w-full rounded-full border border-blue-500 object-cover"
-                                src={post.user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${post.user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                src={post.user.idOfAvatar ? `https://drive.google.com/thumbnail?id=${post.user.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                 alt="" />
                         </div>
                         {loggedInUserData.username ?
@@ -281,7 +284,8 @@ const PostItem = (props) => {
 
                 {/* Image */}
                 <div className='mx-1 flex justify-center'>
-                    {post.idOfImage && <img className="w-full" src={`https://drive.google.com/uc?export=view&id=${post.idOfImage}`} alt="" />}
+                    {/* {post.idOfImage && <img className="w-full" src={`https://drive.google.com/thumbnail?id=${post.idOfImage}`} alt="" />} */}
+                    {post.idOfImage && <img className="w-full" src={`https://drive.google.com/thumbnail?id=${post.idOfImage}`} alt="post" />}
                 </div>
 
                 {/* Main Post */}
@@ -352,7 +356,7 @@ const PostItem = (props) => {
                     {/* loadedComments */}
                     <div className={`${loadedComments} ${textMain} transition ease-in-out duration-500 py-1.5`}>
                         {post.comments && post.comments.length > 0 ? <div className=" flex">
-                            <img src={post.comments[post.comments.length - 1].user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${post.comments[post.comments.length - 1].user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                            <img src={post.comments[post.comments.length - 1].user.idOfAvatar ? `https://drive.google.com/thumbnail?id=${post.comments[post.comments.length - 1].user.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                 alt="profile" className='w-9 h-9 rounded-full mr-1 border border-blue-500 object-cover ' />
                             <span className='hidden sm:block'>
                                 {loggedInUserData.username ?

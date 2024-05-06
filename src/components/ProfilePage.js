@@ -210,7 +210,7 @@ export default function ProfilePage() {
                                             <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
                                                 <img
                                                     alt="..."
-                                                    src={user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                    src={user.idOfAvatar ? `https://drive.google.com/thumbnail?id=${user.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                                     className="object-cover w-full h-full"
                                                 />
                                             </div>
@@ -309,7 +309,7 @@ export default function ProfilePage() {
                                             <div className="w-56 h-56 overflow-hidden rounded-full border border-gray-600 -my-28">
                                                 <img
                                                     alt="..."
-                                                    src={user.idOfAvatar ? `https://drive.google.com/uc?export=view&id=${user.idOfAvatar}` : `https://drive.google.com/uc?export=view&id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
+                                                    src={user.idOfAvatar ? `https://drive.google.com/thumbnail?id=${user.idOfAvatar}` : `https://drive.google.com/thumbnail?id=1HHTqxMVPJSDMTBvl2ZlyYzse4gpPSeBv`}
                                                     className="object-cover w-full h-full"
                                                 />
                                             </div>

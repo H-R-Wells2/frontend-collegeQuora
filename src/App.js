@@ -35,7 +35,7 @@ function App() {
 
 
   // getting states from context
-  const { backG } = useContext(modeContext)
+  const { backG } = useContext(modeContext);
 
 
 
